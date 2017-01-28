@@ -6,11 +6,11 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives: 2017 | 王跳凯的blog</title>
+  <title>王跳凯的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta property="og:type" content="website">
 <meta property="og:title" content="王跳凯的blog">
-<meta property="og:url" content="http://yoursite.com/archives/2017/index.html">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="王跳凯的blog">
@@ -137,34 +137,70 @@
           <div id="js-content" class="content-ll">
             
   
-  
+    <article id="post-optimizing-javascript" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/" class="archive-article-date">
-  	<time datetime="2017-01-27T11:05:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/">反思JavaScript: 通过函数代替break</a>
+      <a class="article-title" href="/2017/01/27/optimizing-javascript/">Javascript 代码优化</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/01/27/optimizing-javascript/" class="archive-article-date">
+  	<time datetime="2017-01-27T07:13:35.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>客户端的脚本可以使你的应用变得动态和生动，但是浏览器对于JavaScript的解释可能会导致效率的底下，而且随着客户端本身的不同也会导致性能的不同。我们整理了一些建议和最好的实践来优化你的Javascript 代码。</p>
+<p>###定义class的方法</p>
+<p>下面这个例子是低效的，每一次实例化<code>baz.Bar</code>，都会创建一个新foo的闭包函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">baz.Bar = function() &#123;  </div><div class="line">	// constructor body  </div><div class="line">	this.foo = function() &#123;    </div><div class="line">		// method body  </div><div class="line">	&#125;;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>比较好的方法是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">baz.Bar = function() &#123;</div><div class="line">  // constructor body</div><div class="line">&#125;;</div><div class="line"></div><div class="line">baz.Bar.prototype.foo = function() &#123;</div><div class="line">  // method body</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这种方式，无论创建多少个<code>baz.Bar</code>的示例，都只会创建一个<code>foo</code>函数，同时也没有闭包函数产生。</p>
+<p>###初始化实例变量<br>Place instance variable declaration/initialization on the prototype for instance variables with value type (rather than reference type) initialization values (i.e. values of type number, Boolean, null, undefined, or string).这个可以避免每次构建函数被调用时不必要地每次都运行初始化代码（但是如果你的实例变量是依赖于构建函数的传入参数，或者依赖于构建时的一些状态则不适用于该建议）</p>
+<p>例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">foo.Bar = function() &#123;  </div><div class="line">  this.prop1_ = 4; </div><div class="line">  this.prop2_ = true;  </div><div class="line">  this.prop3_ = [];  </div><div class="line">  this.prop4_ = &apos;blah&apos;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>应该改为下面这种形式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">foo.Bar = function() &#123;</div><div class="line">  this.prop3_ = [];</div><div class="line">&#125;;</div><div class="line"></div><div class="line">foo.Bar.prototype.prop1_ = 4;</div><div class="line"></div><div class="line">foo.Bar.prototype.prop2_ = true;</div><div class="line"></div><div class="line">foo.Bar.prototype.prop4_ = &apos;blah&apos;;</div></pre></td></tr></table></figure>
+<p>###避免落入闭包的陷进</p>
+<p>闭包是Javascript中一个很强大也很有用的一个特性；同时，它也有一些缺点：</p>
+<ul>
+<li>闭包是最常见的导致内存泄漏的原因</li>
+<li>创建一个闭包比起不使用闭包来创建一个内在的函数来说慢得多，和重用一个静态的函数来比要更加慢。如下例子</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">function setupAlertTimeout() &#123;</div><div class="line">  var msg = &apos;Message to alert&apos;;</div><div class="line">  window.setTimeout(function() &#123; alert(msg); &#125;, 100);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>较快的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">function setupAlertTimeout() &#123;</div><div class="line">  window.setTimeout(function() &#123;</div><div class="line">    var msg = &apos;Message to alert&apos;;</div><div class="line">    alert(msg);</div><div class="line">  &#125;, 100);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>更快的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">function alertMsg() &#123;</div><div class="line">  var msg = &apos;Message to alert&apos;;</div><div class="line">  alert(msg);</div><div class="line">&#125;</div><div class="line"></div><div class="line">function setupAlertTimeout() &#123;</div><div class="line">  window.setTimeout(alertMsg, 100);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<ul>
+<li>闭包会增加作用域的长度。当浏览器解析属性的时候，作用域的每一级都必须被查询。如下例子</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">var a = &apos;a&apos;;</div><div class="line"></div><div class="line">function createFunctionWithClosure() &#123;</div><div class="line">  var b = &apos;b&apos;;</div><div class="line">  return function () &#123;</div><div class="line">    var c = &apos;c&apos;;</div><div class="line">    a;</div><div class="line">    b;</div><div class="line">    c;</div><div class="line">  &#125;;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var f = createFunctionWithClosure();</div><div class="line">f();</div></pre></td></tr></table></figure>
+<p>当<code>f</code>被执行，引用<code>c</code>快于<code>b</code>,快于<code>a</code>。<br>在ie中使用闭包的信息可以浏览<a href="http://blogs.msdn.com/ie/archive/2007/01/04/ie-jscript-performance-recommendations-part-3-javascript-code-inefficiencies.aspx" target="_blank" rel="external">IE+JScript Performance Recommendations Part 3: JavaScript Code inefficiencies</a></p>
+<p>###避免使用<code>with</code><br>在你的代码中要避免视同<code>with</code>。它的性能很差，因为它会修改作用域链，使得其他的作用域连中查找变量变得困难。网站应用中最常见的内存泄漏是因为JavaScript脚本引擎和浏览器的C ++对象实现DOM一件的循环引用（例如：between the JavaScript script engine and Internet Explorer’s COM infrastructure, or between the JavaScript engine and Firefox XPCOM infrastructure）</p>
+<p>###避免浏览器内存泄漏</p>
+<p>在web应用中内存泄漏是一个很常见的问题，它会导致巨大的性能问题。当你的网站应用导致浏览器使用的的内存增加，会影响到用户的系统的其他部分变得缓慢。</p>
+<p>这里有一些经验的法则来避免内存泄漏：</p>
+<p><strong>把事件处理绑定在事件管理系统上</strong></p>
+<p>最常见的循环引用类型就是 [ DOM element –&gt; event handler –&gt; closure scope –&gt; DOM ]，为了避免这种问题，应该选择一个经过良好测试的事件管理系统来绑定事件处理，例如Google doctype，Dojo或者Jquery。</p>
+<blockquote>
+<p>未完</p>
+</blockquote>
+<p><a href="https://developers.google.com/speed/articles/optimizing-javascript#Initializing instance variables" target="_blank" rel="external">原文链接</a>“</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -176,33 +212,127 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/27/optimizing-javascript/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+
+
+
+
+
+
+
   
+    <article id="post-About-this-and-prototype" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/how-require-actually-works/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:23:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/how-require-actually-works/">Node学习之路：require()工作原理</a>
+      <a class="article-title" href="/2017/01/27/About-this-and-prototype/">About this and prototype</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/01/27/About-this-and-prototype/" class="archive-article-date">
+  	<time datetime="2017-01-27T07:12:03.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>对于js中this创建的对象，相当于改变了自身的字面量，而本身有一个自带的属性为prototype，这个不属于字面量的内容<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function Person () &#123;</div><div class="line">	this.name = &quot;wang&quot;;</div><div class="line">        this.age = 15;</div><div class="line">&#125;</div><div class="line">Person.prototype.name = &apos;lala&apos;;</div><div class="line"></div><div class="line">var john = new Person();</div><div class="line"></div><div class="line">console.log(JSON.stringify(john));</div><div class="line">//&#123;name:&quot;wang&quot;, age:15&#125;</div><div class="line">//这里说明了this等同于的是对象字面量</div><div class="line"></div><div class="line"></div><div class="line">console.log(john.name) </div><div class="line">//“wang”，这里说明了，js会优先寻找字面量里面是否有这个对象，其次才会去prototype里面寻找</div></pre></td></tr></table></figure></p>
+<p>对象的样子如下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">  name:&apos;wang&apos;,</div><div class="line">  age: 15,</div><div class="line">  prototype:&#123;</div><div class="line">    constructor:[Function],</div><div class="line">    name: &apos;lala&apos;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/27/About-this-and-prototype/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
+    <article id="post-require" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/26/require/">require()</a>
+    </h1>
+  
+
+        
+        <a href="/2017/01/26/require/" class="archive-article-date">
+  	<time datetime="2017-01-26T07:05:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-26</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">module = new Module() //module 为 Module类的实例</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var Module = function(id, parent) &#123; </div><div class="line">  this.id = id; </div><div class="line">  this.exports = &#123;&#125;; </div><div class="line">  this.parent = parent; </div><div class="line">  this.filename = null; </div><div class="line">  this.loaded = false; </div><div class="line">  this.children = [];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var require = function()&#123;</div><div class="line"> return module.exports</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<blockquote>
+<p>模块的加载实质上就是，注入exports、require、module三个全局变量，然后执行模块的源码，然后将模块的 exports 变量的值输出。—— <a href="http://www.ruanyifeng.com/blog/2015/05/require.html" target="_blank" rel="external">require() 源码解读</a></p>
+</blockquote>
+<p>   所以说每一个require的文件执行的过程，都是先读取文件，注入变量，再执行代码，所以node文件不需要自己实例化Module,在require的时候会自动实例化的，所以从另一个角度说，文件并不会直接执行，所以看上去文件中的require，module等变量都为创建而可以执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//a.js</div><div class="line">exports.multiply = function(n) &#123;</div><div class="line">    return n * 1000 </div><div class="line">&#125;;</div><div class="line">//index.js</div><div class="line">require(&apos;./a.js&apos;)</div><div class="line"></div><div class="line">//require(&apos;./a.js&apos;)实际的变为了 </div><div class="line">var module = &#123; </div><div class="line">  exports: &#123;&#125; </div><div class="line">&#125;;</div><div class="line">(function(module, exports) &#123; </div><div class="line">  exports.multiply = function(n) &#123;</div><div class="line">    return n * 1000 </div><div class="line">  &#125;; </div><div class="line">&#125;(module, module.exports)) </div><div class="line">return module.exports;</div></pre></td></tr></table></figure></p>
+<p>####Demo<br>  <a href="https://github.com/wleonardo/js-demo/tree/master/require-demo" target="_blank" rel="external">require原理</a><br>  <a href="https://github.com/wleonardo/js-demo/tree/master/node-read-jsfile" target="_blank" rel="external">读取js文件并运行</a></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -218,33 +348,61 @@
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/26/require/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+
+
+
+
+
+
+
   
+    <article id="post-use-generator-and-co-in-mocha" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/10-tips-to-become-a-better-node-developer/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:22:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
     <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/10-tips-to-become-a-better-node-developer/">10 个技巧，让你在2017 年成为更好的 Node 开发者</a>
+      <a class="article-title" href="/2017/01/25/use-generator-and-co-in-mocha/">use generator and co in mocha</a>
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/01/25/use-generator-and-co-in-mocha/" class="archive-article-date">
+  	<time datetime="2017-01-25T07:05:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-25</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>主要的点在于当 <code>it()</code> 函数的回调函数带有done参数，mocha会等到回调函数里面出 <code>done</code> 或者或者超时才完成一条测试。同时因为每个测试用例最多执行2000毫秒，所以要面对需要很长时间的测试，需要通过设置 <code>-t</code> 来修改最长时间（暂时没有更好的方法）<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">it(&apos;option is empty&apos;, function(done) &#123;</div><div class="line">  ...</div><div class="line">  done()//结束一条测试</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
+<h4 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">describe(&apos;runBash&apos;, function() &#123;</div><div class="line">  it(&apos;option is Sync&apos;, function(done) &#123;</div><div class="line">    var instructionList = [&apos;echo &quot;one&quot;&apos;, &apos;echo &quot;two&quot;&apos;];</div><div class="line">    var option = &#123;</div><div class="line">      webRoot: &apos;../fake-natoo&apos;</div><div class="line">    &#125;;</div><div class="line">    co(function*(done) &#123;</div><div class="line">      var errCode = yield runBash(instructionList, option);</div><div class="line">      expect(errCode).to.be.equal(null);</div><div class="line">      done();//完成测试</div><div class="line">    &#125;.call(this, done));//传入done</div><div class="line">  &#125;);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h4 id="ps"><a href="#ps" class="headerlink" title="ps"></a>ps</h4><blockquote>
+<p>Mocha默认每个测试用例最多执行2000毫秒(可以通过-t来调整)<br>Mocha默认会高亮显示超过75毫秒的测试用例（可以通过-s来调整）<br><a href="http://www.ruanyifeng.com/blog/2015/12/a-mocha-tutorial-of-examples.html" target="_blank" rel="external">&lt;&lt;测试框架 Mocha 实例教程&gt;&gt;(阮一峰)</a></p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -252,291 +410,39 @@
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
         		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/new-working/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:20:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/new-working/">new到底做了什么</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
+      		 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Test</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/01/25/use-generator-and-co-in-mocha/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/mac-software/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:19:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/mac-software/">开发推荐 mac中好用的软件</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">软件</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/class-in-ES6/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:18:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/class-in-ES6/">class in ES6</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/semver/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:17:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/semver/">semver</a>
-    </h1>
-  
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/node-js-best-practices-how-to-become-a-better-developer-in-2017/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:16:45.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/node-js-best-practices-how-to-become-a-better-developer-in-2017/">node-js-best-practices-how-to-become-a-better-developer-in-2017</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/Closures/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:16:02.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/Closures/">Closures</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/prototype-chain/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:15:21.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/prototype-chain/">Javascript原型链</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
   
   
-    </div></section>
-  
-
-    
     <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/2017/page/2/">2</a><a class="extend next" rel="next" href="/archives/2017/page/2/">Next &raquo;</a>
+      <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
     </nav>
   
 
@@ -560,9 +466,9 @@
     <script>
 	var yiliaConfig = {
 		mathjax: false,
-		isHome: false,
+		isHome: true,
 		isPost: false,
-		isArchive: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
