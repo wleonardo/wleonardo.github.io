@@ -9,21 +9,18 @@
   <title>Javascript原型链 | 王跳凯的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="原型链的继承就是将子类的prototype.__proto__链接到父类的prototype，借此完成原型链1child.prototype.__proto__.= parent.prototype
-实例化的对象没有prototype,prototype是函数特有的属性，所有的对象都有__proto__, 这是指向实例化这个对象的类的prototype,所有对象的原型链最后是null
-下面是经典的">
+实例化的对象没有prototype,prototype是函数特有的属性，所有的对象都有__proto__, 这是指向实例化这个对象的类的prototype,所有对象的原型链最后是null">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Javascript原型链">
 <meta property="og:url" content="http://yoursite.com/2017/01/27/prototype-chain/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
 <meta property="og:description" content="原型链的继承就是将子类的prototype.__proto__链接到父类的prototype，借此完成原型链1child.prototype.__proto__.= parent.prototype
-实例化的对象没有prototype,prototype是函数特有的属性，所有的对象都有__proto__, 这是指向实例化这个对象的类的prototype,所有对象的原型链最后是null
-下面是经典的">
-<meta property="og:updated_time" content="2017-01-27T07:15:47.000Z">
+实例化的对象没有prototype,prototype是函数特有的属性，所有的对象都有__proto__, 这是指向实例化这个对象的类的prototype,所有对象的原型链最后是null">
+<meta property="og:updated_time" content="2017-01-28T04:32:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Javascript原型链">
 <meta name="twitter:description" content="原型链的继承就是将子类的prototype.__proto__链接到父类的prototype，借此完成原型链1child.prototype.__proto__.= parent.prototype
-实例化的对象没有prototype,prototype是函数特有的属性，所有的对象都有__proto__, 这是指向实例化这个对象的类的prototype,所有对象的原型链最后是null
-下面是经典的">
+实例化的对象没有prototype,prototype是函数特有的属性，所有的对象都有__proto__, 这是指向实例化这个对象的类的prototype,所有对象的原型链最后是null">
   
     <link rel="alternative" href="/atom.xml" title="王跳凯的blog" type="application/atom+xml">
   
@@ -167,6 +164,7 @@
       
         <p>原型链的继承就是将子类的<code>prototype.__proto__</code>链接到父类的<code>prototype</code>，借此完成原型链<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">child.prototype.__proto__.= parent.prototype</div></pre></td></tr></table></figure></p>
 <p>实例化的对象没有<code>prototype</code>,<code>prototype</code>是函数特有的属性，所有的对象都有<code>__proto__</code>, 这是指向实例化这个对象的类的<code>prototype</code>,所有对象的原型链最后是null</p>
+<a id="more"></a>
 <p>下面是经典的原型链继承的例子，我借此解释一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">　　function extend(Child, Parent) &#123;</div><div class="line">　　　　var F = function()&#123;&#125;;</div><div class="line">　　　　//将父类的prototype复制到F函数中</div><div class="line">　　　　F.prototype = Parent.prototype;</div><div class="line">　　　　/*new F()实例化F()实际的作用是生成了一个下面这个对象</div><div class="line">　　　　&#123;</div><div class="line">	　　　__proto__: &#123;</div><div class="line">		　　　//Parent.prototype</div><div class="line">	　　　&#125;</div><div class="line">　　　　&#125;</div><div class="line">　　　　这样就完成了</div><div class="line">　　　　Child.prototype.__proto__ = Parent.prototype这个原型链继承的核心内容</div><div class="line">　　　　*/</div><div class="line">　　　　Child.prototype = new F();</div><div class="line">　　　　//Parent.prototype的constructor是Parent，为了准确这里要手动将Child.prototype.constructor改为Child</div><div class="line">　　　　Child.prototype.constructor = Child;</div><div class="line">　　　　//这里是为了代码实际开发时方便调用父类，不用使用__proto__</div><div class="line">　　　　Child.uber = Parent.prototype;</div><div class="line">　　&#125;</div></pre></td></tr></table></figure></p>
 <blockquote>
 <p>涉及到继承这一块，Javascript 只有一种结构，那就是：对象。在 javaScript 中，每个对象都有一个指向它的原型（prototype）对象的内部链接。这个原型对象又有自己的原型，直到某个对象的原型为 null 为止（也就是不再有原型指向），组成这条链的最后一环。这种一级一级的链结构就称为原型链（prototype chain）。—<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain" target="_blank" rel="external">MDN原型链描述</a></p>

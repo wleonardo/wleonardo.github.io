@@ -158,71 +158,12 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>原文：<a href="https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i" target="_blank" rel="external">https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i</a><br><img src="http://upload-images.jianshu.io/upload_images/2764259-b9712034b2c2ccf9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>原文：<a href="https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i">https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i</a><br><img src="http://upload-images.jianshu.io/upload_images/2764259-b9712034b2c2ccf9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 </blockquote>
-<p>在我的上一篇文章 <a href="https://hackernoon.com/rethinking-javascript-death-of-the-for-loop-c431564c84a8" target="_blank" rel="external">Death of the for Loop</a>中，我试图去说服你放弃使用<code>for</code> 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中<code>break</code>怎么办？</p>
-<blockquote>
-<p>break 会相当于循环中的<code>GOTO</code>，我们应该避免使用。</p>
-</blockquote>
-<p><code>break</code> 应该像<code>GOTO</code>一样被废弃。</p>
-<p>你可能会想“算了吧Joel，你这只是耸人听闻，break怎么可能会像<code>GOTO</code>一样？”</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">// bad code. no copy paste.</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">outer:</div><div class="line">  for (var i in outerList) &#123;</div><div class="line">inner:</div><div class="line">    for (var j in innerList) &#123;</div><div class="line">      break outer;</div><div class="line">    &#125;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
-<p>我可以提供标记作为证明。在其他语言中，标记和<code>GOTO</code>是相互对应的。在JavaScript，标记与<code>break</code>和<code>continue</code>也是相互对应的。因为<code>break</code>和<code>continue</code>来自于相同标记组，这也导致了它们和<code>GOTO</code>很像。</p>
-<blockquote>
-<p>JavaScript标签，break和continue是GOTO和非结构化编程时代的遗留</p>
-</blockquote>
-<p><img src="http://upload-images.jianshu.io/upload_images/2764259-673056b4efcd62fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p><a href="http://xkcd.com/292" target="_blank" rel="external">xkcd</a></p>
-<p>“但是如果它没有伤害任何人，那么我们为什么不把它留下语法中，而我们可以选择其他的方案？”</p>
-<h3 id="我们为什么限制我们如何编写软件"><a href="#我们为什么限制我们如何编写软件" class="headerlink" title="我们为什么限制我们如何编写软件?"></a>我们为什么限制我们如何编写软件?</h3><p>这个听上去有些违背直觉，但是限制是一个好事。限制我们使用<code>GOTO</code>就是一个很好的例子。我们也很欢迎限制我们的<code>“use strict”</code>，甚至批评不使用它的人。</p>
-<blockquote>
-<p>“limitations can make things better. A lot better. “— Charles Scalfani</p>
-</blockquote>
-<p>限制（规则）可以使我们写出更好的代码。</p>
-<p><a href="https://medium.com/@cscalfani/why-programmers-need-limits-3d96e1a0a6db" title="https://medium.com/@cscalfani/why-programmers-need-limits-3d96e1a0a6db" target="_blank" rel="external"><strong>为什么编程需要限制</strong><br>_限制使艺术，设计，生活更美好._medium.com</a><a href="https://medium.com/@cscalfani/why-programmers-need-limits-3d96e1a0a6db" target="_blank" rel="external"></a></p>
-<h3 id="我们对于break的选择是什么"><a href="#我们对于break的选择是什么" class="headerlink" title="我们对于break的选择是什么?"></a>我们对于break的选择是什么?</h3><p>我不是要做一个虚有其表的事情，但是也没有一个方案可以适合所有的情况。 这是一个完全不同的编程方式。 一个完全不同的思考方式。函数式编程的思想。</p>
-<p>有一个好消息是，有很多的库和工具可以帮助我们，例如<a href="https://lodash.com/" target="_blank" rel="external">Lodash</a>, <a href="http://ramdajs.com/" target="_blank" rel="external">Ramda</a>, <a href="http://danieltao.com/lazy.js/" target="_blank" rel="external">lazy.js</a>, 递归等等</p>
-<p>我们将从一个简单的cats集合和一个<code>isKitten</code>函数开始，这些将在下面所有的例子中被用到。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">const cats = [</div><div class="line">  &#123; name: &apos;Mojo&apos;,    months: 84 &#125;,</div><div class="line">  &#123; name: &apos;Mao-Mao&apos;, months: 34 &#125;,</div><div class="line">  &#123; name: &apos;Waffles&apos;, months: 4 &#125;,</div><div class="line">  &#123; name: &apos;Pickles&apos;, months: 6 &#125;</div><div class="line">]</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const isKitten = cat =&gt; cat.months &lt; 7</div></pre></td></tr></table></figure>
-<p>让我们从一个我们熟悉的<code>for</code>循环的例子开始。它会遍历我们的cats，然后当找到第一只小猫的时候退出循环。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var firstKitten</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">for (var i = 0; i &lt; cats.length; i++) &#123;</div><div class="line">  if (isKitten(cats[i])) &#123;</div><div class="line">    firstKitten = cats[i]</div><div class="line">    break</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>现在，让我们和lodash中一个相同作用的例子做比较。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const firstKitten = _.find(cats, isKitten)</div></pre></td></tr></table></figure>
-<p>这个例子相当的简单。接下来让我们尝试一些边缘情况吧。现在我们改为遍历cat集合，然后选出前5只小猫，然后退出循环。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">var first5Kittens = []</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// old-school edge case kitty loop</div><div class="line">for (var i = 0; i &lt; cats.length; i++) &#123;</div><div class="line">  if (isKitten(cats[i])) &#123;</div><div class="line">    first5Kittens.push(cats[i])</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">    if (first4Kittens.length &gt;= 5) &#123;</div><div class="line">      break</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<h3 id="简单的方式"><a href="#简单的方式" class="headerlink" title="简单的方式"></a>简单的方式</h3><p>lodash是一个很好的库也可以坐很多的事情，但是有时候你需要一些其他更加专业的工具。<strong>这里我们介绍一个新朋友,</strong> <a href="http://danieltao.com/lazy.js/" target="_blank" rel="external"><strong>lazy.js</strong></a><strong>. “像Underscore，但是更加偷懒”。</strong>但是偷懒就是我们想要的.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">const result = Lazy(cats)</div><div class="line">  .filter(isKitten)</div><div class="line">  .take(5)</div></pre></td></tr></table></figure>
-<h3 id="困难的方法"><a href="#困难的方法" class="headerlink" title="困难的方法"></a>困难的方法</h3><p>库都是有趣的，但是<strong>有时候真正有趣的是从头开始创造东西</strong>。</p>
-<p>所以我们可以创建一个通用的函数，让它可以像<code>filter</code>一样使用也可以增加限制的功能。</p>
-<p>第一步就是把我们上面写的边缘情况的for循环封装在一个函数中。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>接下来，让我们是这个函数更加通用并且遍历所有cat具体的内容。使用<code>limit</code>来代替<code>5</code>,<code>predicate</code>来代替<code>isKitten</code>，<code>list</code>来代替<code>cats</code>。然后把这些作为函数的参数。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>现在我们有了一个可用的且可重复的<code>takeFirst</code>函数，这个可以让我们完全不用去关心我们cat的逻辑实现！</p>
-<p>我们的函数现在依旧还是一个<strong>纯函数</strong>。也就是说函数的输出只和输入的参数有关。如果传入相同的参数，一定会得到相同的结果。</p>
-<p>现在我们已经还是有那个肮脏的<code>for</code>循环，所以让我们继续重构。下一步就是把<code>i</code>和<code>newList</code>放入参数列表。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>当<code>limit</code>变为0的时候 (<code>limit</code>会在递归过程中减少)或者是遍历完了列表，我们希望可以退出递归(<code>isDone</code>)。</p>
-<p>如果递归还在进行，我们将会核对是否有符合我们的过滤条件<code>predicate</code>的值。如果当前值符合过滤条件，我们会调用<code>takeFirst</code>，减少<code>limit</code>并把当前值保存在我们的<code>newList</code>中，否者，移动到列表的下一个值。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>如果你还没有看过<a href="https://medium.com/@joelthoms/rethinking-javascript-the-if-statement-b158a61cd6cb" target="_blank" rel="external">Rethinking JavaScript: The if statement</a>，它会解释这个用三元表达式代替<code>if</code>‘的最后一步。</p>
-<p><a href="https://medium.com/@joelthoms/rethinking-javascript-the-if-statement-b158a61cd6cb" title="https://medium.com/@joelthoms/rethinking-javascript-the-if-statement-b158a61cd6cb" target="_blank" rel="external"><strong>Rethinking JavaScript: The if statement</strong><br>_Thinking functionally has opened my mind about programming._medium.com</a><a href="https://medium.com/@joelthoms/rethinking-javascript-the-if-statement-b158a61cd6cb" target="_blank" rel="external"></a><img src="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>现在我们像下面这样调用我们的新方法：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const first5Kittens = takeFirst(5, isKitten, cats)</div></pre></td></tr></table></figure>
-<p>为了兼容更多的情况，我们可以柯里化<code>takeFirst</code>，然后使用它去创建一些其他的函数（关于柯里化的介绍在另一篇文章中）</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">const first5 = takeFirst(5)</div><div class="line">const getFirst5Kittens = first5(isKitten)</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const first5Kittens = getFirst5Kittens(cats)</div></pre></td></tr></table></figure>
-<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>现在有很多优秀的库例如 lodash, ramda和lazy.js供我们使用。但是如果我们足够大胆，也可以使用递归来创建我们自己的函方法。</p>
-<p>我必须要警告虽然<code>takeFirst</code>看上去很酷 <strong>但是使用递归是有得也有失的</strong>. 递归在Javascript中是很危险的，它很容易就会导致<code>超出最大调用堆栈大小</code>的报错。</p>
-<p>我将会在我的下一篇文章中重写JavaScript的递归。敬请关注。</p>
-<p>我知道这只是一件小事，但是当我收到来自Medium和Twitter (<a href="https://twitter.com/joelnet" target="_blank" rel="external">@joelnet</a>)的follow通知时会使我很开心。当然，如果你觉得我实在胡说八道，你也可以在下面的讨论区告诉我。</p>
-<p>Cheers!</p>
-
+<p>在我的上一篇文章 <a href="https://hackernoon.com/rethinking-javascript-death-of-the-for-loop-c431564c84a8">Death of the for Loop</a>中，我试图去说服你放弃使用<code>for</code> 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中<code>break</code>怎么办？</p>
+        
+          <a class="article-more-a" href="/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/#more">more >></a>
+        
       
 
       
@@ -284,69 +225,40 @@
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
-<p>原文：<a href="http://thenodeway.io/posts/how-require-actually-works/" target="_blank" rel="external">http://thenodeway.io/posts/how-require-actually-works/</a><br><img src="http://upload-images.jianshu.io/upload_images/2764259-c5352a404a4fbbfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="post header image"></p>
+<p>原文：<a href="http://thenodeway.io/posts/how-require-actually-works/">http://thenodeway.io/posts/how-require-actually-works/</a><br><img src="http://upload-images.jianshu.io/upload_images/2764259-c5352a404a4fbbfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="post header image"></p>
 </blockquote>
 <p>介绍</p>
 <ul>
-<li><a href="http://thenodeway.io/introduction/" target="_blank" rel="external">Node学习之路</a></li>
+<li><a href="http://thenodeway.io/introduction/">Node学习之路</a></li>
 </ul>
 <p>掌握的基本知识</p>
 <ul>
-<li><p><a href="http://thenodeway.io/posts/understanding-error-first-callbacks/" target="_blank" rel="external">理解回调函数中的错误优先</a></p>
+<li><p><a href="http://thenodeway.io/posts/understanding-error-first-callbacks/">理解回调函数中的错误优先</a></p>
 </li>
-<li><p><a href="http://thenodeway.io/posts/testing-essentials/" target="_blank" rel="external">测试要点</a></p>
+<li><p><a href="http://thenodeway.io/posts/testing-essentials/">测试要点</a></p>
 </li>
 </ul>
 <p>进阶</p>
 <ul>
-<li><p><a href="http://thenodeway.io/posts/designing-singletons/" target="_blank" rel="external">单例模式</a></p>
+<li><p><a href="http://thenodeway.io/posts/designing-singletons/">单例模式</a></p>
 </li>
-<li><p><a href="http://thenodeway.io/posts/designing-custom-types/" target="_blank" rel="external">设计自定义类型</a></p>
+<li><p><a href="http://thenodeway.io/posts/designing-custom-types/">设计自定义类型</a></p>
 </li>
-<li><p><a href="http://thenodeway.io/posts/designing-factories/" target="_blank" rel="external">工厂模式</a></p>
+<li><p><a href="http://thenodeway.io/posts/designing-factories/">工厂模式</a></p>
 </li>
 </ul>
 <p>高级</p>
 <ul>
-<li><p><a href="http://thenodeway.io/posts/how-require-actually-works/" target="_blank" rel="external"><code>require()</code> 工作原理</a></p>
+<li><p><a href="http://thenodeway.io/posts/how-require-actually-works/"><code>require()</code> 工作原理</a></p>
 </li>
-<li><p><a href="http://thenodeway.io/posts/dangerous-module-design-patterns/" target="_blank" rel="external">危险的模块设计模式</a></p>
+<li><p><a href="http://thenodeway.io/posts/dangerous-module-design-patterns/">危险的模块设计模式</a></p>
 </li>
 </ul>
 <p>几乎所有的Node.js开发者都可以说出<code>require()</code>的作用，但是又有多少人真正知道<code>require()</code>是如何工作的呢。我们几乎每天都会使用它去加载库和模块，但是它的原理还是一个谜。</p>
 <p>因为好奇，我查看了Node的核心源码去寻找答案。但是我不是找到了一个函数，而是找到了Node的核心模块:<code>module.js</code>。这个文件惊人的强大，它包含了文件的加载，编译，并且可以缓存所有使用过的文件。对外使用的<code>require()</code>只是冰山一角。</p>
-<h2 id="module-js"><a href="#module-js" class="headerlink" title="module.js"></a>module.js</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">function Module(id, parent) &#123;</div><div class="line">  this.id = id;</div><div class="line">  this.exports = &#123;&#125;;</div><div class="line">  this.parent = parent;</div><div class="line">  // ...</div></pre></td></tr></table></figure>
-<p><code>module.js</code>里的模块类型在Node.js中有两个主要的作用。第一，它为所有的Node.js模块提供了一个函数用于编译。每一个文件在这个基础模块中运行后都会返回一个新的实例，即使这个文件运行了也还是会存在。这就是为什么我们可以随时使用 <code>module.exports</code>并且可以返回它。</p>
-<p>这个模块的第二个主要的作用就是管理Node模块加载机制。这个独立的<code>require</code>函数其实是<code>module.require</code>的一个引用，而<code>module.require</code>只是一个把<code>Module._load</code>简单包裹了一下（wapper）。这个函数才是真正控制文件的加载的，接下来我们通过这个函数继续我们的探索。</p>
-<h2 id="Module-load"><a href="#Module-load" class="headerlink" title="Module._load"></a>Module._load</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Module._load = function(request, parent, isMain) &#123;</div><div class="line">  // 1\. 检查 Module._cache 是否有缓存</div><div class="line">  // 2\. 如果没有缓存则创建一个新的模块实例</div><div class="line">  // 3\. 将模块实例保存到缓存中</div><div class="line">  // 4\. 通过给予的filename去调用module.load()，然后调用module.compile()去读取文件内容</div><div class="line">  // 5\. 如果文件的载入和解析过程中发生错误，删除缓存中的该模块</div><div class="line">  // 6\. 返回 module.exports</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p><code>Module._load</code>是一个负责新模块的加载和管理模块缓存的函数。缓存所有加载过的模块可以减少文件的重复加载并且明显地加快你的应用。此外，共享模块的实例可以把模块像单例来使用，可以在整个项目的运行中都可以保存它的状态。</p>
-<p>如果一个模块不存在在缓存中，<code>Module._load</code> 会为这个文件创建一个新的基础模块。<code>Module._load</code>会通知模块去读取新的文件的内容，然后把内容送到<code>module._compile</code>。[1]</p>
-<p>如果你看了上面的#6，那么你就会看到<code>module.exports</code>会被返回给用户。这就是为什么你可以通过<code>exports</code>和<code>module.exports</code>创建一个对外的公共接口，而这些就是<code>Module._load</code>做的事情，然后通过<code>require</code>返回出去。我很惊讶于除此之外没有其他的神奇的地方了，但是没有什么比它更加简洁更加好的了。</p>
-<h2 id="module-compile"><a href="#module-compile" class="headerlink" title="module._compile"></a>module._compile</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Module.prototype._compile = function(content, filename) &#123;</div><div class="line">  // 1\. 创建一个独立的require函数，该函数可以调用module.require。</div><div class="line">  // 2\. 给require加上其他帮助性的函数Attach other helper methods to require.</div><div class="line">  // 3\. 将代码包裹在一个函数中，并提供了require，module等变量在模块作用域中。</div><div class="line">  // 4\. 运行这个函数</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
-<p>这里就是见证奇迹的地方。第一，一个特殊的单独的<code>require</code>函数被创造用于这个模块。这个<code>require</code>函数就是我们最熟悉的那个函数。这个函数只是把 <code>Module.require</code>包裹了一下，它也包含了一些鲜为人知的帮助性的属性和方法供我们使用：</p>
-<ul>
-<li><p><code>require()</code>: 加载一个外部模块</p>
-</li>
-<li><p><code>require.resolve()</code>: 通过解析一个模块绝对路径来生成模块的name</p>
-</li>
-<li><p><code>require.main</code>: 主要模块</p>
-</li>
-<li><p><code>require.cache</code>: 所有模块的缓存</p>
-</li>
-<li><p><code>require.extensions</code>: 每一个有效文件的编译函数都是基于这个来做扩展</p>
-</li>
-</ul>
-<p>一旦<code>require</code>完成了，整个加载好的源码会被包裹在一个新的函数里面，同时传入<code>require</code>, <code>module</code>, <code>exports</code>和其对外的变量作为新函数的参数。这样就创造了一个新的函数作用域，这样可以避免污染Node的全局环境。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">(function (exports, require, module, __filename, __dirname) &#123;</div><div class="line">  // 你的代码会被放在这里</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
-<p>最后，这个包含了模块的函数会被运行。整个<code>Module._compile</code>方法的执行时同步的，所以<code>Module._load</code>会等待<code>Module._compile</code>执行完，然后会返回<code>module.exports</code>给用户。</p>
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>至此，我们已经看完了require的代码，通过这一圈的代码就创造出了我们一开始想要去了解的那个<code>require</code> 函数。</p>
-<p>如果你了解了上面所有的内容，那么你将会了解到<code>require(&#39;module&#39;)</code>最后的秘密。没错，就是模块系统本身也可以通过模块系统加载进来的。一开始，这个可能听上去有些奇怪，但是这样可以让用户不用了解Node.js的核心原理就可以使用加载系统加载自己的模块。流行的模块例如<a href="http://thenodeway.io/posts/testing-essentials/" target="_blank" rel="external">mockery and rewire</a>就是这样构建的。</p>
-<p>如果你想了解更多的细节，你可以浏览<a href="https://github.com/joyent/node/blob/master/lib/module.js" target="_blank" rel="external">module.js源码</a>。你会得到更多的信息也会了解的更多，我将会给第一个回答出什么是‘NODE_MODULE_CONTEXTS’并且为什么要加上这个的人加分。</p>
-<hr>
-<p>[1] <code>module._compile</code>函数只是用于运行JavaScript文件。JSON文件会简单地通过 <code>JSON.parse()</code>解析然后返回。</p>
-<p>[2] 当然这些模块都是由一些私有的函数方法构建的，例如<code>Module._resolveLookupPaths</code> and <code>Module._findPath</code>。你可以想一想是否可以有更好的办法…</p>
-<p>请开启你的Javascript然后浏览 <a href="https://disqus.com/?ref_noscript" target="_blank" rel="external">comments powered by Disqus.</a></p>
-
+        
+          <a class="article-more-a" href="/2017/01/27/how-require-actually-works/#more">more >></a>
+        
       
 
       
@@ -441,53 +353,9 @@
 </li>
 </ol>
 <p>好的，接下来让我们一个个单独地去了解上面的每一点。</p>
-<h2 id="避免复杂性"><a href="#避免复杂性" class="headerlink" title="避免复杂性"></a>避免复杂性</h2><p>让我看一眼npm的创造者Isaac Z. Schlueter写的一些模块，例如，<a href="https://www.npmjs.com/package/use-strict" target="_blank" rel="external">use-strict</a>，这个模块是用来在Javascript中强制使用严格模式，这个模块仅仅只有三行代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var module = require(&apos;module&apos;)</div><div class="line">module.wrapper[0] += &apos;&quot;use strict&quot;;&apos;</div><div class="line">Object.freeze(module.wrap)</div></pre></td></tr></table></figure>
-<p>所以我们为什么要避免复杂性呢? 一个起源于美国海军的著名短语:KEEP IT SIMPLE STUPID(或者是“Keep it simple, stupid”)。这就是原因。事实说明，人类大脑在任何一个时间只能在其工作记忆中保持五到七个项目。</p>
-<p>把你的代码模块化成一个更加小的部分，你和其他的开发者会更加好的理解它。你也可以更加好的去测试它。如下例子，</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">app.use(function(req, res, next) &#123;</div><div class="line">  if (req.session.admin === true) return next()</div><div class="line">  else return next(new Error(&apos;Not authorized&apos;))</div><div class="line">&#125;, function(req, res, next) &#123;</div><div class="line">  req.db = db</div><div class="line">  next()</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>或者是</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">const auth = require(&apos;./middleware/auth.js&apos;)</div><div class="line">const db = require(&apos;./middleware/db.js&apos;)(db)</div><div class="line"></div><div class="line">app.use(auth, db)</div></pre></td></tr></table></figure>
-<p>我相信大多数人都会喜欢第二个例子，特别是光看名字就能了解其作用。当日，在你编写代码的时候，你可能认为你知道代码是如何运行的。甚至你想要展示你把几个功能连接在一起写在同一行中是多么的机智。但是，这样你是写了一段愚蠢的代码。如果你思考的很复杂去写这代码，那么今后你再去看这段代码将会很难去理解。保证你的代码简单，特别是在Node的异步代码中。</p>
-<p>当然也会有<a href="http://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/" target="_blank" rel="external">left-pad 事件</a>，但是其实它只是影响了依赖于left-pad模块的项目而且11分钟后就发布了替代品。代码的最小化带来的好处超过了它的缺点。npm已经<a href="http://blog.npmjs.org/post/141905368000/changes-to-npms-unpublish-policy" target="_blank" rel="external">改变了发布策略</a>,任何重要的项目都应该使用缓存或私有的源（作为临时解决方案）。</p>
-<h2 id="使用异步编程"><a href="#使用异步编程" class="headerlink" title="使用异步编程"></a>使用异步编程</h2><p>在Node中同步代码只要很小的一部分。这些代码大多数都是用于命令行工具或者其他与web应用无关的脚本。Node开发者大多数都是编写web应用，因此使用异步代码可以避免阻塞现场。</p>
-<p>例如，当你在编写一个数据库的脚本或者是一个不需要控制并行的任务时，下面这种写法可能是可以的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">let data = fs.readFileSync(&apos;./acconts.json&apos;)</div><div class="line">db.collection(&apos;accounts&apos;).insert(data, (results))=&gt;&#123;</div><div class="line">  fs.writeFileSync(&apos;./accountIDs.json&apos;, results, ()=&gt;&#123;process.exit(1)&#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>但是当你创建一个web应用时，下面这个写法会更好：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">app.use(&apos;/seed/:name&apos;, (req, res) =&gt; &#123;</div><div class="line">  let data = fs.readFile(`./$&#123;req.params.name&#125;.json`, ()=&gt;&#123;</div><div class="line">    db.collection(req.params.name).insert(data, (results))=&gt;&#123;</div><div class="line">      fs.writeFile(`./$&#123;req.params.name&#125;IDs.json`, results, ()=&#123;res.status(201).send()&#125;)</div><div class="line">    &#125;)</div><div class="line">  &#125;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>这个区别在于你是否需要编写一个并发（通常是长期运行）或者非并发（短期运行）的系统。根据经验来说，总是要在Node中使用异步代码。</p>
-<h2 id="避免require阻塞"><a href="#避免require阻塞" class="headerlink" title="避免require阻塞"></a>避免require阻塞</h2><p>Node有一个使用了CommonJS模块格式的简单的模块加载系统。它是基于<code>require</code>函数，<code>require</code>函数可以很方便的在不同的文件中引入模块。和AMD/requirejs不同，Node/CommonJS的模块加载时同步的。<code>require</code>的工作方式是：引入一个模块或者一个文件export的内容:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">`const react = require(&apos;react&apos;)`</div></pre></td></tr></table></figure>
-<p>但是大多数的开发者并不知道<code>require</code>是会被缓存的。因此，只要解析的文件名（resolved filename）没有剧烈的变化（比如npm模块不存在的情况），模块的代码只会被执行并存入变量中一次（在当前进程中）。这是一个很好的优化。当然，即使有了缓存，你最好还是把你的require声明写在开头。下面这段代码，它在路由中真正使用到了<code>axios</code>模块的时候才加载。当请求发送的时候<code>/connect</code>会因为需要加载模块所以会变得慢。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">app.post(&apos;/connect&apos;, (req, res) =&gt; &#123;</div><div class="line">  const axios = require(&apos;axios&apos;)</div><div class="line">  axios.post(&apos;/api/authorize&apos;, req.body.auth)</div><div class="line">    .then((response)=&gt;res.send(response))</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>一个更好，性能更优的方式是在服务定义之前就引入模块而不是在路由中:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">const axios = require(&apos;axios&apos;)</div><div class="line">const express = require(&apos;express&apos;)</div><div class="line">app = express()</div><div class="line">app.post(&apos;/connect&apos;, (req, res) =&gt; &#123;</div><div class="line">  axios.post(&apos;/api/authorize&apos;, req.body.auth)</div><div class="line">    .then((response)=&gt;res.send(response))</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h2 id="知道require会被缓存"><a href="#知道require会被缓存" class="headerlink" title="知道require会被缓存"></a>知道require会被缓存</h2><p>我在上面一节已经提到了<code>require</code>会被缓存，但是有趣的是我们在<code>module.exports</code>之外也会有代码。举例来说：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">console.log(&apos;I will not be cached and only run once, the first time&apos;)</div><div class="line"></div><div class="line">module.exports = () =&gt; &#123;</div><div class="line">  console.log(&apos;I will be cached and will run every time this module is invoked&apos;)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>从中我们了解到有一些代码只会运行一次，你可以使用这个特性来优化你的代码。</p>
-<h2 id="始终检查错误"><a href="#始终检查错误" class="headerlink" title="始终检查错误"></a>始终检查错误</h2><p>Node不是Java。在Java中，你可以抛出错误，因为如果发生了错误那么你会希望应用不在继续执行。在Java中，你可以在外层仅仅使用一个简单的<code>try...catch</code>就可以处理多个错误。</p>
-<p>但是在Node中并不是这样的。自从Node使用了<a href="https://www.youtube.com/watch?v=8aGhZQkoFbQ" target="_blank" rel="external">事件循环</a>和异步执行后，任何的错误发生时都会与错误处理器（例如<code>try...catch</code>）的上下文分离，下面这样做在Node中是没有用的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">try &#123;</div><div class="line">  request.get(&apos;/accounts&apos;, (error, response)=&gt;&#123;</div><div class="line">    data = JSON.parse(response)</div><div class="line">  &#125;)</div><div class="line">&#125; catch(error) &#123;</div><div class="line">  // Will NOT be called</div><div class="line">  console.error(error)</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>但是<code>try...catch</code>在同步代码中是可以被用的。前面的代码片段可以被更好的重构为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">request.get(&apos;/accounts&apos;, (error, response)=&gt;&#123;</div><div class="line">  try &#123;</div><div class="line">    data = JSON.parse(response)</div><div class="line">  &#125; catch(error) &#123;</div><div class="line">    // Will be called</div><div class="line">    console.error(error)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>如果我们无法将<code>request</code>的返回内容包裹在<code>try...catch</code>中，那么我们将没有办法去处理请求的错误。Node的开发者通过在返回的参数里面加上<code>error</code>来解决了这个问题。因此，我们需要在每一个回调中手动去处理错误。你可以去检查这些错误（判断<code>error</code>不是<code>null</code>）,然后展示错误信息给用户或者展示在客户端上并且记录它， 或者你可以通过调用 callback ，给它传 error 参数，将错误传回给上一级调用栈（如果你在调用栈之上有另一个回调函数）。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">request.get(&apos;/accounts&apos;, (error, response)=&gt;&#123;</div><div class="line">  if (error) return console.error(error)</div><div class="line">  try &#123;</div><div class="line">    data = JSON.parse(response)</div><div class="line">  &#125; catch(error) &#123;</div><div class="line">    console.error(error)</div><div class="line">  &#125;</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>一个小技巧是你可以使用<a href="https://www.npmjs.com/package/okay" target="_blank" rel="external">okay</a>库。你可以像下面的例子一样使用它去避免在回调地狱中手动去检查错误(你好, <a href="https://www.sitepoint.com/saved-from-callback-hell/" target="_blank" rel="external">回调地狱</a>).</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">var ok = require(&apos;okay&apos;)</div><div class="line"></div><div class="line">request.get(&apos;/accounts&apos;, ok(console.error, (response)=&gt;&#123;</div><div class="line">  try &#123;</div><div class="line">    data = JSON.parse(response)</div><div class="line">  &#125; catch(error) &#123;</div><div class="line">    console.error(error)</div><div class="line">  &#125;</div><div class="line">&#125;))</div></pre></td></tr></table></figure>
-<h2 id="返回回调或者使用if-…-else"><a href="#返回回调或者使用if-…-else" class="headerlink" title="返回回调或者使用if … else"></a>返回回调或者使用if … else</h2><p>Node是并行的。但是如果你不够细心也会因为这个特性产生bug。 为了安全起见，应该要使用return来终止代码的继续执行：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let error = true</div><div class="line">if (error) return callback(error)</div><div class="line">console.log(&apos;I will never run - good.&apos;)</div></pre></td></tr></table></figure>
-<p>这样可以避免一些因为代码逻辑的处理不当导致一些不应该执行的内容（或者错误）被执行。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">let error = true</div><div class="line">if (error) callback(error)</div><div class="line">console.log(&apos;I will run. Not good!&apos;)</div></pre></td></tr></table></figure>
-<p>请确保使用<code>return</code>去阻止代码的继续执行。</p>
-<h2 id="监听-error-事件"><a href="#监听-error-事件" class="headerlink" title="监听 error 事件"></a>监听 <code>error</code> 事件</h2><p>Node中几乎所有的类/对象都有事件分发器（观察者模式）并且会广播 <code>error</code> 事件。 这是一个很好的特性，可以使开发者在这些讨厌的错误造成巨大后果之前捕捉到它们。</p>
-<p>养成一个通过<code>.on()</code>来创建<code>error</code>事件监听的好习惯：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">var req = http.request(options, (res) =&gt; &#123;</div><div class="line">  if ((&apos;&apos; + res.statusCode).match(/^2\d\d$/)) &#123;</div><div class="line">    // Success, process response</div><div class="line">  &#125; else if ((&apos;&apos; + res.statusCode).match(/^5\d\d$/))</div><div class="line">    // Server error, not the same as req error. Req was ok.</div><div class="line">  &#125;</div><div class="line">&#125;)</div><div class="line"></div><div class="line">req.on(&apos;error&apos;, (error) =&gt; &#123;</div><div class="line">  // Can&apos;t even make a request: general error, e.g. ECONNRESET, ECONNREFUSED, HPE_INVALID_VERSION</div><div class="line">  console.log(error)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<h2 id="了解你的npm"><a href="#了解你的npm" class="headerlink" title="了解你的npm"></a>了解你的npm</h2><p>很多的Node和前端的开发者知道在安装模块的时候使用<code>--save</code>会在安装模块的同时，会在<code>package.json</code>保存一条含有模块版本信息的条目。当然，还有<code>--save-dev</code>可以用于安装<code>devDependencies</code>(在生成环境中不需要的模块)。但是你知道用<code>-S</code>和<code>-D</code>是否可以代替<code>--save</code> 和<code>--save-dev</code>么？答案是可以的。</p>
-<p>当你安装模块的时候，你需要删除<code>-S</code>和<code>-D</code>自动为你模块的版本号添加的<code>^</code>标签。否者当你使用<code>npm install</code>（或者<code>npm i</code>）安装模块的时候，就会自动拉取最新的镜像（版本号的第二位数字）。例如v6.1.0就是v6.2.0的一个镜像分支。</p>
-<p>npm团队推荐使用<a href="http://semver.org/" target="_blank" rel="external">semver</a>，但是你最好不要这样。npm团队认为开源开发者会遵守semver所以他们在npm安装时自动加上了<code>^</code>。没有人可以去保证，所以最好是锁定你的版本号。更好的办法是使用<a href="https://nodejs.org/en/blog/npm/managing-node-js-dependencies-with-shrinkwrap/" target="_blank" rel="external">shrinkwrap</a>：<code>npm shrinkwrap</code>会生成一个包含依赖的具体版本的文件。</p>
-<h2 id="结束语"><a href="#结束语" class="headerlink" title="结束语"></a>结束语</h2><p>这篇文章是两部分的第一部分，我们已经提到了很多方面，从使用callbacks和异步代码，到核查错误和锁定依赖。希望你们可以从中学习到一些新的，或者有用的信息。敬请期待即将推出的第二部分。</p>
-<p>同时，告诉我你的想法。我是否遗漏了什么？你是否有不一样的做法？在下面的评论区告诉我你的想法吧。</p>
-
+        
+          <a class="article-more-a" href="/2017/01/27/10-tips-to-become-a-better-node-developer/#more">more >></a>
+        
       
 
       
@@ -615,21 +483,9 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>这里只是我个人用到的一些比较好用的软件，本人是前端开发，所以偏前端的软件可能多一些，不喜勿喷哦，也希望大家可以推荐好的软件给我。</p>
-<ul>
-<li>sublime<br>不知道该从哪个软件开始写起，后来一想还是从自己最常用的软件开始吧</li>
-</ul>
-<p>sublime作为一个轻量级的ide，性能很优秀，基本什么配置的电脑都可以流畅使用，随着sublime2到sublime3，不管你需要什么样的插件都可以找的到。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2764259-fd47c73dfa81138c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<ul>
-<li>Parallers Desktop</li>
-</ul>
-<p>个人认为mac上最好的虚拟机，没有之一。第一次使用Parallers的融合模式，确实是惊艳到我了，虚拟机居然可以这种地步，一直以为虚拟机就是在一个窗口中，然后在这个窗口内使用。Parallers可以使你使用其他平台的软件像是在使用mac上软件，唯一的问题就是window上的广告和通知也显示在mac上了，感觉怪怪的,另外Parallers现在好像都要收费了，而且还挺贵的，不过确实物超所值。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2764259-a0e44e2e700a56a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<ul>
-<li>Dash<br>开发往往会遇到很多的类库，用到的时候总会需要查询一些文档，一个个去找太麻烦了，dash可以把文档下载下来，而且可以很方便的查询文档，而且dash可以和大多数ide对接，只需要选中你想要查询的函数，加上快捷键就可以直接在dash中查询到对应函数的说明，可以提交开发的效率。另外网路不好的情况下，离线的文档有时候可以帮你解决很多问题。</li>
-</ul>
-<p>*</p>
-
+        
+          <a class="article-more-a" href="/2017/01/27/mac-software/#more">more >></a>
+        
       
 
       
@@ -693,24 +549,12 @@
         <p>在es6出来之后，我们看到js终于有class这个关键字，表示我们终于可以使用官方的类了。那么es6的类和之前的我们使用原型链继承实现的类有什么联系么。</p>
 <p><strong>答案是一模一样</strong></p>
 <blockquote>
-<p>JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over JavaScript’s existing prototype-based inheritance. (在 ECMAScript 6 引入的 JavaScript 类（class）是 JavaScript 现有的原型继承的语法糖。)  ——  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="external">MDN Classes</a></p>
+<p>JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over JavaScript’s existing prototype-based inheritance. (在 ECMAScript 6 引入的 JavaScript 类（class）是 JavaScript 现有的原型继承的语法糖。)  ——  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">MDN Classes</a></p>
 </blockquote>
 <p>好吧，那么为了使我们更好的理解es6的class，也是倒过来更好的理解js的原型链，下面我们把类的es6写法和原型链实现的写法一一列出</p>
-<p>###类的创建，类的构造器和原型方法<br>ES6<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Polygon &#123;</div><div class="line">  constructor(height, width) &#123;</div><div class="line">    this.height = height;</div><div class="line">    this.width = width;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  calcArea() &#123;</div><div class="line">    return this.height * this.width;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">const square = new Polygon(10, 10);</div><div class="line"></div><div class="line">// 100</div><div class="line">console.log(square.area);</div></pre></td></tr></table></figure></p>
-<p>原型链<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var Polygon = function(height, width)&#123;</div><div class="line">	this.height = height;</div><div class="line">  this.width = width;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Polygon.prototype.calcArea = function() &#123;</div><div class="line">	return this.height * this.width;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>###类的静态方法<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes/static" target="_blank" rel="external">static</a>关键字用来定义类的静态方法。静态方法是指那些不需要对类进行<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript#The_object_(class_instance" target="_blank" rel="external">实例化</a>)，使用类名就可以直接访问的方法，需要注意的是静态方法不能被实例化的对象调用。静态方法经常用来作为工具函数。<br>ES6<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">class Point &#123;</div><div class="line">    constructor(x, y) &#123;</div><div class="line">        this.x = x;</div><div class="line">        this.y = y;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    static distance(a, b) &#123;</div><div class="line">        const dx = a.x - b.x;</div><div class="line">        const dy = a.y - b.y;</div><div class="line"></div><div class="line">        return Math.sqrt(dx*dx + dy*dy);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const p1 = new Point(5, 5);</div><div class="line">const p2 = new Point(10, 10);</div><div class="line"></div><div class="line">console.log(Point.distance(p1, p2));</div></pre></td></tr></table></figure></p>
-<p>原型链<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var Point = function(x, y)&#123;</div><div class="line">  this.x = x;</div><div class="line">  this.y = y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Point.distance = function(a, b) &#123;</div><div class="line">  const dx = a.x - b.x;</div><div class="line">  const dy = a.y - b.y;</div><div class="line"></div><div class="line">  return Math.sqrt(dx*dx + dy*dy);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>至此我们也可以明白了如何用原型链去构建一个类</p>
-</blockquote>
-<p>其实当我们去查看babel对于类的实现，其实也是一样的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">var _createClass = function() &#123;</div><div class="line">  function defineProperties(target, props) &#123;</div><div class="line">    for (var i = 0; i &lt; props.length; i++) &#123;</div><div class="line">      var descriptor = props[i];</div><div class="line">      descriptor.enumerable = descriptor.enumerable || false;</div><div class="line">      descriptor.configurable = true;</div><div class="line">      if (&quot;value&quot; in descriptor) descriptor.writable = true;</div><div class="line">      Object.defineProperty(target, descriptor.key, descriptor); </div><div class="line">    &#125; </div><div class="line">  &#125;</div><div class="line">  return function(Constructor, protoProps, staticProps) &#123;</div><div class="line">    //实例方法（原型方法）的实现</div><div class="line">    if (protoProps) defineProperties(Constructor.prototype, protoProps);</div><div class="line">    //静态函数的实现</div><div class="line">    if (staticProps) defineProperties(Constructor, staticProps);</div><div class="line">    return Constructor; </div><div class="line">  &#125;;</div><div class="line">&#125;();</div></pre></td></tr></table></figure>
-<p>###<strong>类的继承</strong></p>
-<blockquote>
-<p>未完</p>
-</blockquote>
-<p>参考文档<br><a href="http://www.jianshu.com/p/efad2d4ecfed" target="_blank" rel="external">Javascript原型链</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="external">MDN Classes</a></p>
-
+        
+          <a class="article-more-a" href="/2017/01/27/class-in-ES6/#more">more >></a>
+        
       
 
       
@@ -833,98 +677,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一年前，我们写了一篇文章<a href="https://blog.risingstack.com/how-to-become-a-better-node-js-developer-in-2016/" target="_blank" rel="external">How to Become a Better Node.js Developer in 2016 </a>，这篇文章成功地获取了不错的反响，所以我想现在是时候回顾这个主题为2017年做准备了。</p>
-<p>###2017年最好的Node.js实践</p>
-<h4 id="使用ES2015"><a href="#使用ES2015" class="headerlink" title="使用ES2015"></a>使用ES2015</h4><p>去年我们建议了你使用ES2015，当前现在的情况已经大有不同了</p>
-<p>回到那个时候，Node.js v4是当时的稳定版本(LTS)，支持了ES2015中57%的功能。一年过去了，现在Node v6已经增长到支持ES2015中99%的功能了。</p>
-<p>如果你现在在使用最新的LTS Node.js版本，你甚至可以不再需要babel就可以使用所有ES2015的特性。但是即使如此，在浏览器端你可能还是需要babel。</p>
-<p>如果你需要关于Node.js版本对于ES2015支持情况的更多的信息，我推荐你可以查询<a href="http://node.green/" target="_blank" rel="external">node.green</a></p>
-<p>####使用Promises</p>
-<p>在80年代第一次提出Promises的概念。现在多数现代编程语言已经支持这一特性了，使我们的编码变得更加简单。</p>
-<p>想象一个如下的功能，它需要读取一个文件，然后解析它，然后打印出其中的name字段。如果使用回调，它可能是下面这个样子的：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">fs.readFile(&apos;./package.json&apos;, &apos;utf-8&apos;, function (err, data) &#123;  </div><div class="line">  if (err) &#123;</div><div class="line">    return console.log(err)</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  try &#123;</div><div class="line">    JSON.parse(data)</div><div class="line">  &#125; catch (ex) &#123;</div><div class="line">    return console.log(ex)</div><div class="line">  &#125;</div><div class="line">  console.log(data.name)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
-<p>Promises可以使得这段代码变的更加有可读性：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">fs.readFileAsync(&apos;./package.json&apos;).then(JSON.parse).then((data) =&gt; &#123;  </div><div class="line">  console.log(data.name)</div><div class="line">&#125;)</div><div class="line">.catch((e) =&gt; &#123;</div><div class="line">  console.error(&apos;error reading/parsing file&apos;, e)</div><div class="line">&#125;)</div></pre></td></tr></table></figure></p>
-<p>当前，现在的<code>fs</code>的并没有一个返回一个Promise的<code>readFileAsync</code>api。为了做到这个，我们使用可以一个类似<a href="http://bluebirdjs.com/docs/api/promise.promisifyall.html" target="_blank" rel="external">promisifyAll</a>的模块。</p>
-<p>####使用标准的JavaScript格式</p>
-<p>当我们谈到代码风格的时候，一个公司有统一的代码风格是至关重要的。只有这样，当你需要改变你的项目的时候，你才可以高效的从零开始，而不用担心基础的架构不一样。</p>
-<p>在RisingStack，我们在所有的项目中都使用了<a href="https://github.com/feross/standard" target="_blank" rel="external">JavaScript Standard Style</a>。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2764259-080be7bedc3cb01a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>使用 Standard后，在你安装之后就可以直接使用，你不需要再做其他的事情，也不需要管理<code>.eslintrc</code>, <code>.jshintrc,</code> 或者 <code>.jscsrc</code>文件。具体的Standard的规则可以查看<a href="http://standardjs.com/rules.html#javascript-standard-style" target="_blank" rel="external">Standard rules</a>。</p>
-<p>###使用docker—容器将在2017年被大量使用在生成环境</p>
-<p>你可以把docker镜像当做部署的工具。docker容器可以将一个软件打包在一个完整的文件系统中，这个容器可以包含你在服务器上需要的一切，例如代码，运行环境，系统工具，系统程序库。</p>
-<p>但是为什么我们需要开始使用容器呢?</p>
-<ul>
-<li>容器可以使你的应用运行在一个隔离的环境中</li>
-<li>作为一个安全工具，可以使你的代码更加的安全</li>
-<li>轻量级的docker镜像</li>
-<li>使得你的部署变得稳定</li>
-<li>你可以在本地运行模拟线上的运行环境</li>
-</ul>
-<p>你可以从<a href="https://docs.docker.com/engine/getstarted/" target="_blank" rel="external">official getting started tutorial</a>开始学习docker。另外也推荐<a href="https://blog.risingstack.com/moving-node-js-from-paas-to-kubernetes-tutorial/" target="_blank" rel="external">Kubernetes best practices</a> </p>
-<p>####监控你的项目</p>
-<p>当你的应用发生错误的时候，第一个知道的人不应该是用户而应该是开发者。</p>
-<p>最新的一个开源解决方案<a href="https://prometheus.io/" target="_blank" rel="external">Prometheus</a>可以帮助你实现项目的监控。Prometheus是一个基于SoundCloud的开源工具箱，它可以监控你的项目并报警。Prometheus唯一的缺点是你需要设置一些配置并且需要需要自己管理。</p>
-<p>如果你在寻找一个开箱即用的解决方案，你也可以使用我们自己开发的<a href="https://trace.risingstack.com/" target="_blank" rel="external">Trace by RisingStack</a></p>
-<p>Trace可以帮助你做到以下的事情</p>
-<ul>
-<li>报警</li>
-<li>生产环境下的内存和cpu分析</li>
-<li>分布式追踪和错误寻找</li>
-<li>性能监控</li>
-<li>保护你的npm包的安全</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/2764259-82a2b67449ab54ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>####在后台进程中使用消息服务</p>
-<p>如果你使用http请求发送消息，当你的接收服务器宕机了，你所有的消息都会丢失。如果你的传输层支持持久化，类似使用消息队列来发送消息，你就不会有这个问题。</p>
-<p><strong>你的接收服务器器宕机了，消息将会被保存下来，在服务重启后会继续发送，如果你的服务器未宕机但是发送了错误，消息会被重新发送一次，这样可以保证你的数据不会丢失。</strong></p>
-<p>举个例子：你需要发送数千份邮件，在这个场景下，你只需要获取到一些类似邮件地址和用户的姓名等基础信息，后台就可以很轻松地将这些信息和邮件信息整合后发送出去。</p>
-<p>这种方式最大的好处是，你可以你需要的时候横向扩展你的服务，而不会有邮件被丢失。如果你需要发送数百万的邮件，你可以用相同的方式来增加你的服务。</p>
-<p>对于消息队列的选择有很多</p>
-<ul>
-<li><a href="https://www.rabbitmq.com/" target="_blank" rel="external">RabbitMQ</a></li>
-<li><a href="https://kafka.apache.org/" target="_blank" rel="external">Kafka</a></li>
-<li><a href="http://nsq.io/" target="_blank" rel="external">NSQ</a></li>
-<li><a href="https://aws.amazon.com/sqs/" target="_blank" rel="external">AWS SQS</a></li>
-</ul>
-<p>####使用最新的LTS版本的Node.js</p>
-<p>为了平衡稳定性和新特性，我推荐你使用最新的LTS版本的Node.js。当我写这篇文章的时候，最新的LTS版本是6.9.2。</p>
-<p>你可以使用<a href="https://github.com/creationix/nvm" target="_blank" rel="external">nvm</a>来切换你的node版本，你只需要两个指令就可管理和切换你的node版本</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">nvm install 6.9.2 </div><div class="line">nvm use 6.9.2</div></pre></td></tr></table></figure>
-<p>####使用语义化的版本管理</p>
-<p>几个月前，我们进行了一个<a href="https://blog.risingstack.com/node-js-developer-survey-results-2016/" target="_blank" rel="external">Node.js开发者调查</a>，我们从中获取了开发者对于使用语义化版本的使用情况。</p>
-<p>不幸的是，我们发现调查者只有71%的人在他们提交和使用模块时使用语义化的版本管理。<strong>我们认为这个数字应该要更高 - 每一个都应该使用语义版本!</strong>，因为不根据<a href="http://semver.org/lang/zh-CN/" target="_blank" rel="external">semver规则</a>来提交package，会很容易摧毁你的Node.js应用。</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/2764259-23211e2ea8f4c975.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>通过版本号来管你的项目或者模块是至关重要的。你的用户应该要知道一个模块是否更新了，在使用新版本前他们要做什么。</p>
-<p>这就是语义版本控制的来历。一个版本号应该要有<strong>主版本号、副版本号、补丁版本号</strong>，更新不同位置的版本号代表不同的意思：</p>
-<ul>
-<li><strong>主版本号</strong>:表示更新会有不兼容的API</li>
-<li><strong>副版本号</strong>:表示更新会有新的功能（不破坏现有的api）</li>
-<li><strong>补丁版本号</strong>:表示更新是模块做了向后兼容的bug修复</li>
-</ul>
-<p>npm是根据semver规则来安装依赖的，因此当你发布一个模块之前，请确认是否遵循了semver规则，否则你会破坏了其他使用了你的依赖的应用。</p>
-<p>####保证你的应用安全</p>
-<p><strong>保证你的用户数据的安全将是你2017年的头等大事。仅在2016年一年，因为缺少一些安全的措施就有<a href="https://en.wikipedia.org/wiki/List_of_data_breaches" target="_blank" rel="external">数百万的用户账户被泄漏</a></strong>。</p>
-<p>你可以通过阅读我们的博客<a href="https://blog.risingstack.com/node-js-security-checklist/" target="_blank" rel="external">Node.js Security Checklist</a>来入门Node.js的安全，博客里包含了以下的话题：</p>
-<ul>
-<li>安全的HTTP Headers</li>
-<li>强制保护</li>
-<li>Session管理</li>
-<li>不安全的依赖</li>
-<li>数据验证</li>
-</ul>
-<p>当你掌握了这些基础，你可以来观看我关于Node的互动讨论<a href="https://www.youtube.com/watch?v=80LbyikAUqI" target="_blank" rel="external">Surviving Web Security with Node.js</a></p>
-<h4 id="学习Serverless"><a href="#学习Serverless" class="headerlink" title="学习Serverless"></a>学习Serverless</h4><p>Serverless started with the introduction of AWS Lambda. Since then it is growing fast, with a blooming open-source community.<br>In the next years, serverless will become a major factor for building new applications. If you’d like to stay on the edge, you should start learning it today.<br>One of the most popular solutions is the , which helps in deploying AWS Lambda functions.</p>
-<p>Serverless是AWS Lambda第一个提出来的，之后它发展的很快，并建立了一个开源的社区。</p>
-<p>接下来的一年，构建新应用时serverless会成为一个标准。如果你想要留在这个领域，你需要重现在开始就学习它。</p>
-<p><a href="https://serverless.com/" target="_blank" rel="external">Serverless Framework</a>是当前最流行的解决方案，在部署AWS Lambda functions可以帮助你。</p>
-<p>####参加会议与聚会并发言</p>
-<p>参加会议和聚会是一个很好地方式去了解和学习新的趋势，开发技巧和最佳实践。当日，这也是一个场合去认识更多新的人。</p>
-<p><strong>To take it one step forward, I’d like to encourage you to speak at <a href="https://github.com/watson/conferences" target="_blank" rel="external">one of these events</a> as well!</strong><br>As public speaking is tough, and “imagine everyone’s naked” is the worst advice, I’d recommend checking out <a href="http://speaking.io/" target="_blank" rel="external">speaking.io</a> for tips on public speaking!</p>
-<p><strong>在此基础上，我也鼓励你在<a href="https://github.com/watson/conferences" target="_blank" rel="external">一些会议</a>上发言。</strong></p>
-<p>在公共场合发言是一个不容易的事情，“imagine everyone’s naked”是最坏的建议。我建议你可以去<a href="http://speaking.io/" target="_blank" rel="external">speaking.io</a>学习一些技巧。</p>
-<p>####Become a better Node.js developer in 2017</p>
-<p><a href="http://www.zcfy.cc/article/node-js-best-practices-how-to-become-a-better-developer-in-2017-risingstack-2174.html" target="_blank" rel="external">原文链接</a></p>
-
+        <p>一年前，我们写了一篇文章<a href="https://blog.risingstack.com/how-to-become-a-better-node-js-developer-in-2016/">How to Become a Better Node.js Developer in 2016 </a>，这篇文章成功地获取了不错的反响，所以我想现在是时候回顾这个主题为2017年做准备了。</p>
+        
+          <a class="article-more-a" href="/2017/01/27/node-js-best-practices-how-to-become-a-better-developer-in-2017/#more">more >></a>
+        
       
 
       
@@ -992,15 +748,9 @@
 <blockquote>
 <p>闭包是指那些能够访问独立(自由)变量的函数 (变量在本地使用，但定义在一个封闭的作用域中)。换句话说，这些函数可以“记忆”它被创建时候的环境。</p>
 </blockquote>
-<p>关于闭包已经有很多很多的文章了，文章的最后会放一些链接，在这里我只写以下几点</p>
-<ul>
-<li>闭包的实现是因为Js中有函数作用域，变量查询是一级一级查询上去，直到根作用域也就是说在任何一级的作用域中都可以访问之前所有作用域连的变量，同时内存回收机制是不会回收还被引用的变量。</li>
-<li>闭包不是实现Js类的基础，但是可以通过闭包实现类的私有变量和私有函数</li>
-<li>闭包的性能很差，有时候可以绑定在prototype中（只可以访问this下的变量）</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">//在这个例子中firstName和LastName不想直接被外界访问，同时可以使用闭包使外界获取到值，</div><div class="line">//同时函数尽量绑定在prototype上，所以getFullName绑定在prototype上，</div><div class="line">//所以我个人认为在这样的情况下，一些用于访问私有变量的基础函数可以使用闭包，</div><div class="line">//大多数类函数可以绑定在prototype中，通过可以访问私有变量的基础函数来实现访问私有变量</div><div class="line">var Man = function()&#123;</div><div class="line">  var firstName = &apos;wang&apos;;</div><div class="line">  var LastName = &apos;yuekai&apos;;</div><div class="line">  this.getFirstName = function()&#123;</div><div class="line">    return firstName;</div><div class="line">  &#125;</div><div class="line">  this.getLastName = function()&#123;</div><div class="line">    return LastName;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Man.prototype.getFullName = function()&#123;</div><div class="line">  return this.getFirstName() + this.getLastName()</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>其他文献<br><a href="http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html" target="_blank" rel="external">学习Javascript闭包（Closure）</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Closures#Creating_closures_in_loops_A_common_mistake" target="_blank" rel="external">闭包</a></p>
-
+        
+          <a class="article-more-a" href="/2017/01/27/Closures/#more">more >></a>
+        
       
 
       
@@ -1063,15 +813,9 @@
       
         <p>原型链的继承就是将子类的<code>prototype.__proto__</code>链接到父类的<code>prototype</code>，借此完成原型链<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">child.prototype.__proto__.= parent.prototype</div></pre></td></tr></table></figure></p>
 <p>实例化的对象没有<code>prototype</code>,<code>prototype</code>是函数特有的属性，所有的对象都有<code>__proto__</code>, 这是指向实例化这个对象的类的<code>prototype</code>,所有对象的原型链最后是null</p>
-<p>下面是经典的原型链继承的例子，我借此解释一下<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">　　function extend(Child, Parent) &#123;</div><div class="line">　　　　var F = function()&#123;&#125;;</div><div class="line">　　　　//将父类的prototype复制到F函数中</div><div class="line">　　　　F.prototype = Parent.prototype;</div><div class="line">　　　　/*new F()实例化F()实际的作用是生成了一个下面这个对象</div><div class="line">　　　　&#123;</div><div class="line">	　　　__proto__: &#123;</div><div class="line">		　　　//Parent.prototype</div><div class="line">	　　　&#125;</div><div class="line">　　　　&#125;</div><div class="line">　　　　这样就完成了</div><div class="line">　　　　Child.prototype.__proto__ = Parent.prototype这个原型链继承的核心内容</div><div class="line">　　　　*/</div><div class="line">　　　　Child.prototype = new F();</div><div class="line">　　　　//Parent.prototype的constructor是Parent，为了准确这里要手动将Child.prototype.constructor改为Child</div><div class="line">　　　　Child.prototype.constructor = Child;</div><div class="line">　　　　//这里是为了代码实际开发时方便调用父类，不用使用__proto__</div><div class="line">　　　　Child.uber = Parent.prototype;</div><div class="line">　　&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>涉及到继承这一块，Javascript 只有一种结构，那就是：对象。在 javaScript 中，每个对象都有一个指向它的原型（prototype）对象的内部链接。这个原型对象又有自己的原型，直到某个对象的原型为 null 为止（也就是不再有原型指向），组成这条链的最后一环。这种一级一级的链结构就称为原型链（prototype chain）。—<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain" target="_blank" rel="external">MDN原型链描述</a></p>
-</blockquote>
-<p>上面这句话有些长，看代码获取会直观一点</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">childClass.prototype.__proto__ == parantClass.prototype</div><div class="line"></div><div class="line">childInstance.__proto__ == childClass.prototype</div><div class="line"></div><div class="line">childInstance.__proto__.__proto__ == childClass.prototype.prototype == parantClass.prototype</div></pre></td></tr></table></figure>
-<p>对于这里的<code>childInstance.__proto__ == childClass.prototype</code>，是由关键字<code>new</code>实现的，具体可以看我的另外一篇文章<a href="">new到底做了什么</a></p>
-<p>参考文献<br><a href="http://www.ruanyifeng.com/blog/2011/06/designing_ideas_of_inheritance_mechanism_in_javascript.html" target="_blank" rel="external">Javascript继承机制的设计思想</a><br><a href="http://www.ruanyifeng.com/blog/2010/05/object-oriented_javascript_inheritance.html" target="_blank" rel="external">Javascript面向对象编程（二）：构造函数的继承</a><br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Inheritance_and_the_prototype_chain" target="_blank" rel="external">继承与原型链</a></p>
-
+        
+          <a class="article-more-a" href="/2017/01/27/prototype-chain/#more">more >></a>
+        
       
 
       

@@ -10,18 +10,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="原文：https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i
 
-在我的上一篇文章 Death of the for Loop中，我试图去说服你放弃使用for 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中break怎么办？
-
-brea">
+在我的上一篇文章 Death of the for Loop中，我试图去说服你放弃使用for 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中break怎么办？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="反思JavaScript: 通过函数代替break">
 <meta property="og:url" content="http://yoursite.com/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
 <meta property="og:description" content="原文：https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i
 
-在我的上一篇文章 Death of the for Loop中，我试图去说服你放弃使用for 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中break怎么办？
-
-brea">
+在我的上一篇文章 Death of the for Loop中，我试图去说服你放弃使用for 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中break怎么办？">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-b9712034b2c2ccf9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-673056b4efcd62fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
@@ -29,14 +25,12 @@ brea">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-01-27T07:24:18.000Z">
+<meta property="og:updated_time" content="2017-01-28T04:32:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="反思JavaScript: 通过函数代替break">
 <meta name="twitter:description" content="原文：https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i
 
-在我的上一篇文章 Death of the for Loop中，我试图去说服你放弃使用for 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中break怎么办？
-
-brea">
+在我的上一篇文章 Death of the for Loop中，我试图去说服你放弃使用for 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中break怎么办？">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2764259-b9712034b2c2ccf9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="王跳凯的blog" type="application/atom+xml">
@@ -183,6 +177,7 @@ brea">
 <p>原文：<a href="https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i" target="_blank" rel="external">https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i</a><br><img src="http://upload-images.jianshu.io/upload_images/2764259-b9712034b2c2ccf9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 </blockquote>
 <p>在我的上一篇文章 <a href="https://hackernoon.com/rethinking-javascript-death-of-the-for-loop-c431564c84a8" target="_blank" rel="external">Death of the for Loop</a>中，我试图去说服你放弃使用<code>for</code> 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中<code>break</code>怎么办？</p>
+<a id="more"></a>
 <blockquote>
 <p>break 会相当于循环中的<code>GOTO</code>，我们应该避免使用。</p>
 </blockquote>
