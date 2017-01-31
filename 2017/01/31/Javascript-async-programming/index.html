@@ -6,14 +6,18 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Archives | 王跳凯的blog</title>
+  <title>Javascript异步编程 | 王跳凯的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="王跳凯的blog">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="随着es6的发布和Babel的出现，对于异步编程，我们慢慢告别了之前回调地狱的问题，现在的我们有了更多的选择，例如：Promise， generator， async/await等方案。下面我们一一来了解一下：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript异步编程">
+<meta property="og:url" content="http://yoursite.com/2017/01/31/Javascript-async-programming/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
+<meta property="og:description" content="随着es6的发布和Babel的出现，对于异步编程，我们慢慢告别了之前回调地狱的问题，现在的我们有了更多的选择，例如：Promise， generator， async/await等方案。下面我们一一来了解一下：">
+<meta property="og:updated_time" content="2017-01-31T12:32:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="王跳凯的blog">
+<meta name="twitter:title" content="Javascript异步编程">
+<meta name="twitter:description" content="随着es6的发布和Babel的出现，对于异步编程，我们慢慢告别了之前回调地狱的问题，现在的我们有了更多的选择，例如：Promise， generator， async/await等方案。下面我们一一来了解一下：">
   
     <link rel="alternative" href="/atom.xml" title="王跳凯的blog" type="application/atom+xml">
   
@@ -135,36 +139,87 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
+            <article id="post-Javascript-async-programming" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      Javascript异步编程
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/31/Javascript-async-programming/" class="archive-article-date">
+
+        
+        <a href="/2017/01/31/Javascript-async-programming/" class="archive-article-date">
   	<time datetime="2017-01-31T12:30:39.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-31</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/31/Javascript-async-programming/">Javascript异步编程</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>随着es6的发布和Babel的出现，对于异步编程，我们慢慢告别了之前回调地狱的问题，现在的我们有了更多的选择，例如：Promise， generator， async/await等方案。下面我们一一来了解一下：<br><a id="more"></a></p>
+<p>###Promise<br>Promise在ES6发布之前就已经有很多的库和工具实现了这个功能，例如Jquery，p等等, Promise做到了将原来的回调地狱的方式，改为了链式返回，在一定程度上改善了异步编程的问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">var p1 = new Promise(function (resolve, reject) &#123;</div><div class="line">   setTimeout(function() &#123;</div><div class="line">      console.log(&apos;resolve&apos;);</div><div class="line">      resolve(&apos;done&apos;);</div><div class="line">    &#125;, 1000);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">p1.then(function(data)&#123;</div><div class="line">    // success</div><div class="line">    console.log(data)</div><div class="line">&#125;).catch(function(error) &#123;</div><div class="line">  // 处理 getJSON 和 前一个回调函数运行时发生的错误</div><div class="line">  console.log(&apos;发生错误！&apos;, error);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>###Generator<br>Generator是ES6中新增的语法，Generator可以做到在函数执行过程中停止和继续进行，从而使异步函数可以以同步编程的方式编写，在异步的地方停止，在异步函数执行完后继续执行Generator函数。</p>
+<p>在调用generator函数时，并不会执行函数内容，而是会返回一个迭代器（iterator）对象, 在执行迭代器的next()函数(next()函数是iterator的属性)时可以逐步执行generator函数内容。</p>
+<blockquote>
+<p>注：一个对象要想可以生成迭代器，该对象需要有“Symbol.iterator”属性</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">function* gen()&#123;</div><div class="line">  var url = &apos;https://api.github.com/users/github&apos;;</div><div class="line">  var result = yield fetch(url);</div><div class="line">  console.log(result);</div><div class="line">  yield 1;</div><div class="line">&#125;</div><div class="line"></div><div class="line">//在chrome控制台中输出</div><div class="line">&gt; gen.prototype[Symbol.iterator]</div><div class="line">//function [Symbol.iterator]() &#123; [native code] &#125;</div></pre></td></tr></table></figure>
+<p>让我们运行 gen()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">var g = gen();</div><div class="line"></div><div class="line">var a = g.next();</div><div class="line"></div><div class="line">console.log(a);//&#123;value: Promise, done: false&#125;</div><div class="line"></div><div class="line">a = g.next();</div><div class="line"></div><div class="line">console.log(a);//&#123;value: 1, done: false&#125;</div><div class="line"></div><div class="line">a = g.next();</div><div class="line"></div><div class="line">console.log(a);//&#123;value: undefined, done: true&#125;</div></pre></td></tr></table></figure>
+<p>对于上面的结果，我们也可以参看babel对于Generator的实现，不过这并不是官方的方案，只是可以作为理解Generator的一个帮助</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">function gen() &#123;</div><div class="line">  var url, result;</div><div class="line">  return regeneratorRuntime.wrap(function gen$(_context) &#123;</div><div class="line">    while (1) &#123;</div><div class="line">      switch (_context.prev = _context.next) &#123;</div><div class="line">        case 0:</div><div class="line">          url = &apos;https://api.github.com/users/github&apos;;</div><div class="line">          _context.next = 3;//设置下一个起始点     </div><div class="line">          return fetch(url);//输出yield后面的表达式</div><div class="line"></div><div class="line">        case 3:</div><div class="line">          result = _context.sent;</div><div class="line"></div><div class="line">          console.log(result);</div><div class="line">          _context.next = 7;//设置下一个起始点</div><div class="line">          //输出yield后面的表达式</div><div class="line">          return 1;</div><div class="line"></div><div class="line">        case 7:</div><div class="line">        case &apos;end&apos;:</div><div class="line">          return _context.stop();</div><div class="line">      &#125;</div><div class="line">    &#125;</div><div class="line">  &#125;, _marked[0], this);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>由此，我们也可以猜测调用Generator的时候，调用了<code>gen.prototype[Symbol.iterator]</code>，该函数相当于是把我们的代码根据标签yield进行分割，存储在一个“列表”中，并返回了一个迭代器，其中含有next属性，虽随着next的调用，一步步地执行“列表”中的每一段函数。</p>
+<p>当我们运行的时候会发现上面的<code>console.log(result);</code>输出了<code>undefined</code>,这是为什么呢，因为Generator只是负责代码的停止和执行，它并不会等待后面的异步结束，而且一步步的写next太麻烦了，能不能让Generator自己执行到结束呢？</p>
+<p>当然可以！</p>
+<p>但是只有Generator并不能做到这些，因为Generator不知道异步代码什么时候结束，但是Promise知道啊，所以我们还需要上面所说的Promise。</p>
+<p>为了方便大家理解，我们一步步来，我们先实现Generator的自执行,在每次调用next()时，都会返回一个对象，包含<code>yield</code>后面语句的执行的返回值和一个是否完成全部Generator函数的标记<code>done</code>,我们可以不断调用next直到<code>done === true</code>为止，就完成了Generator的自执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">function* gen()&#123;</div><div class="line">  yield 1;</div><div class="line">  yield 2;</div><div class="line">  yield 3;</div><div class="line">  yield 4;</div><div class="line">  yield 5;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function run(fn) &#123;</div><div class="line">  var gen = fn();</div><div class="line"></div><div class="line">  function next(data) &#123;</div><div class="line">    var result = gen.next(data);</div><div class="line">    if (result.done) return;</div><div class="line">    next(result);</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  next();</div><div class="line">&#125;</div><div class="line"></div><div class="line">run(gen);</div></pre></td></tr></table></figure>
+<p>接下来我们需要在上面的基础上引入Promise，现在我们的<code>run</code>函数中一个我们自己写的<code>next</code>函数，显而易见的，我们只需要稍微改动一下这个函数即可。为了方便，我们还写了一个<code>readFile</code>函数模仿异步代码，它会返回一个Promise并在1000ms后resolve。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line">var readFile = function(filename) &#123;</div><div class="line">  return new Promise(function(resolve, reject) &#123;</div><div class="line">    setTimeout(function() &#123;</div><div class="line">      resolve(filename);</div><div class="line">    &#125;, 1000);</div><div class="line">  &#125;);</div><div class="line">&#125;</div><div class="line"></div><div class="line">function* gen() &#123;</div><div class="line">  var a = yield readFile(&apos;1&apos;);</div><div class="line">  console.log(a);</div><div class="line">  a = yield readFile(&apos;2&apos;);</div><div class="line">  console.log(a);</div><div class="line">  a = yield readFile(&apos;3&apos;);</div><div class="line">  console.log(a);</div><div class="line">&#125;</div><div class="line"></div><div class="line">var run = function(gen) &#123;</div><div class="line">  var g = gen();</div><div class="line"></div><div class="line">  function next(err, data) &#123;</div><div class="line">    var result = g.next(data);</div><div class="line">    if (!result.done) &#123;</div><div class="line">      result.value.then(function(data) &#123;</div><div class="line">      	next(null, data);</div><div class="line">      	return data;</div><div class="line">      &#125;);</div><div class="line">    &#125; else &#123;</div><div class="line">      console.log(&apos;done&apos;);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">  next();</div><div class="line">&#125;;</div><div class="line"></div><div class="line">run(gen);</div></pre></td></tr></table></figure>
+<p>上面的<code>run</code>函数有一个问题，现在我们默认<code>yield</code>后面一定是一个返回Promise的函数，那很多时候不一定会是这样，所以我们还需要一个转换器，把一切的对象都转为Promise，这个我们这里不再实现，具体可以参看TJ大神写的<a href="https://github.com/tj/co" target="_blank" rel="external">co</a>。</p>
+<h3 id="async-await"><a href="#async-await" class="headerlink" title="async/await"></a>async/await</h3><p>在ES6的基础上，ES2017提供了async函数，这将得异步操作变得更加方便。我们把我们上面的gen函数用async/await改写一下。其实就是去除*，加上async, 所有的yield改为await就好了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">async function gen() &#123;</div><div class="line">  var a = await readFile(&apos;1&apos;);</div><div class="line">  console.log(a);</div><div class="line">  a = await readFile(&apos;2&apos;);</div><div class="line">  console.log(a);</div><div class="line">  a = await readFile(&apos;3&apos;);</div><div class="line">  console.log(a);</div><div class="line">&#125;</div><div class="line"></div><div class="line">gen()</div></pre></td></tr></table></figure>
+<p>上面的代码会和上一节我们最后的代码结果一样，这是得益于<code>async</code>自带有自执行和异步等待。我们就不用再写自己的自执行函数和异步代码等待的逻辑了。await命令后面，可以是Promise对象，也可以是其他原始类型（数值、字符串和布尔值，数组等），是不是很酷炫。</p>
+<p>另外不同<code>Generator</code>返回一个迭代器，<code>async</code>函数返回一个<code>Promise</code>对象</p>
+<p>所以上面的例子我们还可以加上</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">gen().then(function()&#123;</div><div class="line">    console.log(&apos;123&apos;)</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<blockquote>
+<p>async/await很酷，但是现在浏览器还是没有完全支持，Node端只有7.0以上才可以使用，所以还是要使用Babel。</p>
+</blockquote>
+<p>结束：<br>随着ES6的发布，我们的异步代码方案也越来越趋于成熟了</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -176,369 +231,106 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/01/31/Javascript-async-programming/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/28/modules/" class="archive-article-date">
-  	<time datetime="2017-01-28T05:38:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-28</time>
-</a>
-        </div>
-    	 
+<nav id="article-nav">
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/28/modules/">modules</a>
-    </h1>
+  
+    <a href="/2017/01/28/modules/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">modules</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+  <div class="duoshuo">
+	<!-- 多说评论框 start -->
+	<div class="ds-thread" data-thread-key="Javascript-async-programming" data-title="Javascript异步编程" data-url="http://yoursite.com/2017/01/31/Javascript-async-programming/"></div>
+	<!-- 多说评论框 end -->
+	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+	<script type="text/javascript">
+	var duoshuoQuery = {short_name:"wleonardo"};
+	(function() {
+		var ds = document.createElement('script');
+		ds.type = 'text/javascript';ds.async = true;
+		ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+		ds.charset = 'UTF-8';
+		(document.getElementsByTagName('head')[0] 
+		 || document.getElementsByTagName('body')[0]).appendChild(ds);
+	})();
+	</script>
+	<!-- 多说公共JS代码 end -->
+</div>
+
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Node</a>
-        		</li>
-      		
-		</ul>
-	</div>
 
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/28/querystring/" class="archive-article-date">
-  	<time datetime="2017-01-28T05:34:08.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-28</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/28/querystring/">querystring</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/" class="archive-article-date">
-  	<time datetime="2017-01-27T11:05:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/">反思JavaScript: 通过函数代替break</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/how-require-actually-works/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:23:25.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/how-require-actually-works/">Node学习之路：require()工作原理</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Node</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/10-tips-to-become-a-better-node-developer/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:22:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/10-tips-to-become-a-better-node-developer/">10 个技巧，让你在2017 年成为更好的 Node 开发者</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/new-working/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:20:49.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/new-working/">new到底做了什么</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/mac-software/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:19:30.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/mac-software/">开发推荐 mac中好用的软件</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">软件</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/class-in-ES6/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:18:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/class-in-ES6/">class in ES6</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/27/semver/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:17:50.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/27/semver/">semver</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">编程</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-    
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/">Next &raquo;</a>
-    </nav>
-  
 
 
           </div>
@@ -562,8 +354,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
