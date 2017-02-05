@@ -20,7 +20,7 @@
 
 你想看精简版本么 这里是所有三个例子的要点
 异步的generators和异步iteration已经到来! 这是错误的, 它们现在还在阶段 3，这表示他们很有可能在JavaScript未来的一个版本中发布。 在他们发布之前，你可以通">
-<meta property="og:updated_time" content="2017-02-02T10:22:45.000Z">
+<meta property="og:updated_time" content="2017-02-05T04:01:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习JavaScript中的异步Generator">
 <meta name="twitter:description" content="原文：https://www.bignerdranch.com/blog/asyncing-feeling-about-javascript-generators/
@@ -174,7 +174,7 @@
 <p>你想看精简版本么 <a href="https://gist.github.com/nybblr/3af62797052c42f7090b4f8614b5e157" target="_blank" rel="external">这里是所有三个例子的要点</a></p>
 <p><a href="https://github.com/tc39/proposal-async-iteration" target="_blank" rel="external">异步的generators和异步iteration已经到来</a>! 这是错误的, 它们现在还在<a href="https://tc39.github.io/process-document/" target="_blank" rel="external">阶段 3</a>，这表示他们很有可能在JavaScript未来的一个版本中发布。 在他们发布之前，你可以通过<a href="https://babeljs.io/repl/#?presets=stage-3" target="_blank" rel="external">Babel</a>来在你的项目中使用还在阶段3的建议内容。</p>
 <p>网站基本上还是一些分散运行的应用，因为任何在语言上的修改都会造成永久的影响，所以所有的未来的版本都需要向后兼容。因此，被加入到ECMAScript标准的特性，它必须是十分的可靠，而且它的语法需要很优雅。</p>
-<p>考虑到这一点，我们希望异步generator和迭代器可以显著地影响我们如何构建今后的代码，同时也解决现在的问题。让我们开始了解异步generator是如何工作的，它在我们的正式开发中又会遇到什么样的问题。</p>
+<p>考虑到这一点，我们希望异步generator和迭代器可以显著地影响我们如何构建今后的代码，同时也解决现在的问题。让我们开始了解异步generator是如何工作的，它在我们的正式开发中又会遇到什么样的问题。<br><a id="more"></a></p>
 <h2 id="总结-异步的Generators是如何工作的呢"><a href="#总结-异步的Generators是如何工作的呢" class="headerlink" title="总结: 异步的Generators是如何工作的呢"></a>总结: 异步的Generators是如何工作的呢</h2><p>简而言之，异步的generators和普通的generator函数很像，但是它可以yield Promises。如果你想很了解ES2015的generator函数，那么可以先去看一下Chris Aquino的<a href="https://www.bignerdranch.com/blog/generators-rick-astley-and-the-sequence-of-fibonacci/" target="_blank" rel="external">博客</a>，再去看一下Jafar Husain的一篇<a href="https://www.youtube.com/watch?v=lil4YCCXRYc" target="_blank" rel="external">异步编程</a>的很棒的演讲</p>
 <p>总的来说，普通的generator函数基本上就是一个<a href="https://en.wikipedia.org/wiki/Iterator_pattern" target="_blank" rel="external">迭代器</a>和<a href="https://en.wikipedia.org/wiki/Observer_pattern" target="_blank" rel="external">观察者</a> 模式的集合。generator是一个可以中止的函数，你可以通过调用<code>.next()</code>来一步步执行。可以同通过<code>.next()</code>来多次从generator输出内容，也可以通过<code>.next(valueToPush)</code>来多次传入参数。这种双向的接口可以使你通过一种语法同时完成迭代器和观察者的功能!</p>
 <p>当然generators也有它的缺点:它在调用<code>.next()</code>的时候必须立即（同步）返回数据。换句话来说，就是代码在调用<code>.next()</code>的时候就需要得到数据。在generator需要时能够生成新数据的情况下是可以的，但是没有办法处理迭代一个异步的（或者临时的）数据来源，它们需要自己控制在下一次数据准备好的时候执行下一次。</p>
