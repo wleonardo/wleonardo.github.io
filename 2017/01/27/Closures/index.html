@@ -35,6 +35,9 @@
 
   
 
+  <script type="text/javascript" src="http://cdn.bootcss.com/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn1.lncld.net/static/js/av-min-1.2.1.js"></script>
+  <script>AV.initialize("MtN66cHVKsrCYeWokJgEko9R-gzGzoHsz", "6pC8dFaPL9KGzco6yVWeW18o");</script>
 </head>
 
 <body>
@@ -157,6 +160,15 @@
         
       </header>
     
+    
+  <div class="widget-wrap" style="display: none">
+    <h3 class="widget-title">热度</h3>
+    <div class="widget">
+      <ul class="popularlist">
+      </ul>
+    </div>
+  </div>
+
     <div class="article-entry" itemprop="articleBody">
       
         <blockquote>
@@ -347,6 +359,80 @@
     </div>
   </div>
 </footer>
+<!--page counter part-->
+<script>
+function addCount(Counter) {
+    url = $('.archive-article-date').attr('href').trim();
+    title = $('.article-title').text().trim();
+    var query = new AV.Query(Counter);
+    //use url as unique idnetfication
+    console.log(url);
+    query.equalTo("url", url);
+    query.find({
+        success: function(results) {
+          console.log(results);
+            if (results.length > 0) {
+                var counter = results[0];
+                console.log(counter.get('time'));
+                counter.fetchWhenSave(true); //get recent result
+                counter.increment("time");
+                counter.save().then(function(results){
+                  console.log(results);
+                });
+            } else {
+
+                var newcounter = new Counter();
+                var acl = new AV.ACL();
+
+                acl.setPublicReadAccess(true);
+                acl.setPublicWriteAccess(true);
+                newcounter.set("title", title);
+                newcounter.set("url", url);
+                newcounter.set("time", 1);
+                
+                newcounter.setACL(acl);
+                newcounter.save(null, {
+                    success: function(newcounter) {
+                        // alert('New object created');
+                    },
+                    error: function(newcounter, error) {
+                        // alert('Failed to create');
+                    }
+                });
+            }
+        },
+        error: function(error) {
+            //find null is not a error
+            alert('Error:' + error.code + " " + error.message);
+        }
+    });
+}
+$(function() {
+    var Counter = AV.Object.extend("Counter");
+    //only increse visit counting when intering a page
+    console.log($('.article-title'));
+    if ($('.article-title').length == 1) {
+        addCount(Counter);
+        var query = new AV.Query(Counter);
+        query.descending("time");
+        // the sum of popular posts
+        query.limit(10);
+        query.find().then(function(results) {
+            console.log(results); 
+            for (var i = 0; i < results.length; i++) {
+                var counter = results[i];
+                title = counter.get("title");
+                url = counter.get("url");
+                time = counter.get("time");
+                // add to the popularlist widget
+                showcontent = title + " (" + time + ")";
+                //notice the "" in href
+                $('.popularlist').append('<li><a href="' + url + '">' + showcontent + '</a></li>');
+            }
+        })
+    }
+});
+</script>
 
     </div>
     <script>
@@ -412,6 +498,18 @@
              
               <li class="article-tag-list-item">
                 <a href="javascript:void(0)" class="js-tag color1">Javascript</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color2">Apache</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">服务器</a>
+              </li>
+             
+              <li class="article-tag-list-item">
+                <a href="javascript:void(0)" class="js-tag color4">css</a>
               </li>
              
               <li class="article-tag-list-item">
