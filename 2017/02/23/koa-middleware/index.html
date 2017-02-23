@@ -10,27 +10,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="说起Node，最常用的估计就是express和koa，两者都用到了中间件（middleware）这一概念，主要用于对请求的统一处理。
 koa的请求处理是典型的洋葱模型,下面是官方的配图，而这一模型的组成部分就是middleware
-接下来我们来看一下koa的源码，了解中间件的实现方式。
-首先我们找到了koa的仓库Koa,好吧,我知道你们都会这一步。
-在package.json中找到模块的入口文件a">
+接下来我们来看一下koa的源码，了解中间件的实现方式。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Koa中间件（middleware）实现探索">
 <meta property="og:url" content="http://yoursite.com/2017/02/23/koa-middleware/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
 <meta property="og:description" content="说起Node，最常用的估计就是express和koa，两者都用到了中间件（middleware）这一概念，主要用于对请求的统一处理。
 koa的请求处理是典型的洋葱模型,下面是官方的配图，而这一模型的组成部分就是middleware
-接下来我们来看一下koa的源码，了解中间件的实现方式。
-首先我们找到了koa的仓库Koa,好吧,我知道你们都会这一步。
-在package.json中找到模块的入口文件a">
+接下来我们来看一下koa的源码，了解中间件的实现方式。">
 <meta property="og:image" content="https://camo.githubusercontent.com/d80cf3b511ef4898bcde9a464de491fa15a50d06/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67">
-<meta property="og:updated_time" content="2017-02-23T03:55:04.000Z">
+<meta property="og:updated_time" content="2017-02-23T03:56:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Koa中间件（middleware）实现探索">
 <meta name="twitter:description" content="说起Node，最常用的估计就是express和koa，两者都用到了中间件（middleware）这一概念，主要用于对请求的统一处理。
 koa的请求处理是典型的洋葱模型,下面是官方的配图，而这一模型的组成部分就是middleware
-接下来我们来看一下koa的源码，了解中间件的实现方式。
-首先我们找到了koa的仓库Koa,好吧,我知道你们都会这一步。
-在package.json中找到模块的入口文件a">
+接下来我们来看一下koa的源码，了解中间件的实现方式。">
 <meta name="twitter:image" content="https://camo.githubusercontent.com/d80cf3b511ef4898bcde9a464de491fa15a50d06/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67">
   
     <link rel="alternative" href="/atom.xml" title="王跳凯的blog" type="application/atom+xml">
@@ -188,6 +182,7 @@ koa的请求处理是典型的洋葱模型,下面是官方的配图，而这一�
         <p>说起Node，最常用的估计就是express和koa，两者都用到了中间件（middleware）这一概念，主要用于对请求的统一处理。</p>
 <p>koa的请求处理是典型的洋葱模型,下面是官方的配图，而这一模型的组成部分就是middleware<br><img src="https://camo.githubusercontent.com/d80cf3b511ef4898bcde9a464de491fa15a50d06/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67" alt=""></p>
 <p>接下来我们来看一下koa的源码，了解中间件的实现方式。</p>
+<a id="more"></a>
 <p>首先我们找到了koa的仓库<a href="https://github.com/koajs/koa" target="_blank" rel="external">Koa</a>,好吧,我知道你们都会这一步。</p>
 <p>在<code>package.json</code>中找到模块的入口文件<code>application.js</code>,稍微浏览一下(不得不说，tj大神的代码写的真的漂亮)就可以找到Koa处理请求的代码</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">app.callback = function()&#123;</div><div class="line">  if (this.experimental) &#123;</div><div class="line">    console.error(&apos;Experimental ES7 Async Function support is deprecated. Please look into Koa v2 as the middleware signature has changed.&apos;)</div><div class="line">  &#125;</div><div class="line">  var fn = this.experimental</div><div class="line">    ? compose_es7(this.middleware)</div><div class="line">    : co.wrap(compose(this.middleware));</div><div class="line">  var self = this;</div><div class="line">  if (!this.listeners(&apos;error&apos;).length) this.on(&apos;error&apos;, this.onerror);</div><div class="line"></div><div class="line">  return function handleRequest(req, res)&#123;</div><div class="line">    res.statusCode = 404;</div><div class="line">    var ctx = self.createContext(req, res);</div><div class="line">    onFinished(res, ctx.onerror);</div><div class="line">    fn.call(ctx).then(function handleResponse() &#123;</div><div class="line">      respond.call(ctx);</div><div class="line">    &#125;).catch(ctx.onerror);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
