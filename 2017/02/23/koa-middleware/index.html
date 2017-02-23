@@ -6,27 +6,32 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>class in ES6 | 王跳凯的blog</title>
+  <title>Koa中间件（middleware）实现探索 | 王跳凯的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在es6出来之后，我们看到js终于有class这个关键字，表示我们终于可以使用官方的类了。那么es6的类和之前的我们使用原型链继承实现的类有什么联系么。
-答案是一模一样
-
-JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over JavaScript’s existing prototype-based">
+  <meta name="description" content="说起Node，最常用的估计就是express和koa，两者都用到了中间件（middleware）这一概念，主要用于对请求的统一处理。
+koa的请求处理是典型的洋葱模型,下面是官方的配图，而这一模型的组成部分就是middleware
+接下来我们来看一下koa的源码，了解中间件的实现方式。
+首先我们找到了koa的仓库Koa,好吧,我知道你们都会这一步。
+在package.json中找到模块的入口文件a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="class in ES6">
-<meta property="og:url" content="http://yoursite.com/2017/01/27/class-in-ES6/index.html">
+<meta property="og:title" content="Koa中间件（middleware）实现探索">
+<meta property="og:url" content="http://yoursite.com/2017/02/23/koa-middleware/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
-<meta property="og:description" content="在es6出来之后，我们看到js终于有class这个关键字，表示我们终于可以使用官方的类了。那么es6的类和之前的我们使用原型链继承实现的类有什么联系么。
-答案是一模一样
-
-JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over JavaScript’s existing prototype-based">
-<meta property="og:updated_time" content="2017-01-28T04:31:11.000Z">
+<meta property="og:description" content="说起Node，最常用的估计就是express和koa，两者都用到了中间件（middleware）这一概念，主要用于对请求的统一处理。
+koa的请求处理是典型的洋葱模型,下面是官方的配图，而这一模型的组成部分就是middleware
+接下来我们来看一下koa的源码，了解中间件的实现方式。
+首先我们找到了koa的仓库Koa,好吧,我知道你们都会这一步。
+在package.json中找到模块的入口文件a">
+<meta property="og:image" content="https://camo.githubusercontent.com/d80cf3b511ef4898bcde9a464de491fa15a50d06/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67">
+<meta property="og:updated_time" content="2017-02-23T03:55:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="class in ES6">
-<meta name="twitter:description" content="在es6出来之后，我们看到js终于有class这个关键字，表示我们终于可以使用官方的类了。那么es6的类和之前的我们使用原型链继承实现的类有什么联系么。
-答案是一模一样
-
-JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over JavaScript’s existing prototype-based">
+<meta name="twitter:title" content="Koa中间件（middleware）实现探索">
+<meta name="twitter:description" content="说起Node，最常用的估计就是express和koa，两者都用到了中间件（middleware）这一概念，主要用于对请求的统一处理。
+koa的请求处理是典型的洋葱模型,下面是官方的配图，而这一模型的组成部分就是middleware
+接下来我们来看一下koa的源码，了解中间件的实现方式。
+首先我们找到了koa的仓库Koa,好吧,我知道你们都会这一步。
+在package.json中找到模块的入口文件a">
+<meta name="twitter:image" content="https://camo.githubusercontent.com/d80cf3b511ef4898bcde9a464de491fa15a50d06/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67">
   
     <link rel="alternative" href="/atom.xml" title="王跳凯的blog" type="application/atom+xml">
   
@@ -151,20 +156,20 @@ JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over Java
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-class-in-ES6" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-koa-middleware" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      class in ES6
+      Koa中间件（middleware）实现探索
     </h1>
   
 
         
-        <a href="/2017/01/27/class-in-ES6/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:18:42.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
+        <a href="/2017/02/23/koa-middleware/" class="archive-article-date">
+  	<time datetime="2017-02-23T03:54:15.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-23</time>
 </a>
         
       </header>
@@ -180,27 +185,38 @@ JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over Java
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在es6出来之后，我们看到js终于有class这个关键字，表示我们终于可以使用官方的类了。那么es6的类和之前的我们使用原型链继承实现的类有什么联系么。</p>
-<p><strong>答案是一模一样</strong></p>
-<blockquote>
-<p>JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over JavaScript’s existing prototype-based inheritance. (在 ECMAScript 6 引入的 JavaScript 类（class）是 JavaScript 现有的原型继承的语法糖。)  ——  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="external">MDN Classes</a></p>
-</blockquote>
-<p>好吧，那么为了使我们更好的理解es6的class，也是倒过来更好的理解js的原型链，下面我们把类的es6写法和原型链实现的写法一一列出</p>
-<a id="more"></a>
-<p>###类的创建，类的构造器和原型方法<br>ES6<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">class Polygon &#123;</div><div class="line">  constructor(height, width) &#123;</div><div class="line">    this.height = height;</div><div class="line">    this.width = width;</div><div class="line">  &#125;</div><div class="line">  </div><div class="line">  calcArea() &#123;</div><div class="line">    return this.height * this.width;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line">const square = new Polygon(10, 10);</div><div class="line"></div><div class="line">// 100</div><div class="line">console.log(square.area);</div></pre></td></tr></table></figure></p>
-<p>原型链<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var Polygon = function(height, width)&#123;</div><div class="line">	this.height = height;</div><div class="line">  this.width = width;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Polygon.prototype.calcArea = function() &#123;</div><div class="line">	return this.height * this.width;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>###类的静态方法<br><a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Classes/static" target="_blank" rel="external">static</a>关键字用来定义类的静态方法。静态方法是指那些不需要对类进行<a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Introduction_to_Object-Oriented_JavaScript#The_object_(class_instance" target="_blank" rel="external">实例化</a>)，使用类名就可以直接访问的方法，需要注意的是静态方法不能被实例化的对象调用。静态方法经常用来作为工具函数。<br>ES6<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">class Point &#123;</div><div class="line">    constructor(x, y) &#123;</div><div class="line">        this.x = x;</div><div class="line">        this.y = y;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    static distance(a, b) &#123;</div><div class="line">        const dx = a.x - b.x;</div><div class="line">        const dy = a.y - b.y;</div><div class="line"></div><div class="line">        return Math.sqrt(dx*dx + dy*dy);</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">const p1 = new Point(5, 5);</div><div class="line">const p2 = new Point(10, 10);</div><div class="line"></div><div class="line">console.log(Point.distance(p1, p2));</div></pre></td></tr></table></figure></p>
-<p>原型链<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">var Point = function(x, y)&#123;</div><div class="line">  this.x = x;</div><div class="line">  this.y = y;</div><div class="line">&#125;</div><div class="line"></div><div class="line">Point.distance = function(a, b) &#123;</div><div class="line">  const dx = a.x - b.x;</div><div class="line">  const dy = a.y - b.y;</div><div class="line"></div><div class="line">  return Math.sqrt(dx*dx + dy*dy);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>至此我们也可以明白了如何用原型链去构建一个类</p>
-</blockquote>
-<p>其实当我们去查看babel对于类的实现，其实也是一样的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">var _createClass = function() &#123;</div><div class="line">  function defineProperties(target, props) &#123;</div><div class="line">    for (var i = 0; i &lt; props.length; i++) &#123;</div><div class="line">      var descriptor = props[i];</div><div class="line">      descriptor.enumerable = descriptor.enumerable || false;</div><div class="line">      descriptor.configurable = true;</div><div class="line">      if (&quot;value&quot; in descriptor) descriptor.writable = true;</div><div class="line">      Object.defineProperty(target, descriptor.key, descriptor); </div><div class="line">    &#125; </div><div class="line">  &#125;</div><div class="line">  return function(Constructor, protoProps, staticProps) &#123;</div><div class="line">    //实例方法（原型方法）的实现</div><div class="line">    if (protoProps) defineProperties(Constructor.prototype, protoProps);</div><div class="line">    //静态函数的实现</div><div class="line">    if (staticProps) defineProperties(Constructor, staticProps);</div><div class="line">    return Constructor; </div><div class="line">  &#125;;</div><div class="line">&#125;();</div></pre></td></tr></table></figure>
-<p>###<strong>类的继承</strong></p>
-<blockquote>
-<p>未完</p>
-</blockquote>
-<p>参考文档<br><a href="http://www.jianshu.com/p/efad2d4ecfed" target="_blank" rel="external">Javascript原型链</a><br><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes" target="_blank" rel="external">MDN Classes</a></p>
+        <p>说起Node，最常用的估计就是express和koa，两者都用到了中间件（middleware）这一概念，主要用于对请求的统一处理。</p>
+<p>koa的请求处理是典型的洋葱模型,下面是官方的配图，而这一模型的组成部分就是middleware<br><img src="https://camo.githubusercontent.com/d80cf3b511ef4898bcde9a464de491fa15a50d06/68747470733a2f2f7261772e6769746875622e636f6d2f66656e676d6b322f6b6f612d67756964652f6d61737465722f6f6e696f6e2e706e67" alt=""></p>
+<p>接下来我们来看一下koa的源码，了解中间件的实现方式。</p>
+<p>首先我们找到了koa的仓库<a href="https://github.com/koajs/koa" target="_blank" rel="external">Koa</a>,好吧,我知道你们都会这一步。</p>
+<p>在<code>package.json</code>中找到模块的入口文件<code>application.js</code>,稍微浏览一下(不得不说，tj大神的代码写的真的漂亮)就可以找到Koa处理请求的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">app.callback = function()&#123;</div><div class="line">  if (this.experimental) &#123;</div><div class="line">    console.error(&apos;Experimental ES7 Async Function support is deprecated. Please look into Koa v2 as the middleware signature has changed.&apos;)</div><div class="line">  &#125;</div><div class="line">  var fn = this.experimental</div><div class="line">    ? compose_es7(this.middleware)</div><div class="line">    : co.wrap(compose(this.middleware));</div><div class="line">  var self = this;</div><div class="line">  if (!this.listeners(&apos;error&apos;).length) this.on(&apos;error&apos;, this.onerror);</div><div class="line"></div><div class="line">  return function handleRequest(req, res)&#123;</div><div class="line">    res.statusCode = 404;</div><div class="line">    var ctx = self.createContext(req, res);</div><div class="line">    onFinished(res, ctx.onerror);</div><div class="line">    fn.call(ctx).then(function handleResponse() &#123;</div><div class="line">      respond.call(ctx);</div><div class="line">    &#125;).catch(ctx.onerror);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>看完这个函数，我们了解到真正处理请求内容的函数是<code>fn</code>,而这个函数的定义就是下面这段函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var fn = this.experimental</div><div class="line">    ? compose_es7(this.middleware)</div><div class="line">    : co.wrap(compose(this.middleware));</div></pre></td></tr></table></figure>
+<p>好吧，准确来说就是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">co.wrap(compose(this.middleware));</div></pre></td></tr></table></figure>
+<p><strong>其实我们只需要知道这段函数做了什么，就知道中间件是如何运行的了。</strong></p>
+<p>同时，我们在<code>appliction.js</code>文件找到了<code>app.use</code>函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">app.use = function(fn)&#123;</div><div class="line">  ...</div><div class="line">  </div><div class="line">  this.middleware.push(fn);</div><div class="line">  return this;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>从这段代码，我们可以知道<code>this.middleware</code>就是一个<code>generator</code>函数的数组。</p>
+<p>接下来我们需要知道<code>compose</code>函数做了什么，我们找到<code>compose</code>函数，其实compose很短</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">function compose(middleware)&#123;</div><div class="line">  return function *(next)&#123;</div><div class="line">    if (!next) next = noop();</div><div class="line"></div><div class="line">    var i = middleware.length;</div><div class="line"></div><div class="line">    while (i--) &#123;</div><div class="line">      next = middleware[i].call(this, next);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return yield *next;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">function *noop()&#123;&#125;</div></pre></td></tr></table></figure>
+<p>这里<code>compose</code>函数返回了一个Generator，所以上面的代码可以变成下面的样子（当然还有<code>middleware</code>的变量再闭包中）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">co.wrap(function *(next)&#123;</div><div class="line">    if (!next) next = noop();</div><div class="line"></div><div class="line">    var i = middleware.length;</div><div class="line"></div><div class="line">    while (i--) &#123;</div><div class="line">      next = middleware[i].call(this, next);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    return yield *next;</div><div class="line">  &#125;)</div></pre></td></tr></table></figure>
+<p>接下来我们看一下<code>co.wrap</code></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">co.wrap = function (fn) &#123;</div><div class="line">  createPromise.__generatorFunction__ = fn;</div><div class="line">  return createPromise;</div><div class="line">  function createPromise() &#123;</div><div class="line">    return co.call(this, fn.apply(this, arguments));</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>所以代码可以变为下面的样子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">function createPromise() &#123;</div><div class="line">    var fn = function *(next)&#123;</div><div class="line">        if (!next) next = noop();</div><div class="line">    </div><div class="line">        var i = middleware.length;</div><div class="line">    </div><div class="line">        while (i--) &#123;</div><div class="line">          next = middleware[i].call(this, next);</div><div class="line">        &#125;</div><div class="line">    </div><div class="line">        return yield *next;</div><div class="line">      &#125; </div><div class="line">    return co.call(this, fn.apply(this, arguments));</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>接下来，我们仔细看一下这段代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">if (!next) next = noop();</div><div class="line">    </div><div class="line">var i = middleware.length;</div><div class="line">    </div><div class="line">while (i--) &#123;</div><div class="line">    next = middleware[i].call(this, next);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这段代码遍历了我们的中间件数组，最终生成了一个类似下面的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line">next = (function*()&#123;</div><div class="line">    // middleware1</div><div class="line">    ...</div><div class="line">    </div><div class="line">    yield (function*()&#123;</div><div class="line">        // middleware2</div><div class="line">        ...</div><div class="line">        </div><div class="line">        yield (function*()&#123;</div><div class="line">            // middleware3</div><div class="line">            ...</div><div class="line">            </div><div class="line">            yield (function *()&#123;</div><div class="line">                // noop</div><div class="line">                // NO next yield !</div><div class="line">            &#125;)()</div><div class="line">            </div><div class="line">            // ...middleware3</div><div class="line">        &#125;)</div><div class="line">        </div><div class="line">        // ...middleware2</div><div class="line">    &#125;)</div><div class="line">    // ...middleware1</div><div class="line">&#125;)()</div></pre></td></tr></table></figure>
+<p>其实看到这里就已经可以看到洋葱模型的样子了。</p>
+<p>而最后就是这个<code>next</code>的运行，其实这个next就是一个<code>Generator</code>函数生成的迭代器（iterator）对象，然后由<code>co</code>来运行，类似下面</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">co(function*()&#123;</div><div class="line">    ...</div><div class="line"></div><div class="line">    yield *next</div><div class="line">&#125;)</div></pre></td></tr></table></figure>
+<p><code>co</code>可以对generator的进行自执行。到这基本就完成可中间件的实现。</p>
+<p>眼尖的读者可以看到这里最后用到了<code>yield *</code>而非<code>yield</code>,可以有关于<code>co</code>的执行，其实就是为了减少<code>co</code>的一次运行，其实每次都应该用yield <em>next,可能是tj大神怕大家忘记加了，就索性在demo里面就建议大家直接yield next就好了。具体的可以看我对于co源码实现的分析，我这里就提一下`yield </em><code>可以自动执行后面的表达式的迭代器属性，而yield只会直接返回后面的表达式，所以一个</code>yield *<code>可以使</code>co<code>直接拿到后面迭代器中的每一步，而</code>yield<code>只可以拿到迭代器，然后递归调用</code>co`来执行迭代器。</p>
+<p>最后欢迎大家吐槽，谢谢。</p>
 
       
 
@@ -235,7 +251,11 @@ JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over Java
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Node</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">Koa</a>
         		</li>
       		
 		</ul>
@@ -291,7 +311,7 @@ JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over Java
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/01/27/class-in-ES6/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/02/23/koa-middleware/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -305,18 +325,9 @@ JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over Java
   
 <nav id="article-nav">
   
-    <a href="/2017/01/27/mac-software/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          开发推荐 mac中好用的软件
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/01/27/semver/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">semver</div>
+    <a href="/2017/02/08/bootstrap-box-sizing/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Bootstrap盒模型</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -330,7 +341,7 @@ JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over Java
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="class-in-ES6" data-title="class in ES6" data-url="http://yoursite.com/2017/01/27/class-in-ES6/"></div>
+	<div class="ds-thread" data-thread-key="koa-middleware" data-title="Koa中间件（middleware）实现探索" data-url="http://yoursite.com/2017/02/23/koa-middleware/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 
