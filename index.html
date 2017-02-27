@@ -140,6 +140,81 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-if" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/27/if/">IF, 三元表达式, || 的判断</a>
+    </h1>
+  
+
+        
+        <a href="/2017/02/27/if/" class="archive-article-date">
+  	<time datetime="2017-02-27T14:43:43.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-27</time>
+</a>
+        
+      </header>
+    
+    
+  <div class="widget-wrap" style="display: none">
+    <h3 class="widget-title">热度</h3>
+    <div class="widget">
+      <ul class="popularlist">
+      </ul>
+    </div>
+  </div>
+
+    <div class="article-entry" itemprop="articleBody">
+      
+        <table><br>    <thead><br>      <tr><br>        <th>\</th><br>        <th>undefined</th><br>        <th>null</th><br>        <th>‘’</th><br>        <th>0</th><br>        <th>‘0’</th><br>        <th>-0</th><br>        <th>+0</th><br>        <th>NaN</th><br>        <th>-1</th><br>      </tr><br>    </thead><br>    <tbody><br>      <tr><br>        <td>IF</td><br>        <td>false</td><br>        <td>false</td><br>        <td>false</td><br>        <td>false</td><br>        <td>true</td><br>        <td>false</td><br>        <td>false</td><br>        <td>false</td><br>        <td>true</td><br>      </tr><br>      <tr><br>        <td>三元</td><br>        <td>false</td><br>        <td>false</td><br>        <td>false</td><br>        <td>false</td><br>        <td>true</td><br>        <td>false</td><br>        <td>false</td><br>        <td>false</td><br>        <td>true</td><br>      </tr><br>      <tr><br>        <td>||</td><br>        <td>false</td><br>        <td>false</td><br>        <td>false</td><br>        <td>false</td><br>        <td>true</td><br>        <td>false</td><br>        <td>false</td><br>        <td>false</td><br>        <td>true</td><br>      </tr><br>    </tbody><br></table>
+
+<blockquote>
+<p>从现在的情况看起来，三元表达式，<code>IF</code> 和 <code>||</code> 表现的结果基本一致</p>
+</blockquote>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<i class="icon-price-tags icon"></i>
+		<ul class="article-tag-list">
+			 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
+        		</li>
+      		
+		</ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2017/02/27/if/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+
+
+
+
+
+
+
+  
     <article id="post-koa-middleware" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -875,108 +950,6 @@
       
         <p class="article-more-link">
           <a class="article-more-a" href="/2017/01/27/how-require-actually-works/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-
-
-
-
-
-
-
-  
-    <article id="post-10-tips-to-become-a-better-node-developer" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/01/27/10-tips-to-become-a-better-node-developer/">10 个技巧，让你在2017 年成为更好的 Node 开发者</a>
-    </h1>
-  
-
-        
-        <a href="/2017/01/27/10-tips-to-become-a-better-node-developer/" class="archive-article-date">
-  	<time datetime="2017-01-27T07:22:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-27</time>
-</a>
-        
-      </header>
-    
-    
-  <div class="widget-wrap" style="display: none">
-    <h3 class="widget-title">热度</h3>
-    <div class="widget">
-      <ul class="popularlist">
-      </ul>
-    </div>
-  </div>
-
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><img src="http://p0.qhimg.com/t013b4d3250aadd31df.png" alt="A person in a traditional cross-legged meditation pose, focusing on becoming a better Node developer"></p>
-<p>本文是由我们的客座作者<strong>Azat Mardan</strong>写的。SitePoint引入客座帖子的目的是希望能给你带来web社区里著名作者和演讲者的有趣内容。</p>
-<p>在2012年，我加入了Storify并开始使用Node作为我的主要语言。从那以后，我从未回首过去并觉得我错过了Python，Ruby，Java以及PHP，这些在过去10年里，我在web开发过程中使用的语言。</p>
-<p>Storify提供给我一个很有趣的工作，因为Storify和其他的公司不太一样，Storify之前（可能到现在也是）所有的代码都是由JavaScript编写的。而大多数公司，特别是大公司，例如PayPal，Walmart(沃尔玛)或者Capital One(第一资本)，只是在某一些特定的部分使用了Node。通常，他们使用Node作为API接口或者用在业务流程层，这样做是很好的。但是作为一个软件工程师，没什么比得上能够完全沉浸在Node环境里。</p>
-<p>下面我将列出10条建议，这些建议可以帮助你在2017年成为一个更好的Node开发者。其中一些建议是我在日常实践中所学到的，另一些是从那些写了最流行的Node和npm模块的人们身上学到的。 下面是我们将要介绍的内容：</p>
-<ol>
-<li><p><a href="#avoidcomplexity">避免复杂性</a> — 尽可能将你的代码块拆到最小，要小到极致。</p>
-</li>
-<li><p><a href="#useasynchronouscode">使用异步编程</a> — 像躲避瘟疫般避免使用同步代码。</p>
-</li>
-<li><p><a href="#avoidblockingrequire">避免require阻塞</a> — 把你所有的require声明都放在文件的顶部，因为require是同步的，会阻塞代码运行。</p>
-</li>
-<li><p><a href="#knowthatrequireiscached">了解require缓存</a> — 了解它则可以利用它，否则它可能会带来bug。</p>
-</li>
-<li><p><a href="#alwayscheckforerrors">始终检查错误</a> — 错误不是足球，任何时候都不要抛出错误或者跳过错误检查。</p>
-</li>
-<li><p><a href="#alwayscheckforerrors">只在同步代码中使用try…catch</a> — 在异步代码中<code>try...catch</code>是没有作用的。V8引擎针对<code>try...catch</code>无法进行优化。</p>
-</li>
-<li><p><a href="#returncallbacksoruseifelse">返回callbacks或者使用if … else</a> — 返回一个callback只是为了确保不继续执行。</p>
-</li>
-<li><p><a href="#listentotheerrorevents">监听错误事件</a> — 几乎所有的Node的类/对象都有event emitter(观察者模式)并且会广播<code>error</code>事件，确保你监听了它们。</p>
-</li>
-<li><p><a href="#knowyournpm">了解你的npm</a> — 使用<code>-S</code>或者<code>-D</code>来安装模块来代替<code>--save或者</code>–save-dev`。</p>
-</li>
-<li><p><a href="#knowyournpm">在package.json中使用精确的版本号</a>: npm在使用<code>-S</code>来安装模块时会自动使用默认的版本号，你需要手动修改去锁定版本号。除非是开源模块，否者不要相信你的项目中的SemVer（语义化版本标准）。</p>
-</li>
-<li><p><em>加分</em> — 使用不同的依赖。把项目在开发阶段需要的东西放在 devDependencies 中，记得使用 npm i –production。多余的依赖越多，出现问题的风险就越大。</p>
-</li>
-</ol>
-<p>好的，接下来让我们一个个单独地去了解上面的每一点。</p>
-        
-          <a class="article-more-a" href="/2017/01/27/10-tips-to-become-a-better-node-developer/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2017/01/27/10-tips-to-become-a-better-node-developer/">展开全文 >></a>
         </p>
       
 
