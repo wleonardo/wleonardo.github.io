@@ -6,21 +6,21 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>require() | 王跳凯的blog</title>
+  <title>cluster | 王跳凯的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="1module = new Module() //module 为 Module类的实例
-12345678var Module = function(id, parent) &amp;#123;   this.id = id;   this.exports = &amp;#123;&amp;#125;;   this.parent = parent;   this.filename = null;   this.load">
+  <meta name="description" content="当我们去了解Cluster的时候，我们会在node的官方文档的一开始就会看到一个简单的例子
+123456789101112131415161718192021222324252627// 这个例子是根据cpu的核数来生成对应的子进程数量，// 然后每个子进程都运行一个绑定到8000端口的http serverconst cluster = require(&amp;apos;cluster&amp;apos;);">
 <meta property="og:type" content="article">
-<meta property="og:title" content="require()">
-<meta property="og:url" content="http://yoursite.com/2017/01/26/require/index.html">
+<meta property="og:title" content="cluster">
+<meta property="og:url" content="http://yoursite.com/2017/03/21/cluster/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
-<meta property="og:description" content="1module = new Module() //module 为 Module类的实例
-12345678var Module = function(id, parent) &amp;#123;   this.id = id;   this.exports = &amp;#123;&amp;#125;;   this.parent = parent;   this.filename = null;   this.load">
-<meta property="og:updated_time" content="2017-01-27T07:10:51.000Z">
+<meta property="og:description" content="当我们去了解Cluster的时候，我们会在node的官方文档的一开始就会看到一个简单的例子
+123456789101112131415161718192021222324252627// 这个例子是根据cpu的核数来生成对应的子进程数量，// 然后每个子进程都运行一个绑定到8000端口的http serverconst cluster = require(&amp;apos;cluster&amp;apos;);">
+<meta property="og:updated_time" content="2017-03-21T08:29:04.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="require()">
-<meta name="twitter:description" content="1module = new Module() //module 为 Module类的实例
-12345678var Module = function(id, parent) &amp;#123;   this.id = id;   this.exports = &amp;#123;&amp;#125;;   this.parent = parent;   this.filename = null;   this.load">
+<meta name="twitter:title" content="cluster">
+<meta name="twitter:description" content="当我们去了解Cluster的时候，我们会在node的官方文档的一开始就会看到一个简单的例子
+123456789101112131415161718192021222324252627// 这个例子是根据cpu的核数来生成对应的子进程数量，// 然后每个子进程都运行一个绑定到8000端口的http serverconst cluster = require(&amp;apos;cluster&amp;apos;);">
   
     <link rel="alternative" href="/atom.xml" title="王跳凯的blog" type="application/atom+xml">
   
@@ -145,20 +145,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-require" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-cluster" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      require()
+      cluster
     </h1>
   
 
         
-        <a href="/2017/01/26/require/" class="archive-article-date">
-  	<time datetime="2017-01-26T07:05:17.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-26</time>
+        <a href="/2017/03/21/cluster/" class="archive-article-date">
+  	<time datetime="2017-03-21T08:28:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-21</time>
 </a>
         
       </header>
@@ -174,14 +174,21 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">module = new Module() //module 为 Module类的实例</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">var Module = function(id, parent) &#123; </div><div class="line">  this.id = id; </div><div class="line">  this.exports = &#123;&#125;; </div><div class="line">  this.parent = parent; </div><div class="line">  this.filename = null; </div><div class="line">  this.loaded = false; </div><div class="line">  this.children = [];</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">var require = function()&#123;</div><div class="line"> return module.exports</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+        <p>当我们去了解Cluster的时候，我们会在node的官方文档的一开始就会看到一个简单的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">// 这个例子是根据cpu的核数来生成对应的子进程数量，</div><div class="line">// 然后每个子进程都运行一个绑定到8000端口的http server</div><div class="line">const cluster = require(&apos;cluster&apos;);</div><div class="line">const http = require(&apos;http&apos;);</div><div class="line">const numCPUs = require(&apos;os&apos;).cpus().length;</div><div class="line"></div><div class="line">if (cluster.isMaster) &#123;</div><div class="line">  console.log(`Master $&#123;process.pid&#125; is running`);</div><div class="line"></div><div class="line">  // Fork workers.</div><div class="line">  for (let i = 0; i &lt; numCPUs; i++) &#123;</div><div class="line">    cluster.fork();</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  cluster.on(&apos;exit&apos;, (worker, code, signal) =&gt; &#123;</div><div class="line">    console.log(`worker $&#123;worker.process.pid&#125; died`);</div><div class="line">  &#125;);</div><div class="line">&#125; else &#123;</div><div class="line">  // Workers can share any TCP connection</div><div class="line">  // In this case it is an HTTP server</div><div class="line">  http.createServer((req, res) =&gt; &#123;</div><div class="line">    res.writeHead(200);</div><div class="line">    res.end(&apos;hello world\n&apos;);</div><div class="line">  &#125;).listen(8000);</div><div class="line"></div><div class="line">  console.log(`Worker $&#123;process.pid&#125; started`);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>我们可以看到创建子进程的方式就是很简单的一句<code>cluster.fork()</code>,接下来我们就来看一下这个函数做了什么样的事情。</p>
+<p>首先我们打印了一下这个函数，可以看到函数如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div></pre></td><td class="code"><pre><div class="line">function (env) &#123;</div><div class="line">    cluster.setupMaster();</div><div class="line">    const id = ++ids;</div><div class="line">    const workerProcess = createWorkerProcess(id, env);</div><div class="line">    const worker = new Worker(&#123;</div><div class="line">      id: id,</div><div class="line">      process: workerProcess</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    worker.on(&apos;message&apos;, function(message, handle) &#123;</div><div class="line">      cluster.emit(&apos;message&apos;, this, message, handle);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    worker.process.once(&apos;exit&apos;, function(exitCode, signalCode) &#123;</div><div class="line">      /*</div><div class="line">       * Remove the worker from the workers list only</div><div class="line">       * if it has disconnected, otherwise we might</div><div class="line">       * still want to access it.</div><div class="line">       */</div><div class="line">      if (!worker.isConnected()) &#123;</div><div class="line">        removeHandlesForWorker(worker);</div><div class="line">        removeWorker(worker);</div><div class="line">      &#125;</div><div class="line"></div><div class="line">      worker.exitedAfterDisconnect = !!worker.exitedAfterDisconnect;</div><div class="line">      worker.state = &apos;dead&apos;;</div><div class="line">      worker.emit(&apos;exit&apos;, exitCode, signalCode);</div><div class="line">      cluster.emit(&apos;exit&apos;, worker, exitCode, signalCode);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    worker.process.once(&apos;disconnect&apos;, function() &#123;</div><div class="line">      /*</div><div class="line">       * Now is a good time to remove the handles</div><div class="line">       * associated with this worker because it is</div><div class="line">       * not connected to the master anymore.</div><div class="line">       */</div><div class="line">      removeHandlesForWorker(worker);</div><div class="line"></div><div class="line">      /*</div><div class="line">       * Remove the worker from the workers list only</div><div class="line">       * if its process has exited. Otherwise, we might</div><div class="line">       * still want to access it.</div><div class="line">       */</div><div class="line">      if (worker.isDead()) removeWorker(worker);</div><div class="line"></div><div class="line">      worker.exitedAfterDisconnect = !!worker.exitedAfterDisconnect;</div><div class="line">      worker.state = &apos;disconnected&apos;;</div><div class="line">      worker.emit(&apos;disconnect&apos;);</div><div class="line">      cluster.emit(&apos;disconnect&apos;, worker);</div><div class="line">    &#125;);</div><div class="line"></div><div class="line">    worker.process.on(&apos;internalMessage&apos;, internal(worker, onmessage));</div><div class="line">    process.nextTick(emitForkNT, worker);</div><div class="line">    cluster.workers[worker.id] = worker;</div><div class="line">    return worker;</div><div class="line">  &#125;</div></pre></td></tr></table></figure>
+<p>我们看到一开始就调用了一个函数<code>cluster.setupMaster()</code></p>
+<p>我们在<a href="http://nodejs.cn/api/cluster.html#cluster_cluster_setupmaster_settings" target="_blank" rel="external">官方文档</a>中可以查到这个函数, 可以看到这个函数的第一个参数<code>exec</code>默认为<code>process.argv[1]</code>,在主线程中打印<code>process.argv[1]</code>可以看到<code>process.argv[1]</code>指向了入口文件，所以<code>cluster.fork()</code>的时候，是重新运行了入口文件。这也对应了文档中的下面这句话。</p>
 <blockquote>
-<p>模块的加载实质上就是，注入exports、require、module三个全局变量，然后执行模块的源码，然后将模块的 exports 变量的值输出。—— <a href="http://www.ruanyifeng.com/blog/2015/05/require.html" target="_blank" rel="external">require() 源码解读</a></p>
+<p>Unlike the fork(2) POSIX system call, child_process.fork() does not clone the current process.</p>
 </blockquote>
-<p>   所以说每一个require的文件执行的过程，都是先读取文件，注入变量，再执行代码，所以node文件不需要自己实例化Module,在require的时候会自动实例化的，所以从另一个角度说，文件并不会直接执行，所以看上去文件中的require，module等变量都为创建而可以执行。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">//a.js</div><div class="line">exports.multiply = function(n) &#123;</div><div class="line">    return n * 1000 </div><div class="line">&#125;;</div><div class="line">//index.js</div><div class="line">require(&apos;./a.js&apos;)</div><div class="line"></div><div class="line">//require(&apos;./a.js&apos;)实际的变为了 </div><div class="line">var module = &#123; </div><div class="line">  exports: &#123;&#125; </div><div class="line">&#125;;</div><div class="line">(function(module, exports) &#123; </div><div class="line">  exports.multiply = function(n) &#123;</div><div class="line">    return n * 1000 </div><div class="line">  &#125;; </div><div class="line">&#125;(module, module.exports)) </div><div class="line">return module.exports;</div></pre></td></tr></table></figure></p>
-<p>####Demo<br>  <a href="https://github.com/wleonardo/js-demo/tree/master/require-demo" target="_blank" rel="external">require原理</a><br>  <a href="https://github.com/wleonardo/js-demo/tree/master/node-read-jsfile" target="_blank" rel="external">读取js文件并运行</a></p>
+<p>同样我们通过查看源码可以了解到下面这行代码，是根据当前的环境变量和cluster配置，传递给<code>child_process.fork()</code>，<code>workerProcess</code>就是fork后的返回值，通过查看文档，我们知道<code>child_process.fork()</code>返回了一个<code>&lt;ChildProcess&gt;</code>,关于这里面的细节，可以看<a href="TODO">child_process.fork()的细节</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const workerProcess = createWorkerProcess(id, env);</div></pre></td></tr></table></figure>
+<p>再下面，Worker对象对ChildProcess包裹了一层，提供了一些API,具体可以看<a href="https://nodejs.org/dist/latest-v6.x/docs/api/cluster.html#cluster_class_worker" target="_blank" rel="external">文档</a></p>
+<p>其他的就是一个信息的传输</p>
 
       
 
@@ -215,10 +222,6 @@
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color1">Javascript</a>
-        		</li>
-      		 
         		<li class="article-tag-list-item">
         			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">Node</a>
         		</li>
@@ -276,7 +279,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/01/26/require/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/03/21/cluster/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -290,18 +293,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/01/27/About-this-and-prototype/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          About this and prototype
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/01/25/use-generator-and-co-in-mocha/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">use generator and co in mocha</div>
+    <a href="/2017/03/15/sort-by-js/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">常见的10中排序方案的JS实现</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -315,7 +309,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="require" data-title="require()" data-url="http://yoursite.com/2017/01/26/require/"></div>
+	<div class="ds-thread" data-thread-key="cluster" data-title="cluster" data-url="http://yoursite.com/2017/03/21/cluster/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 
