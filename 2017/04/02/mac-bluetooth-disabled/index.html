@@ -6,30 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://yoursite.com">
-  <title>Bootstrap盒模型 | 王跳凯的blog</title>
+  <title>mac蓝牙不可用 | 王跳凯的blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="关于盒模型有两种方案，可以通过box-sizing来控制，关于盒模型其实两种方案都是表示有margin,border,’padding’,’conent’组成，唯一的区别在于一个Dom的width1到底是指那部分。
-1box-sizing: content-box;
-这时 width = content
-1box-sizing: border-box;
-这时 width = border + pa">
+  <meta name="description" content="mac开机以后有时候会出现蓝牙不可用的情况">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Bootstrap盒模型">
-<meta property="og:url" content="http://yoursite.com/2017/02/08/bootstrap-box-sizing/index.html">
+<meta property="og:title" content="mac蓝牙不可用">
+<meta property="og:url" content="http://yoursite.com/2017/04/02/mac-bluetooth-disabled/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
-<meta property="og:description" content="关于盒模型有两种方案，可以通过box-sizing来控制，关于盒模型其实两种方案都是表示有margin,border,’padding’,’conent’组成，唯一的区别在于一个Dom的width1到底是指那部分。
-1box-sizing: content-box;
-这时 width = content
-1box-sizing: border-box;
-这时 width = border + pa">
-<meta property="og:updated_time" content="2017-02-08T13:44:37.000Z">
+<meta property="og:description" content="mac开机以后有时候会出现蓝牙不可用的情况">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1077857-23973291d8c0c0b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-04-02T02:41:47.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Bootstrap盒模型">
-<meta name="twitter:description" content="关于盒模型有两种方案，可以通过box-sizing来控制，关于盒模型其实两种方案都是表示有margin,border,’padding’,’conent’组成，唯一的区别在于一个Dom的width1到底是指那部分。
-1box-sizing: content-box;
-这时 width = content
-1box-sizing: border-box;
-这时 width = border + pa">
+<meta name="twitter:title" content="mac蓝牙不可用">
+<meta name="twitter:description" content="mac开机以后有时候会出现蓝牙不可用的情况">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1077857-23973291d8c0c0b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
   
     <link rel="alternative" href="/atom.xml" title="王跳凯的blog" type="application/atom+xml">
   
@@ -154,20 +144,20 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            <article id="post-bootstrap-box-sizing" class="article article-type-post " itemscope itemprop="blogPost">
+            <article id="post-mac-bluetooth-disabled" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      Bootstrap盒模型
+      mac蓝牙不可用
     </h1>
   
 
         
-        <a href="/2017/02/08/bootstrap-box-sizing/" class="archive-article-date">
-  	<time datetime="2017-02-08T13:43:26.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-02-08</time>
+        <a href="/2017/04/02/mac-bluetooth-disabled/" class="archive-article-date">
+  	<time datetime="2017-04-02T02:36:20.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-04-02</time>
 </a>
         
       </header>
@@ -183,20 +173,18 @@
 
     <div class="article-entry" itemprop="articleBody">
       
-        <p>关于盒模型有两种方案，可以通过box-sizing来控制，关于盒模型其实两种方案都是表示有<code>margin</code>,<code>border</code>,’padding’,’conent’组成，唯一的区别在于一个Dom的width1到底是指那部分。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">box-sizing: content-box;</div></pre></td></tr></table></figure>
-<p>这时 width = content</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">box-sizing: border-box;</div></pre></td></tr></table></figure>
-<p>这时 width = border + padding + content<br><a id="more"></a></p>
-<p>但是这两个哪一个才是w3c标准盒模型呢，我一直以为是第二个，也是就<code>border-box</code>,因为好像一直是这么用的啊。起码看到bootstrap确实用了这个啊。</p>
-<p>但查看了MDN的文档才知道第一种才是w3c标准盒模型</p>
-<p>那么为什么bootstrap选择了<code>border-box</code></p>
-<p>对于这个Twitter在发布bootstrap3的时候的一篇<a href="http://blog.getbootstrap.com/2013/08/19/bootstrap-3-released/" target="_blank" rel="external">说明</a>提到了:</p>
-<blockquote>
-<p><strong>Better box model by default.</strong> Everything in Bootstrap gets box-sizing: border-box, making for easier sizing options and an enhanced grid system.</p>
-</blockquote>
-<p>可以看到之所以选择<code>border-box</code>是为了更加方便控制Dom的大小，也更加容易实现和使用栅格系统</p>
-<p>在栅格系统中，bootstrap3是通过百分比来控制Dom的大小，使用<code>border-box</code>只需要控制宽度即可，否者需要控制宽度和padding，实现上过于麻烦，而且padding容易被修改，一旦被修改就会影响其他的布局。所以bootstrap才选择了<code>border-box</code>作为框架的统一的盒模型。</p>
+        <p>mac开机以后有时候会出现蓝牙不可用的情况<br><img src="http://upload-images.jianshu.io/upload_images/1077857-23973291d8c0c0b0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<a id="more"></a>
+<h4 id="解决办法"><a href="#解决办法" class="headerlink" title="解决办法"></a>解决办法</h4><h5 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h5><ol>
+<li>断开所有的mac外接设备</li>
+<li>重启mac</li>
+</ol>
+<h5 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h5><p>这个办法主要是重置电源管理单元和系统NVRAM恢复出厂设置</p>
+<ol>
+<li>关机</li>
+<li>按下<code>power</code>键（开机键）,同时按住<code>option+command+p+r</code>,等待mac发出4声Duang~的开机音后松开，然后mac会正常开机</li>
+<li>蓝牙可用</li>
+</ol>
 
       
 
@@ -231,7 +219,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">css</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color4">mac</a>
         		</li>
       		
 		</ul>
@@ -287,7 +275,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/02/08/bootstrap-box-sizing/" alt="微信分享二维码">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2017/04/02/mac-bluetooth-disabled/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -301,18 +289,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2017/02/23/koa-middleware/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          Koa中间件（middleware）实现探索
-        
-      </div>
-    </a>
   
-  
-    <a href="/2017/02/08/apache-proxy-redirect/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Apache Proxy和Redirect(Proxy与Redirect冲突问题)</div>
+    <a href="/2017/03/21/cluster/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">cluster</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -326,7 +305,7 @@
   
   <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="bootstrap-box-sizing" data-title="Bootstrap盒模型" data-url="http://yoursite.com/2017/02/08/bootstrap-box-sizing/"></div>
+	<div class="ds-thread" data-thread-key="mac-bluetooth-disabled" data-title="mac蓝牙不可用" data-url="http://yoursite.com/2017/04/02/mac-bluetooth-disabled/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 
