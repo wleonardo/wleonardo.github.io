@@ -358,14 +358,14 @@
 
       
         
-          
-            <h3 id="查看linux版本"><a href="#查看linux版本" class="headerlink" title="查看linux版本"></a>查看linux版本</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">uname -a</div><div class="line">&gt; Linux LI 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:12 UTC 2014 i686 athlon i686 GNU/Linux</div><div class="line"></div><div class="line">// 仅仅查看内核版本</div><div class="line">uname -r</div><div class="line">&gt; 3.13.0-32-generic</div></pre></td></tr></table></figure>
-<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cat /proc/version </div><div class="line">&gt; Linux version 3.13.0-32-generic (buildd@roseapple) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #57-Ubuntu SMP Tue Jul 15 03:51:12 UTC 2014</div></pre></td></tr></table></figure>
-<h3 id="查看Ubuntu版本"><a href="#查看Ubuntu版本" class="headerlink" title="查看Ubuntu版本"></a>查看Ubuntu版本</h3><h4 id="方法一-1"><a href="#方法一-1" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cat /etc/issue</div><div class="line">&gt;  Ubuntu 14.04.2 LTS \n \l</div></pre></td></tr></table></figure>
-<h4 id="方法二-1"><a href="#方法二-1" class="headerlink" title="方法二"></a>方法二</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo lsb_release -a</div><div class="line">&gt; NO LSB modules are available.</div><div class="line">  Distributor ID: Ubuntu</div><div class="line">  Description: Ubuntu 14.04.2 LTS</div><div class="line">  Release: 14.04</div><div class="line">  Codename: trusty</div></pre></td></tr></table></figure>
-<h4 id="方法三："><a href="#方法三：" class="headerlink" title="方法三："></a>方法三：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cat /etc/lsb-release</div><div class="line">&gt; DISTRIB_ID=Ubuntu</div><div class="line">  DISTRIB_RELEASE=14.04</div><div class="line">  DISTRIB_CODENAME=trusty</div><div class="line">  DISTRIB_DESCRIPTION=&quot;Ubuntu 14.04.2 LTS&quot;</div></pre></td></tr></table></figure>
-
-          
+          <h3 id="查看linux版本"><a href="#查看linux版本" class="headerlink" title="查看linux版本"></a>查看linux版本</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/27/get-ubuntu-version/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -494,22 +494,14 @@
 
       
         
-          
-            <p><strong><a href="http://www.runoob.com/linux/linux-command-manual.html" target="_blank" rel="external">linux常用指令</a></strong></p>
-<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><a href="/2017/04/27/get-ubuntu-version/">查看Ubuntu版本</a></p>
-<h3 id="账户管理"><a href="#账户管理" class="headerlink" title="账户管理"></a>账户管理</h3><h4 id="显示当前账户"><a href="#显示当前账户" class="headerlink" title="显示当前账户"></a>显示当前账户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">whoami</div><div class="line">&gt; root</div></pre></td></tr></table></figure>
-<h4 id="新增账户"><a href="#新增账户" class="headerlink" title="新增账户"></a>新增账户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adduser [username]</div><div class="line"># useradd kk //添加用户kk</div></pre></td></tr></table></figure>
-<h4 id="切换账户"><a href="#切换账户" class="headerlink" title="切换账户"></a>切换账户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">su [usename]</div><div class="line">例子: su uftp</div><div class="line">      su root</div><div class="line">      su - root</div></pre></td></tr></table></figure>
-<p><code>su</code> 与 <code>su -</code>前者只是切换了root身份，但Shell环境仍然是普通用户的Shell；而后者连用户和Shell环境一起切换成root身份了。只有切换了Shell环境才不会出现PATH环境变量错误</p>
-<p>关于<code>su</code>与<code>sudo</code>的区别 ，<a href="http://fuwenchao.blog.51cto.com/6008712/1340685" target="_blank" rel="external">可以查看</a></p>
-<h3 id="apt-get"><a href="#apt-get" class="headerlink" title="apt-get"></a>apt-get</h3><p>ubuntu 源地址 <a href="http://wiki.ubuntu.org.cn/%E6%BA%90%E5%88%97%E8%A1%A8" target="_blank" rel="external">http://wiki.ubuntu.org.cn/%E6%BA%90%E5%88%97%E8%A1%A8</a></p>
-<p>ubuntu 源地址修改</p>
-<p>地址保存在/etc/apt/source.list中</p>
-<p>建议备份 cp ./source.list ./source.list_back</p>
-<h3 id="端口查询"><a href="#端口查询" class="headerlink" title="端口查询"></a>端口查询</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netstat -nat</div></pre></td></tr></table></figure>
-<p><a href="https://linux.cn/article-2434-1.html" target="_blank" rel="external">netstat详解</a></p>
-
-          
+          <p><strong><a href="http://www.runoob.com/linux/linux-command-manual.html">linux常用指令</a></strong><br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/27/linux/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
