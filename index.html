@@ -271,6 +271,422 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/27/get-ubuntu-version/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/27/get-ubuntu-version/" itemprop="url">
+                  查看Ubuntu版本
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-27T22:32:30+08:00">
+                2017-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/04/27/get-ubuntu-version/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2017/04/27/get-ubuntu-version/" class="cy_cmt_count" data-xid="2017/04/27/get-ubuntu-version/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="查看linux版本"><a href="#查看linux版本" class="headerlink" title="查看linux版本"></a>查看linux版本</h3><h4 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">uname -a</div><div class="line">&gt; Linux LI 3.13.0-32-generic #57-Ubuntu SMP Tue Jul 15 03:51:12 UTC 2014 i686 athlon i686 GNU/Linux</div><div class="line"></div><div class="line">// 仅仅查看内核版本</div><div class="line">uname -r</div><div class="line">&gt; 3.13.0-32-generic</div></pre></td></tr></table></figure>
+<h4 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cat /proc/version </div><div class="line">&gt; Linux version 3.13.0-32-generic (buildd@roseapple) (gcc version 4.8.2 (Ubuntu 4.8.2-19ubuntu1) ) #57-Ubuntu SMP Tue Jul 15 03:51:12 UTC 2014</div></pre></td></tr></table></figure>
+<h3 id="查看Ubuntu版本"><a href="#查看Ubuntu版本" class="headerlink" title="查看Ubuntu版本"></a>查看Ubuntu版本</h3><h4 id="方法一-1"><a href="#方法一-1" class="headerlink" title="方法一"></a>方法一</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cat /etc/issue</div><div class="line">&gt;  Ubuntu 14.04.2 LTS \n \l</div></pre></td></tr></table></figure>
+<h4 id="方法二-1"><a href="#方法二-1" class="headerlink" title="方法二"></a>方法二</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">sudo lsb_release -a</div><div class="line">&gt; NO LSB modules are available.</div><div class="line">  Distributor ID: Ubuntu</div><div class="line">  Description: Ubuntu 14.04.2 LTS</div><div class="line">  Release: 14.04</div><div class="line">  Codename: trusty</div></pre></td></tr></table></figure>
+<h4 id="方法三："><a href="#方法三：" class="headerlink" title="方法三："></a>方法三：</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">cat /etc/lsb-release</div><div class="line">&gt; DISTRIB_ID=Ubuntu</div><div class="line">  DISTRIB_RELEASE=14.04</div><div class="line">  DISTRIB_CODENAME=trusty</div><div class="line">  DISTRIB_DESCRIPTION=&quot;Ubuntu 14.04.2 LTS&quot;</div></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/27/linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/27/linux/" itemprop="url">
+                  linux
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-27T22:31:32+08:00">
+                2017-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/04/27/linux/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2017/04/27/linux/" class="cy_cmt_count" data-xid="2017/04/27/linux/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p><strong><a href="http://www.runoob.com/linux/linux-command-manual.html" target="_blank" rel="external">linux常用指令</a></strong></p>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p><a href="/2017/04/27/get-ubuntu-version/">查看Ubuntu版本</a></p>
+<h3 id="账户管理"><a href="#账户管理" class="headerlink" title="账户管理"></a>账户管理</h3><h4 id="显示当前账户"><a href="#显示当前账户" class="headerlink" title="显示当前账户"></a>显示当前账户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">whoami</div><div class="line">&gt; root</div></pre></td></tr></table></figure>
+<h4 id="新增账户"><a href="#新增账户" class="headerlink" title="新增账户"></a>新增账户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">adduser [username]</div><div class="line"># useradd kk //添加用户kk</div></pre></td></tr></table></figure>
+<h4 id="切换账户"><a href="#切换账户" class="headerlink" title="切换账户"></a>切换账户</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">su [usename]</div><div class="line">例子: su uftp</div><div class="line">      su root</div><div class="line">      su - root</div></pre></td></tr></table></figure>
+<p><code>su</code> 与 <code>su -</code>前者只是切换了root身份，但Shell环境仍然是普通用户的Shell；而后者连用户和Shell环境一起切换成root身份了。只有切换了Shell环境才不会出现PATH环境变量错误</p>
+<p>关于<code>su</code>与<code>sudo</code>的区别 ，<a href="http://fuwenchao.blog.51cto.com/6008712/1340685" target="_blank" rel="external">可以查看</a></p>
+<h3 id="apt-get"><a href="#apt-get" class="headerlink" title="apt-get"></a>apt-get</h3><p>ubuntu 源地址 <a href="http://wiki.ubuntu.org.cn/%E6%BA%90%E5%88%97%E8%A1%A8" target="_blank" rel="external">http://wiki.ubuntu.org.cn/%E6%BA%90%E5%88%97%E8%A1%A8</a></p>
+<p>ubuntu 源地址修改</p>
+<p>地址保存在/etc/apt/source.list中</p>
+<p>建议备份 cp ./source.list ./source.list_back</p>
+<h3 id="端口查询"><a href="#端口查询" class="headerlink" title="端口查询"></a>端口查询</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">netstat -nat</div></pre></td></tr></table></figure>
+<p><a href="https://linux.cn/article-2434-1.html" target="_blank" rel="external">netstat详解</a></p>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/27/vim-shortcut/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/04/27/vim-shortcut/" itemprop="url">
+                  vim快捷键
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-27T22:30:02+08:00">
+                2017-04-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/04/27/vim-shortcut/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://yoursite.com/2017/04/27/vim-shortcut/" class="cy_cmt_count" data-xid="2017/04/27/vim-shortcut/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>#VIM 快捷键<br><img src="http://feihu.me/img/posts/vim-cmd.png" alt=""></p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/04/27/vim-shortcut/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/04/02/mac-bluetooth-disabled/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1238,447 +1654,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/02/02/asyncing-feeling-about-javascript-generators/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="王跳凯">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王跳凯的blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/02/02/asyncing-feeling-about-javascript-generators/" itemprop="url">
-                  学习JavaScript中的异步Generator
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-02T18:21:08+08:00">
-                2017-02-02
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/02/02/asyncing-feeling-about-javascript-generators/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2017/02/02/asyncing-feeling-about-javascript-generators/" class="cy_cmt_count" data-xid="2017/02/02/asyncing-feeling-about-javascript-generators/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <blockquote>
-<p>原文：<a href="https://www.bignerdranch.com/blog/asyncing-feeling-about-javascript-generators/">https://www.bignerdranch.com/blog/asyncing-feeling-about-javascript-generators/</a></p>
-</blockquote>
-<p>你想看精简版本么 <a href="https://gist.github.com/nybblr/3af62797052c42f7090b4f8614b5e157">这里是所有三个例子的要点</a></p>
-<p><a href="https://github.com/tc39/proposal-async-iteration">异步的generators和异步iteration已经到来</a>! 这是错误的, 它们现在还在<a href="https://tc39.github.io/process-document/">阶段 3</a>，这表示他们很有可能在JavaScript未来的一个版本中发布。 在他们发布之前，你可以通过<a href="https://babeljs.io/repl/#?presets=stage-3">Babel</a>来在你的项目中使用还在阶段3的建议内容。</p>
-<p>网站基本上还是一些分散运行的应用，因为任何在语言上的修改都会造成永久的影响，所以所有的未来的版本都需要向后兼容。因此，被加入到ECMAScript标准的特性，它必须是十分的可靠，而且它的语法需要很优雅。</p>
-<p>考虑到这一点，我们希望异步generator和迭代器可以显著地影响我们如何构建今后的代码，同时也解决现在的问题。让我们开始了解异步generator是如何工作的，它在我们的正式开发中又会遇到什么样的问题。<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/02/02/asyncing-feeling-about-javascript-generators/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/31/Javascript-async-programming/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="王跳凯">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王跳凯的blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/31/Javascript-async-programming/" itemprop="url">
-                  Javascript异步编程
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-31T20:30:39+08:00">
-                2017-01-31
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/01/31/Javascript-async-programming/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2017/01/31/Javascript-async-programming/" class="cy_cmt_count" data-xid="2017/01/31/Javascript-async-programming/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>随着es6的发布和Babel的出现，对于异步编程，我们慢慢告别了之前回调地狱的问题，现在的我们有了更多的选择，例如：Promise， generator， async/await等方案。下面我们一一来了解一下：<br>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/31/Javascript-async-programming/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/28/modules/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="王跳凯">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王跳凯的blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/28/modules/" itemprop="url">
-                  modules
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-28T13:38:15+08:00">
-                2017-01-28
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/01/28/modules/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://yoursite.com/2017/01/28/modules/" class="cy_cmt_count" data-xid="2017/01/28/modules/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <ul>
-<li><a href="#toc_0">Modules</a><ul>
-<li><a href="#toc_1">访问main模块</a></li>
-<li><a href="#toc_2">另外：包管理器小提示</a></li>
-<li><a href="#toc_3">All Together</a></li>
-<li><a href="#toc_4">缓存</a></li>
-<li><a href="#toc_5">Module Caching Caveats（模块缓存警告）</a></li>
-<li><a href="#toc_6">Core Modules(核心模块)</a></li>
-<li><a href="#toc_7">Cycles(循环依赖)</a></li>
-<li><a href="#toc_8">File Modules(文件模块)</a></li>
-<li><a href="#toc_9">Folders as Modules(文件夹做为模块)</a></li>
-<li><a href="#toc_10">Loading from node_modules Folders(从node_modules文件夹中加载模块)</a></li>
-<li><a href="#toc_11">Loading from the global folders(从全局文件中导入模块)</a></li>
-<li><a href="#toc_12">The module wrapper(包裹模块)</a></li>
-<li><a href="#toc_13">The module Object(module对象)</a><ul>
-<li><a href="#toc_14">module.children</a></li>
-<li><a href="#toc_15">module.exports</a></li>
-<li><a href="#toc_16">exports alias(exports别名)</a></li>
-<li><a href="#toc_17">module.filename</a></li>
-<li><a href="#toc_18">module.id</a></li>
-<li><a href="#toc_19">module.loaded</a></li>
-<li><a href="#toc_20">module.parent</a></li>
-<li><a href="#toc_21">module.require(id)</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/28/modules/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1728,7 +1703,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">28</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1741,7 +1716,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">11</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
