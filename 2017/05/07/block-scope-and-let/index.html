@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="编程," />
+  <meta name="keywords" content="Javascript," />
 
 
 
@@ -87,16 +87,16 @@
 
 
 
-<meta name="description" content="semver规则">
+<meta name="description" content="在学习Javascript的一开始，我们就使用var来创建变量，随着ES6的发布，出现了一个一个新的创建变量的方式let，随着浏览器和node的快速支持以及babel的出现，我们已经可以正式使用let。在很多情况下用于比起使用var,let会更好，不只是在代码的稳定性还可以增加代码的可读性。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="semver">
-<meta property="og:url" content="http://yoursite.com/2017/01/27/semver/index.html">
+<meta property="og:title" content="块级作用域和let">
+<meta property="og:url" content="http://yoursite.com/2017/05/07/block-scope-and-let/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
-<meta property="og:description" content="semver规则">
-<meta property="og:updated_time" content="2017-01-27T07:18:20.000Z">
+<meta property="og:description" content="在学习Javascript的一开始，我们就使用var来创建变量，随着ES6的发布，出现了一个一个新的创建变量的方式let，随着浏览器和node的快速支持以及babel的出现，我们已经可以正式使用let。在很多情况下用于比起使用var,let会更好，不只是在代码的稳定性还可以增加代码的可读性。">
+<meta property="og:updated_time" content="2017-05-07T13:29:10.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="semver">
-<meta name="twitter:description" content="semver规则">
+<meta name="twitter:title" content="块级作用域和let">
+<meta name="twitter:description" content="在学习Javascript的一开始，我们就使用var来创建变量，随着ES6的发布，出现了一个一个新的创建变量的方式let，随着浏览器和node的快速支持以及babel的出现，我们已经可以正式使用let。在很多情况下用于比起使用var,let会更好，不只是在代码的稳定性还可以增加代码的可读性。">
 
 
 
@@ -124,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/01/27/semver/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/07/block-scope-and-let/"/>
 
 
 
 
 
-  <title> semver | 王跳凯的blog </title>
+  <title> 块级作用域和let | 王跳凯的blog </title>
   <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
 </head>
 
@@ -270,7 +270,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/27/semver/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/07/block-scope-and-let/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王跳凯">
@@ -291,7 +291,7 @@
             
             
               
-                semver
+                块级作用域和let
               
             
           </h1>
@@ -306,8 +306,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-27T15:17:50+08:00">
-                2017-01-27
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-07T20:32:51+08:00">
+                2017-05-07
               </time>
             
 
@@ -326,8 +326,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2017/01/27/semver/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/01/27/semver/" itemprop="commentsCount"></span>
+                <a href="/2017/05/07/block-scope-and-let/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/05/07/block-scope-and-let/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -353,7 +353,30 @@
       
 
       
-        <p><a href="http://semver.org/lang/zh-CN/" target="_blank" rel="external">semver规则</a></p>
+        <p>在学习Javascript的一开始，我们就使用var来创建变量，随着ES6的发布，出现了一个一个新的创建变量的方式<code>let</code>，随着浏览器和node的快速支持以及babel的出现，我们已经可以正式使用<code>let</code>。在很多情况下用于比起使用<code>var</code>,<code>let</code>会更好，不只是在代码的稳定性还可以增加代码的可读性。</p>
+<a id="more"></a>
+<p>我们在学习<code>let</code>的时候，经常会看到对于<code>let</code>的定义</p>
+<blockquote>
+<p>The let statement declares a block scope local variable，optionally initializing it to a value.(let语句声明一个块级作用域的本地变量，并且可选的赋予初始值。)   — <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/let" target="_blank" rel="external">let MDN</a></p>
+</blockquote>
+<p>显而易见的，<code>let</code>就是作用于块级作用域，那么我们首先来了解一下什么是块级作用域（block scope）。</p>
+<p>对于块级作用域MDN的定义是</p>
+<blockquote>
+<p>语句块 (或其他语言中的 复合语句) 用来组织零个或多条语句. 用一对花括号界定语句块.  — <a href="https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/block" target="_blank" rel="external">block MDN</a></p>
+</blockquote>
+<p>语法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[label:] &#123;</div><div class="line">  statement_1;</div><div class="line">  statement_2;</div><div class="line">  ...</div><div class="line">  statement_n;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>MDN对于语法的说明，给了我们一个说明，下面<code>while (x &lt; 10)</code>也是块级作用域的一部分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">while (x &lt; 10) &#123;</div><div class="line">  x++;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>所以简单来说let在<code>{}</code>以内或者在类似<code>while (x &lt; 10)</code>的<code>()</code>中定义的变量，不会被外层的作用域访问到，如下的例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">if (true) &#123;</div><div class="line">  let x = 2;</div><div class="line">&#125;</div><div class="line">console.log(x); // Uncaught ReferenceError: x is not defined</div></pre></td></tr></table></figure>
+<p>同时，我们看下面这个例子</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&apos;use strict&apos;;</div><div class="line"></div><div class="line">let a = 1;</div><div class="line"></div><div class="line">&#123;</div><div class="line">  let a = 2;</div><div class="line">  console.log(a) // 2</div><div class="line">&#125;</div><div class="line"></div><div class="line">let a = 1;</div></pre></td></tr></table></figure>
+<p>这段代码也很好理解，我要说的是，我们一开始申明了<code>&#39;use strict&#39;;</code>，表示我们使用了严格模式，我们两次定义了a变量，但是代码正常执行了，说明了<code>{}</code>产生了新的块作用域，所以代码正常执行了。</p>
+<p>另外对于<code>let</code>，我们可以看情况将其包裹在<code>{}</code>中，<strong>为变量显式声明块作用域</strong>，这样更加符合<code>let</code>的块级作用域的定义，也可以方便js的垃圾回收机制来判断是否需要回收，也可以增加代码的模块化和可读性，例子如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">function process(data) &#123;</div><div class="line">  // 在这里做点有趣的事情</div><div class="line">&#125;</div><div class="line">// 在这个块中定义的内容可以销毁了！</div><div class="line">&#123;</div><div class="line">  let someReallyBigData = &#123; .. &#125;;</div><div class="line"></div><div class="line">  process( someReallyBigData );</div><div class="line">&#125;</div><div class="line"></div><div class="line">// 做其他的事情</div></pre></td></tr></table></figure>
+<p>最后，我来解答一道网上经常看到的题目，题目和详细解答在我的另一篇文章中也有，我个人认为最好的答案是，只需要把<code>var</code>改为<code>let</code>,其实这道题目的本质在于<code>var</code>不是块级作用域，而我们的代码是写在块级作用域中的，所以我们需要一个块级作用域的变量声明，保证每个块级作用域都是不一样的变量，相互不影响，而<code>let</code>刚好。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">for ( let i=1; i&lt;=5; i++) &#123;</div><div class="line">  setTimeout( function timer() &#123;</div><div class="line">    console.log( i );</div><div class="line">  &#125;，i*1000 );</div><div class="line">&#125;</div><div class="line">// 相隔1s输出</div><div class="line">// 1</div><div class="line">// 2</div><div class="line">// 3</div><div class="line">// 4</div><div class="line">// 5</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -383,7 +406,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/编程/" rel="tag"># 编程</a>
+            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
           
         </div>
       
@@ -396,8 +419,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/27/node-js-best-practices-how-to-become-a-better-developer-in-2017/" rel="next" title="node-js-best-practices-how-to-become-a-better-developer-in-2017">
-                <i class="fa fa-chevron-left"></i> node-js-best-practices-how-to-become-a-better-developer-in-2017
+              <a href="/2017/05/05/mysql-bind-address/" rel="next" title="mysql绑定地址">
+                <i class="fa fa-chevron-left"></i> mysql绑定地址
               </a>
             
           </div>
@@ -405,10 +428,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/27/class-in-ES6/" rel="prev" title="class in ES6">
-                class in ES6 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
