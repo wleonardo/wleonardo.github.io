@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Javascript,算法," />
+  <meta name="keywords" content="Javascript," />
 
 
 
@@ -87,64 +87,25 @@
 
 
 
-<meta name="description" content="这段时间重新回顾了一下，算法的基础部分，排序，为了更好的理解排序，我使用JS实现了下面10种算法。
-
-实现的排序
-冒泡排序(bubble)
-插入排序(insert)
-快速排序(quick)
-选择排序(selection)
-归并排序(merge)
-希尔排序(shell)
-堆排序(heap)
-基数排序(radix)
-桶排序(bucket)
-计数排序(counting)
-
-
-
-具体的细节可以浏览sort">
+<meta name="description" content="当我们使用一段时间的JS之后会遇到下面这个问题
+10.1 + 0.2 === 0.3 // false
+我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。
+其实出现这样的问题在于js使用了IEEE754二进制浮点数算术标准，这个标准对于1/2, 1/4, 1/8等数字有很好的支持，其实这个标准也是现在大多数语言,CPU和">
 <meta property="og:type" content="article">
-<meta property="og:title" content="常见的10中排序方案的JS实现">
-<meta property="og:url" content="http://yoursite.com/2017/03/15/sort-by-js/index.html">
+<meta property="og:title" content="js浮点运算精度问题">
+<meta property="og:url" content="http://yoursite.com/2017/05/14/ieee754-and-js-float-point-calculation/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
-<meta property="og:description" content="这段时间重新回顾了一下，算法的基础部分，排序，为了更好的理解排序，我使用JS实现了下面10种算法。
-
-实现的排序
-冒泡排序(bubble)
-插入排序(insert)
-快速排序(quick)
-选择排序(selection)
-归并排序(merge)
-希尔排序(shell)
-堆排序(heap)
-基数排序(radix)
-桶排序(bucket)
-计数排序(counting)
-
-
-
-具体的细节可以浏览sort">
-<meta property="og:updated_time" content="2017-03-15T08:59:42.000Z">
+<meta property="og:description" content="当我们使用一段时间的JS之后会遇到下面这个问题
+10.1 + 0.2 === 0.3 // false
+我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。
+其实出现这样的问题在于js使用了IEEE754二进制浮点数算术标准，这个标准对于1/2, 1/4, 1/8等数字有很好的支持，其实这个标准也是现在大多数语言,CPU和">
+<meta property="og:updated_time" content="2017-05-14T07:09:06.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="常见的10中排序方案的JS实现">
-<meta name="twitter:description" content="这段时间重新回顾了一下，算法的基础部分，排序，为了更好的理解排序，我使用JS实现了下面10种算法。
-
-实现的排序
-冒泡排序(bubble)
-插入排序(insert)
-快速排序(quick)
-选择排序(selection)
-归并排序(merge)
-希尔排序(shell)
-堆排序(heap)
-基数排序(radix)
-桶排序(bucket)
-计数排序(counting)
-
-
-
-具体的细节可以浏览sort">
+<meta name="twitter:title" content="js浮点运算精度问题">
+<meta name="twitter:description" content="当我们使用一段时间的JS之后会遇到下面这个问题
+10.1 + 0.2 === 0.3 // false
+我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。
+其实出现这样的问题在于js使用了IEEE754二进制浮点数算术标准，这个标准对于1/2, 1/4, 1/8等数字有很好的支持，其实这个标准也是现在大多数语言,CPU和">
 
 
 
@@ -172,13 +133,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/03/15/sort-by-js/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/05/14/ieee754-and-js-float-point-calculation/"/>
 
 
 
 
 
-  <title> 常见的10中排序方案的JS实现 | 王跳凯的blog </title>
+  <title> js浮点运算精度问题 | 王跳凯的blog </title>
   <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
 </head>
 
@@ -318,7 +279,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/15/sort-by-js/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/05/14/ieee754-and-js-float-point-calculation/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王跳凯">
@@ -339,7 +300,7 @@
             
             
               
-                常见的10中排序方案的JS实现
+                js浮点运算精度问题
               
             
           </h1>
@@ -354,8 +315,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-15T16:58:40+08:00">
-                2017-03-15
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-14T13:34:37+08:00">
+                2017-05-14
               </time>
             
 
@@ -374,8 +335,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2017/03/15/sort-by-js/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/03/15/sort-by-js/" itemprop="commentsCount"></span>
+                <a href="/2017/05/14/ieee754-and-js-float-point-calculation/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/05/14/ieee754-and-js-float-point-calculation/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -401,26 +362,54 @@
       
 
       
-        <p>这段时间重新回顾了一下，算法的基础部分，排序，为了更好的理解排序，我使用JS实现了下面10种算法。</p>
-<ul>
-<li>实现的排序<ul>
-<li>冒泡排序(bubble)</li>
-<li>插入排序(insert)</li>
-<li>快速排序(quick)</li>
-<li>选择排序(selection)</li>
-<li>归并排序(merge)</li>
-<li>希尔排序(shell)</li>
-<li>堆排序(heap)</li>
-<li>基数排序(radix)</li>
-<li>桶排序(bucket)</li>
-<li>计数排序(counting)</li>
-</ul>
-</li>
-</ul>
-<p>具体的细节可以浏览<a href="https://github.com/wleonardo/sort" target="_blank" rel="external">sort.js</a></p>
+        <p>当我们使用一段时间的JS之后会遇到下面这个问题</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">0.1 + 0.2 === 0.3 // false</div></pre></td></tr></table></figure>
+<p>我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。</p>
+<p>其实出现这样的问题在于js使用了IEEE754二进制浮点数算术标准，这个标准对于1/2, 1/4, 1/8等数字有很好的支持，其实这个标准也是现在大多数语言,CPU和浮点计算器选择的浮点数算术标准。</p>
+<p>因为IEEE754是二进制的规则，所以可以看做用<code>n*2^m</code>这样的表示方式,这样的表达式在有限的存储空间下无法表示<code>n*10^m</code>类型数字，所以很简单的<code>0.1</code>无法被准确的表示。</p>
+<p>但是类似Java等很多语言在底层会对浮点预算有处理，所以看上去好像没有遇到JS中的问题</p>
 <blockquote>
-<p>现在未对内存使用做很好的优化，如果对内存要求比较高的话，还是推荐使用c语言来实现</p>
+<p>有人认为， JavaScript 应该采用一种可以精确呈现数字的实现方式。 一直以 来出现过很多替代方案，只是都没能成为标准，以后大概也不会。这个问题 看似简单，实则不然，否则早就解决了。</p>
 </blockquote>
+<p>为什么说在有限的存储空间下无法准确表示呢，那么让我们来了解一下IEEE754是如何来表示一个数字的吧。</p>
+<p>关于IEEE754有单精度和双精度两种方式，两个方式的计算规则都是一样的，只是单精度使用32位来存储一个数字，而双精度使用64位来存储，只是用于存储的位数的大小。</p>
+<p>关于IEEE754每位表示的意思，这里不详细说明，详细可以查看<a href="https://zh.wikipedia.org/wiki/IEEE_754" target="_blank" rel="external">wiki IEEE 754</a></p>
+<p>简单来说就是IEEE754对于数字的表达方式是<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">n = (-1)^s * 2^(e-127) * (1 + f)</div></pre></td></tr></table></figure></p>
+<p>(右边为第0位)<br>单精度 s : 第31位<br>      e : 第30至23位<br>      f : 第22指0位</p>
+<p>单精度 s : 第63位<br>      e : 第62至52位<br>      f : 第51指0位</p>
+<p>我们举一个例子来说明IEEE的表达方式</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">s</th>
+<th style="text-align:left">e</th>
+<th style="text-align:left">f</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">0</td>
+<td style="text-align:left">0111 1110</td>
+<td style="text-align:left">1100 0000 0000 0000 0000 000</td>
+</tr>
+</tbody>
+</table>
+<p>在这里s = 0，e转为10进制是126， f中左数第一位表示 <code>1 / 2^1</code>,第二位表示<code>1 / 2^2</code>,依次类推，所以在这里<code>f = 1 / 2^1 + 1 / 2^2 = 0.75</code>;</p>
+<p>所以 <code>n = (-1)^0 * 2^(126-127) * (1+0.75) = 0.875</code>;</p>
+<p>倒过来，如果我们给到的数字是23.56，那么首先我们先用二进制表示这个数字，为<code>10111.1000111101011100001</code>,然后我们将小数点移到前面只有一位数字，这里我们左移了4位<br>变成<code>1.01111000111101011100001</code>，然后除去第一位的<code>01111000111101011100001</code>填入22-0位，因为是正数，所以第31位为0，然后我们左移了4位，所以说明<code>(e-127) = 4</code>，所以<code>e=131</code>，转为二进制，所以第30至23位为<code>1000 0011</code>,从而得到了结果。</p>
+<p>下面我们来看一下ieee754中那个无法准确表达的0.1。<br>首先将0.1转为二进制，10进制转二进制可以在网上查到，在如果不考虑存储的话，应该是0.000110001100011…,可以看到是00011的无限循环，其实如果在存储长度没有限制的情况下，通过简单的计算我们可以看到这个无限循环就是等于0.1。</p>
+<blockquote>
+<p>000011 = 3 <em> 2 / (1 / 2^4), 等式为 3</em> 2 ( 1/2^4 + 1/2^8 … 1/2^4n)。<br>通过等比数列运算 s = 3 <em> 2 </em> (1/2^4) <em> (1- (1/2^4)^n) / (1 - 1 /2^4) = 3 </em> 2 * 1 / 15 = 0.1</p>
+</blockquote>
+<p>那么我们有什么办法可以在js中安全的使用浮点运算呢，可能说没有有完美的解决办法</p>
+<p>但是还是有一些简单的处理办法。</p>
+<p>对于计算，我们可以使用<code>toFixed</code>来处理<code>toFixed</code>是用来强制保留小数点后面的位数，可以用于大多数精度要求不是非常高的计算中</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(0.1 + 0.2).toFixed(2) // 0.30</div></pre></td></tr></table></figure>
+<p>最常见的方法是设置一个误差范围值， 通常称为“机器精度”（machine epsilon） ， 对<code>JavaScript</code>的数字来说，这个值通常是 <code>2^-52 (2.220446049250313e-16)</code> 。</p>
+<p>从 ES6 开始， 该值定义在 <code>Number.EPSILON</code>中， 我们可以直接拿来用， 也可以为 ES6 之前 的版本写 polyﬁll：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">if (!Number.EPSILON) &#123;</div><div class="line">  Number.EPSILON = Math.pow(2,-52);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以使用 <code>Number.EPSILON</code>来比较两个数字是否相等（在指定的误差范围内）：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">function numbersCloseEnoughToEqual(n1,n2) &#123;</div><div class="line">  return Math.abs( n1 - n2 ) &lt; Number.EPSILON;</div><div class="line">&#125;</div><div class="line"></div><div class="line">var a = 0.1 + 0.2;</div><div class="line">var b = 0.3;</div><div class="line"></div><div class="line">numbersCloseEnoughToEqual( a, b ); // true</div><div class="line">numbersCloseEnoughToEqual( 0.0000001, 0.0000002 ); // false</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -452,8 +441,6 @@
           
             <a href="/tags/Javascript/" rel="tag"># Javascript</a>
           
-            <a href="/tags/算法/" rel="tag"># 算法</a>
-          
         </div>
       
 
@@ -465,8 +452,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/27/if/" rel="next" title="IF, 三元表达式, || 的判断">
-                <i class="fa fa-chevron-left"></i> IF, 三元表达式, || 的判断
+              <a href="/2017/05/13/for-timeout/" rel="next" title="for-timeout">
+                <i class="fa fa-chevron-left"></i> for-timeout
               </a>
             
           </div>
@@ -475,8 +462,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/03/21/cluster/" rel="prev" title="cluster">
-                cluster <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/14/combining-fonts/" rel="prev" title="-转载-自定义组合字体">
+                -转载-自定义组合字体 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
