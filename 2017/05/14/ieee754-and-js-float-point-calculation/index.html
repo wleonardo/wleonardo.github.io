@@ -89,23 +89,20 @@
 
 <meta name="description" content="当我们使用一段时间的JS之后会遇到下面这个问题
 10.1 + 0.2 === 0.3 // false
-我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。
-其实出现这样的问题在于js使用了IEEE754二进制浮点数算术标准，这个标准对于1/2, 1/4, 1/8等数字有很好的支持，其实这个标准也是现在大多数语言,CPU和">
+我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="js浮点运算精度问题">
+<meta property="og:title" content="js浮点运算精度问题和IEEE754">
 <meta property="og:url" content="http://yoursite.com/2017/05/14/ieee754-and-js-float-point-calculation/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
 <meta property="og:description" content="当我们使用一段时间的JS之后会遇到下面这个问题
 10.1 + 0.2 === 0.3 // false
-我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。
-其实出现这样的问题在于js使用了IEEE754二进制浮点数算术标准，这个标准对于1/2, 1/4, 1/8等数字有很好的支持，其实这个标准也是现在大多数语言,CPU和">
-<meta property="og:updated_time" content="2017-05-14T07:09:06.000Z">
+我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。">
+<meta property="og:updated_time" content="2017-05-14T07:10:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="js浮点运算精度问题">
+<meta name="twitter:title" content="js浮点运算精度问题和IEEE754">
 <meta name="twitter:description" content="当我们使用一段时间的JS之后会遇到下面这个问题
 10.1 + 0.2 === 0.3 // false
-我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。
-其实出现这样的问题在于js使用了IEEE754二进制浮点数算术标准，这个标准对于1/2, 1/4, 1/8等数字有很好的支持，其实这个标准也是现在大多数语言,CPU和">
+我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。">
 
 
 
@@ -139,7 +136,7 @@
 
 
 
-  <title> js浮点运算精度问题 | 王跳凯的blog </title>
+  <title> js浮点运算精度问题和IEEE754 | 王跳凯的blog </title>
   <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
 </head>
 
@@ -300,7 +297,7 @@
             
             
               
-                js浮点运算精度问题
+                js浮点运算精度问题和IEEE754
               
             
           </h1>
@@ -364,8 +361,7 @@
       
         <p>当我们使用一段时间的JS之后会遇到下面这个问题</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">0.1 + 0.2 === 0.3 // false</div></pre></td></tr></table></figure>
-<p>我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。</p>
-<p>其实出现这样的问题在于js使用了IEEE754二进制浮点数算术标准，这个标准对于1/2, 1/4, 1/8等数字有很好的支持，其实这个标准也是现在大多数语言,CPU和浮点计算器选择的浮点数算术标准。</p>
+<p>我们可以在控制台里面看到0.1+0.2输出的并不是0.3而是0.30000000000000004。那么为什么出现这样的问题呢。<br><a id="more"></a><br>其实出现这样的问题在于js使用了IEEE754二进制浮点数算术标准，这个标准对于1/2, 1/4, 1/8等数字有很好的支持，其实这个标准也是现在大多数语言,CPU和浮点计算器选择的浮点数算术标准。</p>
 <p>因为IEEE754是二进制的规则，所以可以看做用<code>n*2^m</code>这样的表示方式,这样的表达式在有限的存储空间下无法表示<code>n*10^m</code>类型数字，所以很简单的<code>0.1</code>无法被准确的表示。</p>
 <p>但是类似Java等很多语言在底层会对浮点预算有处理，所以看上去好像没有遇到JS中的问题</p>
 <blockquote>
