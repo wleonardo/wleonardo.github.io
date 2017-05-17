@@ -95,7 +95,7 @@
 <meta property="og:site_name" content="王跳凯的blog">
 <meta property="og:description" content="arguments转数组1let args = Array.prototype.slice.call(arguments);
 判断是否是Generator1234// 来自于co,这里的判断前提是一个对象，所以传入的参数名是objfunction isGenerator(obj) &amp;#123;  return &amp;apos;function&amp;apos; == typeof obj.next &amp;amp">
-<meta property="og:updated_time" content="2017-05-07T14:44:37.000Z">
+<meta property="og:updated_time" content="2017-05-17T13:28:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="js-tips">
 <meta name="twitter:description" content="arguments转数组1let args = Array.prototype.slice.call(arguments);
@@ -358,6 +358,9 @@
       
         <h4 id="arguments转数组"><a href="#arguments转数组" class="headerlink" title="arguments转数组"></a><code>arguments</code>转数组</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">let args = Array.prototype.slice.call(arguments);</div></pre></td></tr></table></figure>
 <h4 id="判断是否是Generator"><a href="#判断是否是Generator" class="headerlink" title="判断是否是Generator"></a>判断是否是<code>Generator</code></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 来自于co,这里的判断前提是一个对象，所以传入的参数名是obj</div><div class="line">function isGenerator(obj) &#123;</div><div class="line">  return &apos;function&apos; == typeof obj.next &amp;&amp; &apos;function&apos; == typeof obj.throw;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<a id="more"></a>
+<h4 id="npm-publish"><a href="#npm-publish" class="headerlink" title="npm publish"></a>npm publish</h4><p>npm publish 时会将<code>.gitignore</code>改为<code>.npmignore</code></p>
+<h3 id="防止-Node-js-进程崩溃"><a href="#防止-Node-js-进程崩溃" class="headerlink" title="防止 Node.js 进程崩溃"></a>防止 Node.js 进程崩溃</h3><p>可以在 process 对象的 <code>uncaughtException</code> 事件上注册监听器。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">const myEmitter = new MyEmitter();</div><div class="line"></div><div class="line">process.on(&apos;uncaughtException&apos;, (err) =&gt; &#123;</div><div class="line">  console.error(&apos;有错误&apos;);</div><div class="line">&#125;);</div><div class="line"></div><div class="line">myEmitter.emit(&apos;error&apos;, new Error(&apos;whoops!&apos;));</div></pre></td></tr></table></figure></p>
 
       
     </div>
@@ -486,7 +489,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -554,7 +557,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#arguments转数组"><span class="nav-number">1.</span> <span class="nav-text">arguments转数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断是否是Generator"><span class="nav-number">2.</span> <span class="nav-text">判断是否是Generator</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#arguments转数组"><span class="nav-number">1.</span> <span class="nav-text">arguments转数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#判断是否是Generator"><span class="nav-number">2.</span> <span class="nav-text">判断是否是Generator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#npm-publish"><span class="nav-number">3.</span> <span class="nav-text">npm publish</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#防止-Node-js-进程崩溃"><span class="nav-number"></span> <span class="nav-text">防止 Node.js 进程崩溃</span></a></div>
             
 
           </div>
