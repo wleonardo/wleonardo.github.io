@@ -1,0 +1,849 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文：https://www.bignerdranch.com/blog/asyncing-feeling-about-javascript-generators/
+
+你想看精简版本么 这里是所有三个例子的要点
+异步的generators和异步iteration已经到来! 这是错误的, 它们现在还在阶段 3，这表示他们很有可能在JavaScript未来的一个版本中发布。 在他们发布之前，你可以通">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习JavaScript中的异步Generator">
+<meta property="og:url" content="http://wangyuekai.com/2017/02/02/asyncing-feeling-about-javascript-generators/index.html">
+<meta property="og:site_name" content="王跳凯的blog">
+<meta property="og:description" content="原文：https://www.bignerdranch.com/blog/asyncing-feeling-about-javascript-generators/
+
+你想看精简版本么 这里是所有三个例子的要点
+异步的generators和异步iteration已经到来! 这是错误的, 它们现在还在阶段 3，这表示他们很有可能在JavaScript未来的一个版本中发布。 在他们发布之前，你可以通">
+<meta property="og:updated_time" content="2017-02-05T04:01:04.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习JavaScript中的异步Generator">
+<meta name="twitter:description" content="原文：https://www.bignerdranch.com/blog/asyncing-feeling-about-javascript-generators/
+
+你想看精简版本么 这里是所有三个例子的要点
+异步的generators和异步iteration已经到来! 这是错误的, 它们现在还在阶段 3，这表示他们很有可能在JavaScript未来的一个版本中发布。 在他们发布之前，你可以通">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wangyuekai.com/2017/02/02/asyncing-feeling-about-javascript-generators/"/>
+
+
+
+
+
+  <title> 学习JavaScript中的异步Generator | 王跳凯的blog </title>
+  <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
+  <meta name="google-site-verification" content="qWJ2I33b2z3aL2XF4jrAarApua4GQpFVMashz57sIDY" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?53c86d9133e15af360d3d19fb25bffbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王跳凯的blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/02/02/asyncing-feeling-about-javascript-generators/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                学习JavaScript中的异步Generator
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-02T18:21:08+08:00">
+                2017-02-02
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/02/02/asyncing-feeling-about-javascript-generators/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/02/02/asyncing-feeling-about-javascript-generators/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文：<a href="https://www.bignerdranch.com/blog/asyncing-feeling-about-javascript-generators/" target="_blank" rel="external">https://www.bignerdranch.com/blog/asyncing-feeling-about-javascript-generators/</a></p>
+</blockquote>
+<p>你想看精简版本么 <a href="https://gist.github.com/nybblr/3af62797052c42f7090b4f8614b5e157" target="_blank" rel="external">这里是所有三个例子的要点</a></p>
+<p><a href="https://github.com/tc39/proposal-async-iteration" target="_blank" rel="external">异步的generators和异步iteration已经到来</a>! 这是错误的, 它们现在还在<a href="https://tc39.github.io/process-document/" target="_blank" rel="external">阶段 3</a>，这表示他们很有可能在JavaScript未来的一个版本中发布。 在他们发布之前，你可以通过<a href="https://babeljs.io/repl/#?presets=stage-3" target="_blank" rel="external">Babel</a>来在你的项目中使用还在阶段3的建议内容。</p>
+<p>网站基本上还是一些分散运行的应用，因为任何在语言上的修改都会造成永久的影响，所以所有的未来的版本都需要向后兼容。因此，被加入到ECMAScript标准的特性，它必须是十分的可靠，而且它的语法需要很优雅。</p>
+<p>考虑到这一点，我们希望异步generator和迭代器可以显著地影响我们如何构建今后的代码，同时也解决现在的问题。让我们开始了解异步generator是如何工作的，它在我们的正式开发中又会遇到什么样的问题。<br><a id="more"></a></p>
+<h2 id="总结-异步的Generators是如何工作的呢"><a href="#总结-异步的Generators是如何工作的呢" class="headerlink" title="总结: 异步的Generators是如何工作的呢"></a>总结: 异步的Generators是如何工作的呢</h2><p>简而言之，异步的generators和普通的generator函数很像，但是它可以yield Promises。如果你想很了解ES2015的generator函数，那么可以先去看一下Chris Aquino的<a href="https://www.bignerdranch.com/blog/generators-rick-astley-and-the-sequence-of-fibonacci/" target="_blank" rel="external">博客</a>，再去看一下Jafar Husain的一篇<a href="https://www.youtube.com/watch?v=lil4YCCXRYc" target="_blank" rel="external">异步编程</a>的很棒的演讲</p>
+<p>总的来说，普通的generator函数基本上就是一个<a href="https://en.wikipedia.org/wiki/Iterator_pattern" target="_blank" rel="external">迭代器</a>和<a href="https://en.wikipedia.org/wiki/Observer_pattern" target="_blank" rel="external">观察者</a> 模式的集合。generator是一个可以中止的函数，你可以通过调用<code>.next()</code>来一步步执行。可以同通过<code>.next()</code>来多次从generator输出内容，也可以通过<code>.next(valueToPush)</code>来多次传入参数。这种双向的接口可以使你通过一种语法同时完成迭代器和观察者的功能!</p>
+<p>当然generators也有它的缺点:它在调用<code>.next()</code>的时候必须立即（同步）返回数据。换句话来说，就是代码在调用<code>.next()</code>的时候就需要得到数据。在generator需要时能够生成新数据的情况下是可以的，但是没有办法处理迭代一个异步的（或者临时的）数据来源，它们需要自己控制在下一次数据准备好的时候执行下一次。</p>
+<p>WebSocket消息机制就是一个很好的异步获取数据的例子。如果我们已经接收到了所有的数据，那么我们当然可以同步地遍历它们。但是，我们也可能会遇到我们并不知道什么时候会接收到数据，所以我们需要一个机制去等待数据接收完成后去遍历。异步generators和异步迭代器可以让我们做到这个。</p>
+<p><strong>简单的来说就是：</strong>generator函数适用于数据可以被使用者控制的情况，异步generators适用于允许数据源本身控制的情况。</p>
+<h2 id="一个简单的例子-生成和使用AsyncGenerator"><a href="#一个简单的例子-生成和使用AsyncGenerator" class="headerlink" title="一个简单的例子: 生成和使用AsyncGenerator"></a>一个简单的例子: 生成和使用AsyncGenerator</h2><p>让我们用一个例子来练习我们的异步方案。我们需要编写一个异步的generator函数，它可以重复的等待一个随机的毫秒数后生成一个新的数字。在几秒钟中时间里，它可能会从0开始生成5个左右的数字。首先我们先通过创建一个Promise来创建一个定时器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 创建一个Promise，并在ms后resolves</div><div class="line">var timer = function(ms) &#123;</div><div class="line">  return new Promise(resolve =&gt; &#123;</div><div class="line">    setTimeout(resolve, ms);</div><div class="line">  &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>运行<code>timer(5000)</code>会返回一个Promise，并且会在5秒后resolve。现在我们可以写一个异步generator：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">// Repeatedly generate a number starting</div><div class="line">// from 0 after a random amount of time</div><div class="line">var source = async function\*() &#123;</div><div class="line">  var i = 0;</div><div class="line">  while (true) &#123;</div><div class="line">    await timer(Math.random() \* 1000);</div><div class="line">    yield i++;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>如此复杂的功能却可以写的如此优雅！我们的异步generator函数等待一个随机的时间后<code>yield</code>并减小i的值。如果我们没有异步generator，我们可以像下面一样使用普通的generator函数，通过<code>yield</code>Promises来实现:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var source = function\*() &#123;</div><div class="line">  var i = 0;</div><div class="line">  while (true) &#123;</div><div class="line">    yield timer(Math.random() \* 1000)</div><div class="line">      .then(() =&gt; i++);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>当然，这里还有一些特殊情况和引用需要我们处理，所以最好有一个专门的函数类型！现在是时候编写使用代码了;因为我们需要<code>await</code>操作符，所以我们将会创建一个异步的<code>run()</code>函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">// 把所有都集合到一起</div><div class="line">var run = async function() &#123;</div><div class="line">  var stream = source();</div><div class="line">  for await (let n of stream) &#123;</div><div class="line">    console.log(n);</div><div class="line">  &#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">run();</div><div class="line">// =&gt; 0</div><div class="line">// =&gt; 1</div><div class="line">// =&gt; 2</div><div class="line">// =&gt; 3</div><div class="line">// ...</div></pre></td></tr></table></figure>
+<p>这是多么神奇，只有20行不到的代码。首先，我们先运行了异步generator函数<code>source</code>，它返回了一个特殊的<code>AsyncGenerator</code>对象。然后，我们使用一个语法上叫“异步迭代”的<code>for await...of</code>循环遍历<code>source</code>生成的对象。</p>
+<p><strong>但是我们还可以再改进一下:</strong> 假设我们是想要输出<code>source</code>生成的数字。我们可以在<code>for await...of</code>循环里面直接输出它们，但是我们最好在循环的外面“转换”stream 的值，像是使用<code>.map()</code>一样来转换数组里的值。它是如此的简单：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// Return a new async iterator that applies a</div><div class="line">// transform to the values from another async generator</div><div class="line">var map = async function\*(stream, transform) &#123;</div><div class="line">  for await (let n of stream) &#123;</div><div class="line">    yield transform(n);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>接下来我们只需要再往<code>run()</code>函数中加一行代码就好了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"> // Tie everything together</div><div class="line"> var run = async function() &#123;</div><div class="line">   var stream = source();</div><div class="line">+  // Square values generated by source() as they arrive</div><div class="line">+  stream = map(stream, n =&gt; n \* n);</div><div class="line">   for await (let n of stream) &#123;</div><div class="line">     console.log(n);</div><div class="line">   &#125;</div><div class="line"> &#125;;</div></pre></td></tr></table></figure>
+<p>当我们运行 <code>run()</code>就会输出：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">// =&gt; 0</div><div class="line">// =&gt; 1</div><div class="line">// =&gt; 4</div><div class="line">// =&gt; 9</div><div class="line">// ...</div></pre></td></tr></table></figure>
+<p>多么感人啊！但是只是用于计算数字有一点大材小用了。</p>
+<h2 id="中级例子-在WebSockets中使用AsyncIterator（异步迭代器）"><a href="#中级例子-在WebSockets中使用AsyncIterator（异步迭代器）" class="headerlink" title="中级例子: 在WebSockets中使用AsyncIterator（异步迭代器）"></a>中级例子: 在WebSockets中使用AsyncIterator（异步迭代器）</h2><p>我们一般是通过绑定事件来监听WebSocket的数据：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">var ws = new WebSocket(&apos;ws://localhost:3000/&apos;);</div><div class="line">ws.addEventListener(&apos;message&apos;, event =&gt; &#123;</div><div class="line">  console.log(event.data);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>但是如果可以把WebSocket的信息当做stream，这样就可以用我们上面的办法“iterate”这些信息。不幸的是，WebSockets还没有异步迭代器的功能，但是我们只需要写短短的几行就可以自己来实现这个功能。我们的<code>run()</code>函数大概的样子如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">// Tie everything together</div><div class="line">var run = async () =&gt; &#123;</div><div class="line">  var ws = new WebSocket(&apos;ws://localhost:3000/&apos;);</div><div class="line">  for await (let message of ws) &#123;</div><div class="line">    console.log(message);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>Now for that polyfill.你可能会回忆起<a href="https://www.bignerdranch.com/blog/generators-rick-astley-and-the-sequence-of-fibonacci/" target="_blank" rel="external">Chris Aquino’s blog series</a>中写到的内容，一个对象要使用<code>for...of</code>循环，必须要有<code>Symbol.iterator</code>属性。同样的，一个对象要想使用<code>for await...of</code>循环，它必须要有<code>Symbol.asyncIterator</code>属性。下面就是具体的实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// Add an async iterator to all WebSockets</div><div class="line">WebSocket.prototype[Symbol.asyncIterator] = async function\*() &#123;</div><div class="line">  while(this.readyState !== 3) &#123;</div><div class="line">    yield (await oncePromise(this, &apos;message&apos;)).data;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这个异步迭代器会等待接受信息，然后会对WebSocket的<code>MessageEvent</code>返回的数据的<code>data</code>属性进行<code>yield</code>。<code>oncePromise()</code>函数有一点黑科技：它返回了一个Promise，当事件触发时它会被resolves，然后立即移除事件监听。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">// Generate a Promise that listens only once for an event</div><div class="line">var oncePromise = (emitter, event) =&gt; &#123;</div><div class="line">  return new Promise(resolve =&gt; &#123;</div><div class="line">    var handler = (...args) =&gt; &#123;</div><div class="line">      emitter.removeEventListener(event, handler);</div><div class="line">      resolve(...args);</div><div class="line">    &#125;;</div><div class="line">    emitter.addEventListener(event, handler);</div><div class="line">  &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>这样看上去有一点低效，但是证明了websocket的信息接收确实可以用我们的异步迭代器实现。如果你在<a href="http://localhost:3000" target="_blank" rel="external">http://localhost:3000</a> 有一个运行的WebSocket服务，那么你可以通过调用<code>run()</code>来监听信息流：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">run();</div><div class="line">// =&gt; &quot;hello&quot;</div><div class="line">// =&gt; &quot;sandwich&quot;</div><div class="line">// =&gt; &quot;otters&quot;</div><div class="line">// ...</div></pre></td></tr></table></figure>
+<h2 id="高级例子-重写-RxJS"><a href="#高级例子-重写-RxJS" class="headerlink" title="高级例子: 重写 RxJS"></a>高级例子: 重写 RxJS</h2><p>现在是时候面对最后的挑战了。<a href="https://en.wikipedia.org/wiki/Functional_reactive_programming" target="_blank" rel="external">反应型函数编程</a> (FRP)在UI编程和JavaScript中被大量使用， <a href="http://reactivex.io/rxjs/manual/overview.html" target="_blank" rel="external">RxJS</a>是这种编程方式中最流行的框架。RxJS中模型事件来源例如Observable–它们很想一个一个事件流或者lazy array，它们可以被类似数组语法中的<code>map()</code>和<code>filter()</code>处理。</p>
+<p>自从FRP补充了JavaScript中的非阻塞式理念，<a href="https://github.com/tc39/proposal-observable" target="_blank" rel="external">类RxJS的API</a>很有可能会加入到JavaScript未来的一个版本中。同时，我们可以使用异步generators编写我们自己的类似RxJS的功能，而这仅仅只需要80行代码。下面就是我们要实现的目标：</p>
+<ol>
+<li><p>监听所有的点击事件</p>
+</li>
+<li><p>过滤点击事件只获取点击anchor标签的事件</p>
+</li>
+<li><p>只允许不同的点击Only allow distinct clicks</p>
+</li>
+<li><p>将点击事件映射到点击计数器和点击事件</p>
+</li>
+<li><p>每500ms只可以触发一次点击</p>
+</li>
+<li><p>打印点击的次数和事件</p>
+</li>
+</ol>
+<p>这些问题都是RxJS解决了的问题，所以我们将要尝试重新实现。下面是我们的实现：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">// Tie everything together</div><div class="line">var run = async () =&gt; &#123;</div><div class="line">  var i = 0;</div><div class="line">  var clicks = streamify(&apos;click&apos;, document.querySelector(&apos;body&apos;));</div><div class="line"></div><div class="line">  clicks = filter(clicks, e =&gt; e.target.matches(&apos;a&apos;));</div><div class="line">  clicks = distinct(clicks, e =&gt; e.target);</div><div class="line">  clicks = map(clicks, e =&gt; [i++, e]);</div><div class="line">  clicks = throttle(clicks, 500);</div><div class="line"></div><div class="line">  subscribe(clicks, ([ id, click ]) =&gt; &#123;</div><div class="line">    console.log(id);</div><div class="line">    console.log(click);</div><div class="line">    click.preventDefault();</div><div class="line">  &#125;);</div><div class="line">&#125;;</div><div class="line"></div><div class="line">run();</div></pre></td></tr></table></figure>
+<p>为了使上面的函数正常运行，我们还需要6个函数：<code>streamify()</code>, <code>filter()</code>, <code>distinct()</code>, <code>map()</code>, <code>throttle()</code> 和 <code>subscribe()</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 把所有的event emitter放入一个stream</div><div class="line">var streamify = async function\*(event, element) &#123;</div><div class="line">  while (true) &#123;</div><div class="line">    yield await oncePromise(element, event);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><code>streamify()</code> 像是一个WebSocket异步迭代器： <code>oncePromise()</code> 使用 <code>.addEventListener()</code> 去监听事件一次, 然后resolves Promise. 通过<code>while (true)</code>循环 , 我们可以一直监听事件。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">// Only pass along events that meet a condition</div><div class="line">var filter = async function\*(stream, test) &#123;</div><div class="line">  for await (var event of stream) &#123;</div><div class="line">    if (test(event)) &#123;</div><div class="line">      yield event;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><code>filter()</code> 会只允许通过test的事件被 <code>yield</code>. <code>map()</code>几乎是相同的:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// Transform every event of the stream</div><div class="line">var map = async function\*(stream, transform) &#123;</div><div class="line">  for await (var event of stream) &#123;</div><div class="line">    yield transform(event);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p><code>map()</code>可以简单地在yield之前变换事件。<code>distinct()</code>展示了异步generator的其中一个强大的功能：它可以保存局部变量!</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">var identity = e =&gt; e;</div><div class="line"></div><div class="line">// 只允许与最后一个不相同的事件通过</div><div class="line">var distinct = async function\*(stream, extract = identity) &#123;</div><div class="line">  var lastVal;</div><div class="line">  var thisVal;</div><div class="line">  for await (var event of stream) &#123;</div><div class="line">    thisVal = extract(event);</div><div class="line">    if (thisVal !== lastVal) &#123;</div><div class="line">      lastVal = thisVal;</div><div class="line">      yield event;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>最后，强大的<code>throttle()</code>函数和<code>distinct()</code>很像：它记录最后一个事件的时间，且只允许超过最后一次<code>yield</code>事件一个确定的时间的事件通过。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">// 只允许超过最后一次事件确定时间的事件通过。</div><div class="line">var throttle = async function\*(stream, delay) &#123;</div><div class="line">  var lastTime;</div><div class="line">  var thisTime;</div><div class="line">  for await (var event of stream) &#123;</div><div class="line">    thisTime = (new Date()).getTime();</div><div class="line">    if (!lastTime || thisTime - lastTime &gt; delay) &#123;</div><div class="line">      lastTime = thisTime;</div><div class="line">      yield event;</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>我们做了这么多，最后，我们还需要打印出每次的点击事件和当前的次数。<code>subscribe()</code>做了一些零碎的事情：它在每一次事件循环的时候运行，并执行callback，所以没有必要使用<code>yield</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">// 每次事件到达都调用一次回调函数</div><div class="line">var subscribe = async (stream, callback) =&gt; &#123;</div><div class="line">  for await (var event of stream) &#123;</div><div class="line">    callback(event);</div><div class="line">  &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>到这里，我们已经写了一个我们自己的反应型函数式管道！</p>
+<p>你可以在<a href="https://gist.github.com/nybblr/3af62797052c42f7090b4f8614b5e157" target="_blank" rel="external">这里</a>获取到所有的例子的代码和要点。</p>
+<h2 id="挑战"><a href="#挑战" class="headerlink" title="挑战"></a>挑战</h2><p>异步generators是如此的优雅。而generator函数允许我们从迭代器中回去数据，异步generators可以让我们迭代“推送”过来的数据。这是多么好的异步数据结构的抽象。当然，也有一些注意事项。</p>
+<p>首先，对一个objects增加支持<code>for await...of</code>的功能有一些粗糙，除非你可以避免使用<code>yield</code>和<code>await</code>。尤其是，使用<code>.addEventListener（）</code>转换任何东西都很棘手，因为你不可以在一个回调中使用<code>yield</code>操作:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">var streamify = async function\*(event, element) &#123;</div><div class="line">  element.addEventListener(event, e =&gt; &#123;</div><div class="line">    // 这里将无法运行，因为yield</div><div class="line">    // 不可以在一个普通函数中被使用</div><div class="line">    yield e;</div><div class="line">  &#125;);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>同样的，你也不可以在<code>.forEach()</code>和其他函数型的方法中使用<code>yield</code>。这是一个固有的限制因为我们不能保证在generator已经完成后不使用<code>yield</code>。</p>
+<p>为了绕过这个问题，我们写了一个<code>oncePromise()</code>函数来帮组我们。撇开一些潜在的性能问题，需要注意的是Promise的回调总是在当前的调用堆栈结束之后执行。在浏览器端，类似<a href="https://jakearchibald.com/2015/tasks-microtasks-queues-and-schedules/" target="_blank" rel="external">microtasks</a>一样运行Promise的回调是不会出现问题的，但是一些Promise的polyfill在下一次事件循环运行之前是不会运行callback。因此，调用<code>.preventDefault()</code>函数有时候会没有有效果，因为可能DOM时间已经冒泡到浏览器了。</p>
+<p>JavaScript现在已经有了多个异步流数据类型：<code>Stream</code>, <code>AsyncGenerator</code>和最后的<code>Observable</code>。虽然三个都是属于“推送”数据源，但是在处理回调和控制底层资源上还是有一些微妙的语义上的不同。如果你想了解更多关于反应函数式语法的细节，可以浏览<a href="https://github.com/kriskowal/gtor" target="_blank" rel="external">General Theory of Reactivity</a>.</p>
+<h2 id="更多"><a href="#更多" class="headerlink" title="更多"></a>更多</h2><p>在程序语言的竞赛中，JavaScript不是一个懒鬼。ES2015中的变量的解构赋值，ES2016中的异步函数，而现在的异步迭代器可以使JavaScript使用优雅的解决复杂UI和I/O编程的问题而不是使用充满不可控的多线程方案。</p>
+<p>除此之外，还有很多的新内容和新特性！所以请关注博客和<a href="https://github.com/tc39/proposals" target="_blank" rel="external">TC39 proposals repo</a>来获取最新的好东西。同时，你也可以通过<a href="https://babeljs.io/repl/#?presets=stage-3" target="_blank" rel="external">在Babel中开启Stage 3 提案</a>的方式在你的代码中使用异步generator函数。</p>
+<p><strong>你是否有兴趣学习网页平台的下一代的JavaScript?</strong> 欢迎来我们的<a href="https://www.bignerdranch.com/training/courses/front-end-essentials/" target="_blank" rel="external">前端训练营</a>, 或者 <a href="https://www.bignerdranch.com/training/corporate-training/" target="_blank" rel="external">我们可以提供企业培训g</a>!</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/31/Javascript-async-programming/" rel="next" title="Javascript异步编程">
+                <i class="fa fa-chevron-left"></i> Javascript异步编程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/02/08/apache-proxy-redirect/" rel="prev" title="Apache Proxy和Redirect(Proxy与Redirect冲突问题)">
+                Apache Proxy和Redirect(Proxy与Redirect冲突问题) <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400"
+               alt="王跳凯" />
+          <p class="site-author-name" itemprop="name">王跳凯</p>
+           
+              <p class="site-description motion-element" itemprop="description">读书的目的不只是找到一个和你想法相同的人，更重要的是看到和自己不一样的人生和想法</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wleonardo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:wang861622836@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-open-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#总结-异步的Generators是如何工作的呢"><span class="nav-number">1.</span> <span class="nav-text">总结: 异步的Generators是如何工作的呢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一个简单的例子-生成和使用AsyncGenerator"><span class="nav-number">2.</span> <span class="nav-text">一个简单的例子: 生成和使用AsyncGenerator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#中级例子-在WebSockets中使用AsyncIterator（异步迭代器）"><span class="nav-number">3.</span> <span class="nav-text">中级例子: 在WebSockets中使用AsyncIterator（异步迭代器）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高级例子-重写-RxJS"><span class="nav-number">4.</span> <span class="nav-text">高级例子: 重写 RxJS</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#挑战"><span class="nav-number">5.</span> <span class="nav-text">挑战</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#更多"><span class="nav-number">6.</span> <span class="nav-text">更多</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-shower"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王跳凯</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysWOgUkv';
+      var conf = '9302b736bbb333914237d54917548624';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

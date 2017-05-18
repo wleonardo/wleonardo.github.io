@@ -1,0 +1,940 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="转载,html," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="本文转载自：众成翻译译者：msmailcode链接：http://www.zcfy.cc/article/2838原文：https://github.com/joshbuchea/HEAD?utm_source=statuscode&amp;amp;utm_medium=medium
+
+HEAD可以在你文档的head标签中使用的所有内容的清单。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="转载一份清单：所有可以放进head标签的元素">
+<meta property="og:url" content="http://wangyuekai.com/2017/05/18/head-element/index.html">
+<meta property="og:site_name" content="王跳凯的blog">
+<meta property="og:description" content="本文转载自：众成翻译译者：msmailcode链接：http://www.zcfy.cc/article/2838原文：https://github.com/joshbuchea/HEAD?utm_source=statuscode&amp;amp;utm_medium=medium
+
+HEAD可以在你文档的head标签中使用的所有内容的清单。">
+<meta property="og:updated_time" content="2017-05-18T14:08:10.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="转载一份清单：所有可以放进head标签的元素">
+<meta name="twitter:description" content="本文转载自：众成翻译译者：msmailcode链接：http://www.zcfy.cc/article/2838原文：https://github.com/joshbuchea/HEAD?utm_source=statuscode&amp;amp;utm_medium=medium
+
+HEAD可以在你文档的head标签中使用的所有内容的清单。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wangyuekai.com/2017/05/18/head-element/"/>
+
+
+
+
+
+  <title> 转载一份清单：所有可以放进head标签的元素 | 王跳凯的blog </title>
+  <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
+  <meta name="google-site-verification" content="qWJ2I33b2z3aL2XF4jrAarApua4GQpFVMashz57sIDY" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?53c86d9133e15af360d3d19fb25bffbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王跳凯的blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/05/18/head-element/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                转载一份清单：所有可以放进head标签的元素
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-18T22:05:34+08:00">
+                2017-05-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/05/18/head-element/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/05/18/head-element/" itemprop="commentsCount"></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>本文转载自：<a href="http://www.zcfy.cc" target="_blank" rel="external">众成翻译</a><br>译者：<a href="http://www.zcfy.cc/@msmailcode" target="_blank" rel="external">msmailcode</a><br>链接：<a href="http://www.zcfy.cc/article/2838" target="_blank" rel="external">http://www.zcfy.cc/article/2838</a><br>原文：<a href="https://github.com/joshbuchea/HEAD?utm_source=statuscode&amp;utm_medium=medium" target="_blank" rel="external">https://github.com/joshbuchea/HEAD?utm_source=statuscode&amp;utm_medium=medium</a></p>
+</blockquote>
+<h1 id="HEAD"><a href="#HEAD" class="headerlink" title="HEAD"></a><a href="#head"></a>HEAD</h1><p>可以在你文档的head标签中使用的所有内容的清单。</p>
+<a id="more"></a>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a><a href="#table-of-contents"></a>目录</h2><ul>
+<li><p><a href="#-recommended-minimum-">Recommended Minimum</a></p>
+</li>
+<li><p><a href="#-elements-elements">Elements</a></p>
+</li>
+<li><p><a href="#-meta-meta">Meta</a></p>
+</li>
+<li><p><a href="#-link-link">Link</a></p>
+<ul>
+<li><a href="#-favicons-favicons">Favicons</a></li>
+</ul>
+</li>
+<li><p><a href="#-social-social-">Social</a></p>
+<ul>
+<li><p><a href="#-facebook-open-graph-facebook-open-graph">Facebook Open Graph</a></p>
+</li>
+<li><p><a href="#-facebook-instant-articles-facebook-instant-articles">Facebook Instant Articles</a></p>
+</li>
+<li><p><a href="#-twitter-cards-twitter-cards">Twitter Cards</a></p>
+</li>
+<li><p><a href="#-google-schemaorg-google-schema-org">Google+ / Schema.org</a></p>
+</li>
+<li><p><a href="#-oembed-oembed">OEmbed</a></p>
+</li>
+</ul>
+</li>
+<li><p><a href="#-browsers-platforms-browsers-platforms-">Browsers / Platforms</a></p>
+<ul>
+<li><p><a href="#-apple-ios-apple-ios">Apple iOS</a></p>
+</li>
+<li><p><a href="#-apple-safari-apple-safari">Apple Safari</a></p>
+</li>
+<li><p><a href="#-google-android-google-android">Google Android</a></p>
+</li>
+<li><p><a href="#-google-chrome-google-chrome">Google Chrome</a></p>
+</li>
+<li><p><a href="#-microsoft-internet-explorer-microsoft-internet-explorer">Microsoft Internet Explorer</a></p>
+</li>
+</ul>
+</li>
+<li><p><a href="#-browsers-chinese-browsers-chinese-">Browsers (Chinese)</a></p>
+<ul>
+<li><p><a href="#-360-browser-360-">360 Browser</a></p>
+</li>
+<li><p><a href="#-qq-mobile-browser-qq-">QQ Mobile Browser</a></p>
+</li>
+<li><p><a href="#-uc-mobile-browser-uc-">UC Mobile Browser</a></p>
+</li>
+</ul>
+</li>
+<li><p><a href="#-app-links-app-links-">App Links</a></p>
+</li>
+<li><p><a href="#-notes-">Notes</a></p>
+<ul>
+<li><a href="#-performance-">Performance</a></li>
+</ul>
+</li>
+<li><p><a href="#-other-resources-">Other Resources</a></p>
+</li>
+<li><p><a href="#-related-projects-">Related Projects</a></p>
+</li>
+<li><p><a href="#other-formats">Other Formats</a></p>
+</li>
+<li><p><a href="#translations">Translations</a></p>
+</li>
+<li><p><a href="#contributing">Contributing</a></p>
+</li>
+<li><p><a href="#contributors">Contributors</a></p>
+</li>
+<li><p><a href="#author">Author</a></p>
+</li>
+<li><p><a href="#license">License</a></p>
+</li>
+</ul>
+<h2 id="推荐的最基本的"><a href="#推荐的最基本的" class="headerlink" title="推荐的最基本的"></a><a href="#recommended-minimum"></a>推荐的最基本的</h2><p>下面是一个最简单的网站需要的最基本的标签。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&lt;meta charset=&quot;utf-8&quot;&gt;</div><div class="line">&lt;meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;ie=edge&quot;&gt;</div><div class="line">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;</div><div class="line">&lt;!-- 上面的三个标签 *必须* 在head标签的最前面；任何其他的标签必须在这三个标签的 *后面* --&gt;</div><div class="line">&lt;title&gt;Page Title&lt;/title&gt;</div></pre></td></tr></table></figure>
+<h2 id="Elements"><a href="#Elements" class="headerlink" title="Elements"></a><a href="#elements"></a>Elements</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 文档标题  --&gt;</div><div class="line">&lt;title&gt;Page Title&lt;/title&gt;</div><div class="line"></div><div class="line">&lt;!-- 在文档中包含的所有相对 URL 的 Base URL --&gt;</div><div class="line">&lt;base href=&quot;https://example.com/page.html&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 外部样式表 --&gt;</div><div class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;styles.css&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 内部样式表 --&gt;</div><div class="line">&lt;style&gt;</div><div class="line">  /* ... */</div><div class="line">&lt;/style&gt;</div><div class="line"></div><div class="line">&lt;!-- JavaScript --&gt;</div><div class="line">&lt;!-- JavaScript --&gt;</div><div class="line">``&lt;script src=&quot;script.js&quot;&gt;``&lt;/script&gt;</div><div class="line">&lt;noscript&gt;&lt;!--脚本未被执行时的替代内容--&gt;&lt;/noscript&gt;</div></pre></td></tr></table></figure>
+<h2 id="Meta"><a href="#Meta" class="headerlink" title="Meta"></a><a href="#meta"></a>Meta</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div></pre></td><td class="code"><pre><div class="line">&lt;meta charset=&quot;utf-8&quot;&gt; &lt;!-- 设置文档的字符编码 --&gt;</div><div class="line">&lt;meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;ie=edge&quot;&gt;</div><div class="line">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1, shrink-to-fit=no&quot;&gt;</div><div class="line">&lt;!-- 上面的三个标签 *必须* 在head标签的最前面；任何其他的标签必须在这三个标签的 *后面* --&gt;</div><div class="line"></div><div class="line">&lt;!-- 允许控制资源从何处加载 --&gt;</div><div class="line">&lt;meta http-equiv=&quot;Content-Security-Policy&quot; content=&quot;default-src &apos;self&apos;&quot;&gt;</div><div class="line">&lt;!-- 尽可能早的在文档中放置 --&gt;</div><div class="line">&lt;!-- 仅适用于此标签后的内容 --&gt;</div><div class="line"></div><div class="line">&lt;!-- Web应用程序名称（仅当网站作为应用程序时使用） --&gt;</div><div class="line">&lt;meta name=&quot;application-name&quot; content=&quot;Application Name&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 页面的简短描述（限制为150个字符） --&gt;</div><div class="line">&lt;!-- 在 *部分* 情况下，这个描述被用作搜索结果中显示的片段的一部分。 --&gt;</div><div class="line">&lt;meta name=&quot;description&quot; content=&quot;A description of the page&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 控制搜索引擎的抓取和索引行为 --&gt;</div><div class="line">&lt;meta name=&quot;robots&quot; content=&quot;index,follow&quot;&gt;&lt;!-- All Search Engines --&gt;&lt;!-- 所有的搜索引擎 --&gt;</div><div class="line">&lt;meta name=&quot;googlebot&quot; content=&quot;index,follow&quot;&gt;&lt;!-- Google Specific --&gt;&lt;!-- 针对 Google --&gt;</div><div class="line"></div><div class="line">&lt;!-- 告诉 Google 不显示 [sitelinks](!https://en.wikipedia.org/wiki/Sitelink) 搜索框 --&gt;</div><div class="line">&lt;meta name=&quot;google&quot; content=&quot;nositelinkssearchbox&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 告诉谷歌不要为这个页面提供翻译 --&gt;</div><div class="line">&lt;meta name=&quot;google&quot; content=&quot;notranslate&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- Google [Search Console](!https://developers.google.cn/webmaster-tools/) 身份验证 --&gt;</div><div class="line">&lt;meta name=&quot;google-site-verification&quot; content=&quot;verification_token&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- [Yandex Webmasters](!https://webmaster.yandex.com/) 身份验证 --&gt;</div><div class="line">&lt;meta name=&quot;yandex-verification&quot; content=&quot;verification_token&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- [Bing Webmaster Center](!https://www.bing.com/toolbox/webmaster/) 身份验证 --&gt;</div><div class="line">&lt;meta name=&quot;msvalidate.01&quot; content=&quot;verification_token&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- [Alexa Console](!http://www.alexa.com/) 身份验证 --&gt;</div><div class="line">&lt;meta name=&quot;alexaVerifyID&quot; content=&quot;verification_token&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- [Pinterest Console](!https://developers.pinterest.com) 身份验证 --&gt;</div><div class="line">&lt;meta name=&quot;p:domain_verify&quot; content=&quot;code from pinterest&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- [Norton Safe Web](!https://safeweb.norton.com/help/site_owners) 身份验证 --&gt;</div><div class="line">&lt;meta name=&quot;norton-safeweb-site-verification&quot; content=&quot;norton code&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 用于命名构建网站的软件 (i.e. - WordPress, Dreamweaver) --&gt;</div><div class="line">&lt;meta name=&quot;generator&quot; content=&quot;program&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 网站主题的简短描述 --&gt;</div><div class="line">&lt;meta name=&quot;subject&quot; content=&quot;your website&apos;s subject&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 基于网站内容给出一般[年龄分级](!https://en.wikipedia.org/wiki/International_Age_Rating_Coalition) --&gt;</div><div class="line">&lt;meta name=&quot;rating&quot; content=&quot;General&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 允许控制 referrer 信息如何传递 --&gt;</div><div class="line">&lt;meta name=&quot;referrer&quot; content=&quot;no-referrer&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 禁用自动检测和格式化可能的电话号码 --&gt;</div><div class="line">&lt;meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 通过设置为&quot;off&quot;完全关闭[ DNS 预读取](!https://developer.mozilla.org/zh-CN/docs/Controlling_DNS_prefetching) --&gt;</div><div class="line">&lt;meta http-equiv=&quot;x-dns-prefetch-control&quot; content=&quot;off&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 在客户端浏览器上存储cookie以进行用户识别 --&gt;</div><div class="line">&lt;meta http-equiv=&quot;set-cookie&quot; content=&quot;name=value; expires=date; path=url&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 指定显示在特定框架中的页面 --&gt;</div><div class="line">&lt;meta http-equiv=&quot;Window-Target&quot; content=&quot;_value&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 地理标签 --&gt;</div><div class="line">&lt;meta name=&quot;ICBM&quot; content=&quot;latitude, longitude&quot;&gt;</div><div class="line">&lt;meta name=&quot;geo.position&quot; content=&quot;latitude;longitude&quot;&gt;</div><div class="line">&lt;!-- 国家代码（ISO 3166-1）：强制性，州代码（ISO 3166-2）：可选；eg. content=&quot;US&quot; / content=&quot;US-NY&quot; --&gt;</div><div class="line">&lt;meta name=&quot;geo.placename&quot; content=&quot;city/town&quot;&gt;&lt;!-- eg. content=&quot;New York City&quot; --&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><p><a href="https://support.google.com/webmasters/answer/79812?hl=en" target="_blank" rel="external">Google可以识别的meta标签</a></p>
+</li>
+<li><p><a href="https://wiki.whatwg.org/wiki/MetaExtensions" target="_blank" rel="external">Meta扩展-WHATWG Wiki</a></p>
+</li>
+<li><p><a href="https://en.wikipedia.org/wiki/ICBM_address#Modern_use" target="_blank" rel="external">ICBM-维基百科</a></p>
+</li>
+<li><p><a href="https://en.wikipedia.org/wiki/Geotagging#HTML_pages" target="_blank" rel="external">地理标签-维基百科</a></p>
+</li>
+</ul>
+<h2 id="Link"><a href="#Link" class="headerlink" title="Link"></a><a href="#link"></a>Link</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 指向一个CSS样式表 --&gt;</div><div class="line">&lt;link rel=&quot;stylesheet&quot; href=&quot;https://example.com/styles.css&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 帮助解决内容重复收录 [Canonical link element](!https://en.wikipedia.org/wiki/Canonical_link_element) --&gt;</div><div class="line">&lt;link rel=&quot;canonical&quot; href=&quot;https://example.com/2010/06/9-things-to-do-before-entering-social-media.html&quot;&gt;</div><div class="line"></div><div class="line">&lt;!--  之前用于包含 icon 链接，但已被废弃不再使用 --&gt;</div><div class="line">&lt;link rel=&quot;shortlink&quot; href=&quot;https://example.com/?p=42&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 链接到当前文档的 [AMP HTML](!https://www.ampproject.org/) 版本 --&gt;</div><div class="line">&lt;link rel=&quot;amphtml&quot; href=&quot;https://example.com/path/to/amp-version.html&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 链接到为web应用程序指定“安装”凭证的JSON文件 --&gt;</div><div class="line">&lt;link rel=&quot;manifest&quot; href=&quot;manifest.json&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 链接到文档的作者 --&gt;</div><div class="line">&lt;link rel=&quot;author&quot; href=&quot;humans.txt&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 链接到适用于链接上下文的版权声明 --&gt;</div><div class="line">&lt;link rel=&quot;copyright&quot; href=&quot;copyright.html&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 给出文档的另一种语言的替代版本  [a-simple-guide-to-using-rel-alternate-hreflang-x](!https://searchenginewatch.com/sew/how-to/2232347/a-simple-guide-to-using-rel-alternate-hreflang-x) --&gt;</div><div class="line">&lt;link rel=&quot;alternate&quot; href=&quot;https://es.example.com/&quot; hreflang=&quot;es&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 提供了关于作者或其他人的信息 --&gt;</div><div class="line">&lt;link rel=&quot;me&quot; href=&quot;https://google.com/profiles/thenextweb&quot; type=&quot;text/html&quot;&gt;</div><div class="line">&lt;link rel=&quot;me&quot; href=&quot;mailto:name@example.com&quot;&gt;</div><div class="line">&lt;link rel=&quot;me&quot; href=&quot;sms:+15035550125&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 描述历史记录、文件或其他资料的集合的文档的链接。 --&gt;</div><div class="line">&lt;link rel=&quot;archives&quot; href=&quot;https://example.com/archives/&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 层次结构中的顶级资源的链接 --&gt;</div><div class="line">&lt;link rel=&quot;index&quot; href=&quot;https://example.com/&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 给出一个自我参考 - 当文档有多个可能的参考时非常有用 --&gt;</div><div class="line">&lt;link rel=&quot;self&quot; type=&quot;application/atom+xml&quot; href=&quot;https://example.com/atomFeed.php?page=3&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 分别是一个系列文档的第一个、下一个、前一个以及最后一个文档  --&gt;</div><div class="line">&lt;link rel=&quot;first&quot; href=&quot;https://example.com/atomFeed.php&quot;&gt;</div><div class="line">&lt;link rel=&quot;next&quot; href=&quot;https://example.com/atomFeed.php?page=4&quot;&gt;</div><div class="line">&lt;link rel=&quot;prev&quot; href=&quot;https://example.com/atomFeed.php?page=2&quot;&gt;</div><div class="line">&lt;link rel=&quot;last&quot; href=&quot;https://example.com/atomFeed.php?page=147&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 使用第三方服务维护博客时使用 --&gt;</div><div class="line">&lt;link rel=&quot;EditURI&quot; href=&quot;https://example.com/xmlrpc.php?rsd&quot; type=&quot;application/rsd+xml&quot; title=&quot;RSD&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 当另一个WordPress博客链接到你的WordPress博客或帖子时，生成一个自动评论 --&gt;</div><div class="line">&lt;link rel=&quot;pingback&quot; href=&quot;https://example.com/xmlrpc.php&quot;&gt;</div><div class="line"></div><div class="line">&lt;!--  当你在自己的页面上链接到一个 url 时通知它 --&gt;</div><div class="line">&lt;link rel=&quot;webmention&quot; href=&quot;https://example.com/webmention&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 加载一个外部的 HTML 文件到当前 HTML 文件中 --&gt;</div><div class="line">&lt;link rel=&quot;import&quot; href=&quot;/path/to/component.html&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 打开搜索 --&gt;</div><div class="line">&lt;link rel=&quot;search&quot; href=&quot;/open-search.xml&quot; type=&quot;application/opensearchdescription+xml&quot; title=&quot;Search Title&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- Feeds网络订阅 --&gt;</div><div class="line">&lt;link rel=&quot;alternate&quot; href=&quot;https://feeds.feedburner.com/example&quot; type=&quot;application/rss+xml&quot; title=&quot;RSS&quot;&gt;</div><div class="line">&lt;link rel=&quot;alternate&quot; href=&quot;https://example.com/feed.atom&quot; type=&quot;application/atom+xml&quot; title=&quot;Atom 0.3&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 预读取，预加载，预浏览 --&gt;</div><div class="line">&lt;link rel=&quot;dns-prefetch&quot; href=&quot;//example.com/&quot;&gt;</div><div class="line">&lt;link rel=&quot;preconnect&quot; href=&quot;https://www.example.com/&quot;&gt;</div><div class="line">&lt;link rel=&quot;prefetch&quot; href=&quot;https://www.example.com/&quot;&gt;</div><div class="line">&lt;link rel=&quot;prerender&quot; href=&quot;https://example.com/&quot;&gt;</div><div class="line">&lt;link rel=&quot;preload&quot; href=&quot;image.png&quot; as=&quot;image&quot;&gt;</div><div class="line">&lt;!-- 更多信息: https://css-tricks.com/prefetching-preloading-prebrowsing/ --&gt;</div></pre></td></tr></table></figure>
+<h3 id="Favicons"><a href="#Favicons" class="headerlink" title="Favicons"></a><a href="#favicons"></a>Favicons</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;!-- IE 10 及以下版本 --&gt;</div><div class="line">&lt;!-- 将 favicon.ico 放在网站根目录中 - 不需要 link 标签 --&gt;</div><div class="line"></div><div class="line">&lt;!-- IE 11, Chrome, Firefox, Safari, Opera --&gt;</div><div class="line">&lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; sizes=&quot;16x16&quot; href=&quot;/path/to/favicon-16x16.png&quot;&gt;</div><div class="line">&lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; sizes=&quot;32x32&quot; href=&quot;/path/to/favicon-32x32.png&quot;&gt;</div><div class="line">&lt;link rel=&quot;icon&quot; type=&quot;image/png&quot; sizes=&quot;96x96&quot; href=&quot;/path/to/favicon-96x96.png&quot;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><p><a href="https://bitsofco.de/all-about-favicons-and-touch-icons/" target="_blank" rel="external">关于 Favicons (和 Touch Icons)</a></p>
+</li>
+<li><p><a href="https://github.com/audreyr/favicon-cheat-sheet" target="_blank" rel="external">Favicon 对照表</a></p>
+</li>
+</ul>
+<h2 id="Social-社交媒体"><a href="#Social-社交媒体" class="headerlink" title="Social 社交媒体"></a><a href="#social"></a>Social 社交媒体</h2><h3 id="Facebook-Open-Graph"><a href="#Facebook-Open-Graph" class="headerlink" title="Facebook Open Graph"></a><a href="#facebook-open-graph"></a>Facebook Open Graph</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;meta property=&quot;fb:app_id&quot; content=&quot;123456789&quot;&gt;</div><div class="line">&lt;meta property=&quot;og:url&quot; content=&quot;https://example.com/page.html&quot;&gt;</div><div class="line">&lt;meta property=&quot;og:type&quot; content=&quot;website&quot;&gt;</div><div class="line">&lt;meta property=&quot;og:title&quot; content=&quot;Content Title&quot;&gt;</div><div class="line">&lt;meta property=&quot;og:image&quot; content=&quot;https://example.com/image.jpg&quot;&gt;</div><div class="line">&lt;meta property=&quot;og:description&quot; content=&quot;Description Here&quot;&gt;</div><div class="line">&lt;meta property=&quot;og:site_name&quot; content=&quot;Site Name&quot;&gt;</div><div class="line">&lt;meta property=&quot;og:locale&quot; content=&quot;en_US&quot;&gt;</div><div class="line">&lt;meta property=&quot;article:author&quot; content=&quot;&quot;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><p><a href="https://developers.facebook.com/docs/sharing/webmasters#markup" target="_blank" rel="external">Facebook Open Graph Markup</a></p>
+</li>
+<li><p><a href="http://ogp.me/" target="_blank" rel="external">Open Graph protocol</a></p>
+</li>
+</ul>
+<h3 id="Facebook-Instant-Articles"><a href="#Facebook-Instant-Articles" class="headerlink" title="Facebook Instant Articles"></a><a href="#facebook-instant-articles"></a>Facebook Instant Articles</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">&lt;meta charset=&quot;utf-8&quot;&gt;</div><div class="line">&lt;meta property=&quot;op:markup_version&quot; content=&quot;v1.0&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 你的文章的 Web 版本的 URL --&gt;</div><div class="line">&lt;link rel=&quot;canonical&quot; href=&quot;http://example.com/article.html&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 本文使用的样式 --&gt;</div><div class="line">&lt;meta property=&quot;fb:article_style&quot; content=&quot;myarticlestyle&quot;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><p><a href="https://developers.facebook.com/docs/instant-articles/guides/articlecreate" target="_blank" rel="external">Facebook Instant Articles: Creating Articles</a></p>
+</li>
+<li><p><a href="https://developers.facebook.com/docs/instant-articles/reference" target="_blank" rel="external">Instant Articles: Format Reference</a></p>
+</li>
+</ul>
+<h3 id="Twitter-Cards"><a href="#Twitter-Cards" class="headerlink" title="Twitter Cards"></a><a href="#twitter-cards"></a>Twitter Cards</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=&quot;twitter:card&quot; content=&quot;summary&quot;&gt;</div><div class="line">&lt;meta name=&quot;twitter:site&quot; content=&quot;@site_account&quot;&gt;</div><div class="line">&lt;meta name=&quot;twitter:creator&quot; content=&quot;@individual_account&quot;&gt;</div><div class="line">&lt;meta name=&quot;twitter:url&quot; content=&quot;https://example.com/page.html&quot;&gt;</div><div class="line">&lt;meta name=&quot;twitter:title&quot; content=&quot;Content Title&quot;&gt;</div><div class="line">&lt;meta name=&quot;twitter:description&quot; content=&quot;Content description less than 200 characters&quot;&gt;</div><div class="line">&lt;meta name=&quot;twitter:image&quot; content=&quot;https://example.com/image.jpg&quot;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><p><a href="https://dev.twitter.com/cards/getting-started" target="_blank" rel="external">Twitter Cards: Getting Started Guide</a></p>
+</li>
+<li><p><a href="https://cards-dev.twitter.com/validator" target="_blank" rel="external">Twitter Card Validator</a></p>
+</li>
+</ul>
+<h3 id="Google-Schema-org"><a href="#Google-Schema-org" class="headerlink" title="Google+ / Schema.org"></a><a href="#google--schemaorg"></a>Google+ / Schema.org</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;link href=&quot;https://plus.google.com/+YourPage&quot; rel=&quot;publisher&quot;&gt;</div><div class="line">&lt;meta itemprop=&quot;name&quot; content=&quot;Content Title&quot;&gt;</div><div class="line">&lt;meta itemprop=&quot;description&quot; content=&quot;Content description less than 200 characters&quot;&gt;</div><div class="line">&lt;meta itemprop=&quot;image&quot; content=&quot;https://example.com/image.jpg&quot;&gt;</div></pre></td></tr></table></figure>
+<h3 id="Pinterest"><a href="#Pinterest" class="headerlink" title="Pinterest"></a><a href="#pinterest"></a>Pinterest</h3><p>Pinterest 让你阻止用户从你的网站上保存东西，查看 <a href="https://help.pinterest.com/en/articles/prevent-people-saving-things-pinterest-your-site" target="_blank" rel="external">help center</a>。 <code>description</code> 是可选的</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=&quot;pinterest&quot; content=&quot;nopin&quot; description=&quot;Sorry, you can&apos;t save from my website!&quot;&gt;</div></pre></td></tr></table></figure>
+<h3 id="OEmbed"><a href="#OEmbed" class="headerlink" title="OEmbed"></a><a href="#oembed"></a>OEmbed</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;link rel=&quot;alternate&quot; type=&quot;application/json+oembed&quot;</div><div class="line">  href=&quot;http://example.com/services/oembed?url=http%3A%2F%2Fexample.com%2Ffoo%2F&amp;format=json&quot;</div><div class="line">  title=&quot;oEmbed Profile: JSON&quot;&gt;</div><div class="line">&lt;link rel=&quot;alternate&quot; type=&quot;text/xml+oembed&quot;</div><div class="line">  href=&quot;http://example.com/services/oembed?url=http%3A%2F%2Fexample.com%2Ffoo%2F&amp;format=xml&quot;</div><div class="line">  title=&quot;oEmbed Profile: XML&quot;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><a href="http://oembed.com/" target="_blank" rel="external">oEmbed format</a></li>
+</ul>
+<h2 id="Browsers浏览器-Platforms平台"><a href="#Browsers浏览器-Platforms平台" class="headerlink" title="Browsers浏览器 / Platforms平台"></a><a href="#browsers--platforms"></a>Browsers浏览器 / Platforms平台</h2><h3 id="Apple-iOS"><a href="#Apple-iOS" class="headerlink" title="Apple iOS"></a><a href="#apple-ios"></a>Apple iOS</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">&lt;!-- Smart App Banner 智能 App 广告条 --&gt;</div><div class="line">&lt;meta name=&quot;apple-itunes-app&quot; content=&quot;app-id=APP_ID,affiliate-data=AFFILIATE_ID,app-argument=SOME_TEXT&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 禁止数字自动识别为电话号码 --&gt;</div><div class="line">&lt;meta name=&quot;format-detection&quot; content=&quot;telephone=no&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- Add to Home Screen 添加到主屏幕 --&gt;</div><div class="line">&lt;meta name=&quot;apple-mobile-web-app-capable&quot; content=&quot;yes&quot;&gt;</div><div class="line">&lt;meta name=&quot;apple-mobile-web-app-status-bar-style&quot; content=&quot;black&quot;&gt;</div><div class="line">&lt;meta name=&quot;apple-mobile-web-app-title&quot; content=&quot;App Title&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- Touch Icons --&gt;</div><div class="line">&lt;!-- 在大多数情况下，在head中一个180×180px的图标就足够了。 --&gt;</div><div class="line">&lt;link rel=&quot;apple-touch-icon&quot; href=&quot;/path/to/apple-touch-icon.png&quot;&gt;</div><div class="line">&lt;!-- 注意: iOS 7 的 Safari 不为图标添加效果。 --&gt;</div><div class="line">&lt;!-- 旧版本 Safari 不会为后缀名为 -precomposed.png 的 icon 文件添加效果 --&gt;</div><div class="line"></div><div class="line">&lt;!-- 启动画面 ( 弃用 ) --&gt;</div><div class="line">&lt;link rel=&quot;apple-touch-startup-image&quot; href=&quot;/path/to/startup.png&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- iOS 应用深度链接 --&gt;</div><div class="line">&lt;meta name=&quot;apple-itunes-app&quot; content=&quot;app-id=APP-ID, app-argument=http/url-sample.com&quot;&gt;</div><div class="line">&lt;link rel=&quot;alternate&quot; href=&quot;ios-app://APP-ID/http/url-sample.com&quot;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://developer.apple.com/library/safari/documentation/AppleApplications/Reference/SafariHTMLRef/Articles/MetaTags.html" target="_blank" rel="external">Apple Meta Tags</a></li>
+</ul>
+<h3 id="Apple-Safari"><a href="#Apple-Safari" class="headerlink" title="Apple Safari"></a><a href="#apple-safari"></a>Apple Safari</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 固定书签页 --&gt;</div><div class="line">&lt;link rel=&quot;mask-icon&quot; href=&quot;/path/to/icon.svg&quot; color=&quot;red&quot;&gt;</div></pre></td></tr></table></figure>
+<h3 id="Google-Android"><a href="#Google-Android" class="headerlink" title="Google Android"></a><a href="#google-android"></a>Google Android</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;meta name=&quot;theme-color&quot; content=&quot;#E64545&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 添加到主屏幕 --&gt;</div><div class="line">&lt;meta name=&quot;mobile-web-app-capable&quot; content=&quot;yes&quot;&gt;</div><div class="line">&lt;!-- 更多信息: https://developer.chrome.com/multidevice/android/installtohomescreen --&gt;</div><div class="line"></div><div class="line">&lt;!-- Android 应用深度链接 --&gt;</div><div class="line">&lt;meta name=&quot;google-play-app&quot; content=&quot;app-id=package-name&quot;&gt;</div><div class="line">&lt;link rel=&quot;alternate&quot; href=&quot;android-app://package-name/http/url-sample.com&quot;&gt;</div></pre></td></tr></table></figure>
+<h3 id="Google-Chrome"><a href="#Google-Chrome" class="headerlink" title="Google Chrome"></a><a href="#google-chrome"></a>Google Chrome</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;link rel=&quot;chrome-webstore-item&quot; href=&quot;https://chrome.google.com/webstore/detail/APP_ID&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 禁用翻译提示 --&gt;</div><div class="line">&lt;meta name=&quot;google&quot; value=&quot;notranslate&quot;&gt;</div></pre></td></tr></table></figure>
+<h3 id="Google-Chrome-Mobile-只针对-Android"><a href="#Google-Chrome-Mobile-只针对-Android" class="headerlink" title="Google Chrome Mobile (只针对 Android)"></a><a href="#google-chrome-mobile-android-only"></a>Google Chrome Mobile (只针对 Android)</h3><p>从 Chrome 31 开始, 你可以像 Safari 一样设置你的 Web 应用为“app mode” 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 链接到一个 manifest 并定义 manifest 的元数据。 --&gt;</div><div class="line">&lt;!-- manifest.json的例子可以在下面的链接中找到。 --&gt;</div><div class="line">&lt;link rel=&quot;manifest&quot; href=&quot;manifest.json&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 将你的网页定义为 Web 应用 --&gt;</div><div class="line">&lt;meta name=&quot;mobile-web-app-capable&quot; content=&quot;yes&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 主屏幕图标  --&gt;</div><div class="line">&lt;link rel=&quot;icon&quot; sizes=&quot;192x192&quot; href=&quot;highres-icon.png&quot;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><a href="https://developer.chrome.com/multidevice/android/installtohomescreen" target="_blank" rel="external">Google Developer</a></li>
+</ul>
+<h3 id="Microsoft-Internet-Explorer"><a href="#Microsoft-Internet-Explorer" class="headerlink" title="Microsoft Internet Explorer"></a><a href="#microsoft-internet-explorer"></a>Microsoft Internet Explorer</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">&lt;meta http-equiv=&quot;x-ua-compatible&quot; content=&quot;ie=edge&quot;&gt;</div><div class="line">&lt;meta name=&quot;skype_toolbar&quot; content=&quot;skype_toolbar_parser_compatible&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- IE10: 禁用点击时链接高亮 (https://blogs.windows.com/buildingapps/2012/11/15/adapting-your-webkit-optimized-site-for-internet-explorer-10/) --&gt;</div><div class="line">&lt;meta name=&quot;msapplication-tap-highlight&quot; content=&quot;no&quot;&gt;</div><div class="line"></div><div class="line">&lt;!-- 固定网页 (https://msdn.microsoft.com/en-us/library/dn255024(v=vs.85).aspx) --&gt;</div><div class="line">&lt;meta name=&quot;application-name&quot; content=&quot;Sample Title&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-tooltip&quot; content=&quot;A description of what this site does.&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-starturl&quot; content=&quot;http://example.com/index.html?pinned=true&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-navbutton-color&quot; content=&quot;#FF3300&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-window&quot; content=&quot;width=800;height=600&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-task&quot; content=&quot;name=Task 1;action-uri=http://host/Page1.html;icon-uri=http://host/icon1.ico&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-task&quot; content=&quot;name=Task 2;action-uri=http://microsoft.com/Page2.html;icon-uri=http://host/icon2.ico&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-badge&quot; value=&quot;frequency=NUMBER_IN_MINUTES;polling-uri=http://example.com/path/to/file.xml&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-TileColor&quot; content=&quot;#FF3300&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-TileImage&quot; content=&quot;/path/to/tileimage.jpg&quot;&gt;</div><div class="line"></div><div class="line">&lt;meta name=&quot;msapplication-config&quot; content=&quot;http://example.com/browserconfig.xml&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-notification&quot; content=&quot;frequency=60;polling-uri=http://example.com/livetile;polling-uri2=http://example.com/livetile2&quot;&gt;</div><div class="line">&lt;meta name=&quot;msapplication-task-separator&quot; content=&quot;1&quot;&gt;</div></pre></td></tr></table></figure>
+<h2 id="App-Links-应用关联"><a href="#App-Links-应用关联" class="headerlink" title="App Links 应用关联"></a><a href="#app-links"></a>App Links 应用关联</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">&lt;!-- iOS --&gt;</div><div class="line">&lt;meta property=&quot;al:ios:url&quot; content=&quot;applinks://docs&quot;&gt;</div><div class="line">&lt;meta property=&quot;al:ios:app_store_id&quot; content=&quot;12345&quot;&gt;</div><div class="line">&lt;meta property=&quot;al:ios:app_name&quot; content=&quot;App Links&quot;&gt;</div><div class="line">&lt;!-- Android --&gt;</div><div class="line">&lt;meta property=&quot;al:android:url&quot; content=&quot;applinks://docs&quot;&gt;</div><div class="line">&lt;meta property=&quot;al:android:app_name&quot; content=&quot;App Links&quot;&gt;</div><div class="line">&lt;meta property=&quot;al:android:package&quot; content=&quot;org.applinks&quot;&gt;</div><div class="line">&lt;!-- Web Fallback  Web替代显示资源文件 --&gt;</div><div class="line">&lt;meta property=&quot;al:web:url&quot; content=&quot;http://applinks.org/documentation&quot;&gt;</div><div class="line">&lt;!-- 更多信息: http://applinks.org/documentation/ --&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><a href="http://applinks.org/documentation/" target="_blank" rel="external">App Links Docs</a></li>
+</ul>
+<h2 id="Browsers-Chinese"><a href="#Browsers-Chinese" class="headerlink" title="Browsers (Chinese)"></a><a href="#browsers-chinese"></a>Browsers (Chinese)</h2><h3 id="360-浏览器"><a href="#360-浏览器" class="headerlink" title="360 浏览器"></a><a href="#360-browser"></a>360 浏览器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">&lt;!-- [按指定顺序选择渲染引擎](!http://se.360.cn/v6/help/meta.html) --&gt;</div><div class="line">&lt;meta name=&quot;renderer&quot; content=&quot;webkit|ie-comp|ie-stand&quot;&gt;</div></pre></td></tr></table></figure>
+<h3 id="QQ-手机浏览器"><a href="#QQ-手机浏览器" class="headerlink" title="QQ 手机浏览器"></a><a href="#qq-mobile-browser"></a>QQ 手机浏览器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 将屏幕锁定为指定方向 竖屏/横屏 --&gt;</div><div class="line">&lt;meta name=&quot;x5-orientation&quot; content=&quot;landscape/portrait&quot;&gt;</div><div class="line">&lt;!-- 设置页面全屏显示 --&gt;</div><div class="line">&lt;meta name=&quot;x5-fullscreen&quot; content=&quot;true&quot;&gt;</div><div class="line">&lt;!-- 开启网页应用模式 (全屏,etc.) --&gt;</div><div class="line">&lt;meta name=&quot;x5-page-mode&quot; content=&quot;app&quot;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><a href="http://open.mb.qq.com/web/doc?id=1201" target="_blank" rel="external">QQ手机浏览器</a></li>
+</ul>
+<h3 id="UC-手机浏览器"><a href="#UC-手机浏览器" class="headerlink" title="UC 手机浏览器"></a><a href="#uc-mobile-browser"></a>UC 手机浏览器</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 强制页面横屏/竖屏显示 --&gt;</div><div class="line">&lt;meta name=&quot;screen-orientation&quot; content=&quot;landscape/portrait&quot;&gt;</div><div class="line">&lt;!-- 设置页面全屏显示 --&gt;</div><div class="line">&lt;meta name=&quot;full-screen&quot; content=&quot;yes&quot;&gt;</div><div class="line">&lt;!-- 即使是无图模式UC浏览器仍会显示图片 --&gt;</div><div class="line">&lt;meta name=&quot;imagemode&quot; content=&quot;force&quot;&gt;</div><div class="line">&lt;!-- 调用应用模式(全屏,禁止手势, etc.) --&gt;</div><div class="line">&lt;meta name=&quot;browsermode&quot; content=&quot;application&quot;&gt;</div><div class="line">&lt;!-- 禁用 UC浏览器的夜间模式 --&gt;</div><div class="line">&lt;meta name=&quot;nightmode&quot; content=&quot;disable&quot;&gt;</div><div class="line">&lt;!-- 简化页面的处理，使得页面内容更适合进行页面阅读、节省流量及响应更快 --&gt;</div><div class="line">&lt;meta name=&quot;layoutmode&quot; content=&quot;fitscreen&quot;&gt;</div><div class="line">&lt;!-- 禁用UC浏览器的特性:“当页面文字多时，放大字体”。 --&gt;</div><div class="line">&lt;meta name=&quot;wap-font-scale&quot; content=&quot;no&quot;&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li><a href="http://www.uc.cn/download/UCBrowser_U3_API.doc" target="_blank" rel="external">UC浏览器文档</a></li>
+<li><a href="http://www.uc.cn/download/UCBrowser_U4_API_1107.pdf" target="_blank" rel="external">最新版UC浏览器文档</a></li>
+</ul>
+<h2 id="注释"><a href="#注释" class="headerlink" title="注释"></a><a href="#notes"></a>注释</h2><h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a><a href="#performance"></a>性能</h3><p>Moving the <code>href</code> attribute to the beginning of an element improves compression when GZIP is enabled, because the <code>href</code> attribute is used in <code>a</code>, <code>base</code> and <code>link</code> tags.<br>当启用 GZIP 时，将 <code>href</code> 属性移动到元素的开始可以提高压缩，因为 <code>href</code> 属性 在 <code>a</code>, <code>base</code> and <code>link</code> 标签中使用。</p>
+<p>例子:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;link href=&quot;https://fonts.googleapis.com/css?family=Open+Sans:400,700&quot; rel=&quot;stylesheet&quot;&gt;</div></pre></td></tr></table></figure>
+<h2 id="其它资源"><a href="#其它资源" class="headerlink" title="其它资源"></a><a href="#other-resources"></a>其它资源</h2><ul>
+<li><p><a href="https://github.com/h5bp/html5-boilerplate/blob/master/dist/doc/html.md" target="_blank" rel="external">HTML5 Boilerplate Docs: The HTML</a></p>
+</li>
+<li><p><a href="https://github.com/h5bp/html5-boilerplate/blob/master/dist/doc/extend.md" target="_blank" rel="external">HTML5 Boilerplate Docs: Extend and customize</a></p>
+</li>
+</ul>
+<h2 id="相关项目"><a href="#相关项目" class="headerlink" title="相关项目"></a><a href="#related-projects"></a>相关项目</h2><ul>
+<li><p><a href="https://github.com/joshbuchea/atom-html-head-snippets" target="_blank" rel="external">Atom HTML Head Snippets</a> - Atom package for <code>HEAD</code> snippets</p>
+</li>
+<li><p><a href="https://github.com/marcobiedermann/sublime-head-snippets" target="_blank" rel="external">Sublime Text HTML Head Snippets</a> - Sublime Text package for <code>HEAD</code> snippets</p>
+</li>
+<li><p><a href="https://github.com/hemanth/head-it" target="_blank" rel="external">head-it</a> - CLI interface for <code>HEAD</code> snippets</p>
+</li>
+<li><p><a href="https://github.com/ktquez/vue-head" target="_blank" rel="external">vue-head</a> - Manipulating the meta information of the <code>HEAD</code> tag for Vue.js</p>
+</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/转载/" rel="tag"># 转载</a>
+          
+            <a href="/tags/html/" rel="tag"># html</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/17/events-learn/" rel="next" title="Node.js EventEmitter 学习">
+                <i class="fa fa-chevron-left"></i> Node.js EventEmitter 学习
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="SOHUCS"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400"
+               alt="王跳凯" />
+          <p class="site-author-name" itemprop="name">王跳凯</p>
+           
+              <p class="site-description motion-element" itemprop="description">读书的目的不只是找到一个和你想法相同的人，更重要的是看到和自己不一样的人生和想法</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">43</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wleonardo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:wang861622836@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-open-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HEAD"><span class="nav-number">1.</span> <span class="nav-text">HEAD</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#推荐的最基本的"><span class="nav-number">1.2.</span> <span class="nav-text">推荐的最基本的</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Elements"><span class="nav-number">1.3.</span> <span class="nav-text">Elements</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Meta"><span class="nav-number">1.4.</span> <span class="nav-text">Meta</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Link"><span class="nav-number">1.5.</span> <span class="nav-text">Link</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Favicons"><span class="nav-number">1.5.1.</span> <span class="nav-text">Favicons</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Social-社交媒体"><span class="nav-number">1.6.</span> <span class="nav-text">Social 社交媒体</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Facebook-Open-Graph"><span class="nav-number">1.6.1.</span> <span class="nav-text">Facebook Open Graph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Facebook-Instant-Articles"><span class="nav-number">1.6.2.</span> <span class="nav-text">Facebook Instant Articles</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Twitter-Cards"><span class="nav-number">1.6.3.</span> <span class="nav-text">Twitter Cards</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Schema-org"><span class="nav-number">1.6.4.</span> <span class="nav-text">Google+ / Schema.org</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pinterest"><span class="nav-number">1.6.5.</span> <span class="nav-text">Pinterest</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OEmbed"><span class="nav-number">1.6.6.</span> <span class="nav-text">OEmbed</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Browsers浏览器-Platforms平台"><span class="nav-number">1.7.</span> <span class="nav-text">Browsers浏览器 / Platforms平台</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Apple-iOS"><span class="nav-number">1.7.1.</span> <span class="nav-text">Apple iOS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Apple-Safari"><span class="nav-number">1.7.2.</span> <span class="nav-text">Apple Safari</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Android"><span class="nav-number">1.7.3.</span> <span class="nav-text">Google Android</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Chrome"><span class="nav-number">1.7.4.</span> <span class="nav-text">Google Chrome</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Google-Chrome-Mobile-只针对-Android"><span class="nav-number">1.7.5.</span> <span class="nav-text">Google Chrome Mobile (只针对 Android)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Microsoft-Internet-Explorer"><span class="nav-number">1.7.6.</span> <span class="nav-text">Microsoft Internet Explorer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#App-Links-应用关联"><span class="nav-number">1.8.</span> <span class="nav-text">App Links 应用关联</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Browsers-Chinese"><span class="nav-number">1.9.</span> <span class="nav-text">Browsers (Chinese)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#360-浏览器"><span class="nav-number">1.9.1.</span> <span class="nav-text">360 浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#QQ-手机浏览器"><span class="nav-number">1.9.2.</span> <span class="nav-text">QQ 手机浏览器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#UC-手机浏览器"><span class="nav-number">1.9.3.</span> <span class="nav-text">UC 手机浏览器</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#注释"><span class="nav-number">1.10.</span> <span class="nav-text">注释</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#性能"><span class="nav-number">1.10.1.</span> <span class="nav-text">性能</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其它资源"><span class="nav-number">1.11.</span> <span class="nav-text">其它资源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关项目"><span class="nav-number">1.12.</span> <span class="nav-text">相关项目</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-shower"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王跳凯</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cysWOgUkv';
+      var conf = '9302b736bbb333914237d54917548624';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
