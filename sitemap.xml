@@ -2,16 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://wangyuekai.com/2017/05/18/head-element/</loc>
+    <loc>http://wangyuekai.com/2017/06/09/js-array-remove-duplication/</loc>
     
-    <lastmod>2017-05-18T14:08:10.000Z</lastmod>
+    <lastmod>2017-06-09T07:43:04.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://wangyuekai.com/2017/05/03/js-tips/</loc>
     
-    <lastmod>2017-05-18T13:45:27.000Z</lastmod>
+    <lastmod>2017-06-01T13:36:43.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://wangyuekai.com/2017/06/01/node-circular-require/</loc>
+    
+    <lastmod>2017-06-01T12:56:26.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://wangyuekai.com/2017/05/23/js-recursion-stackoverflow/</loc>
+    
+    <lastmod>2017-06-01T12:46:11.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://wangyuekai.com/2017/05/19/linux-install-lamp/</loc>
+    
+    <lastmod>2017-05-19T10:15:57.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://wangyuekai.com/2017/05/18/head-element/</loc>
+    
+    <lastmod>2017-05-18T14:08:10.000Z</lastmod>
     
   </url>
   
