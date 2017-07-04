@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://wangyuekai.com/2017/07/04/es6-spread-syntax/</loc>
+    
+    <lastmod>2017-07-04T09:22:32.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://wangyuekai.com/2017/04/28/read-history/</loc>
+    
+    <lastmod>2017-06-29T03:28:30.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://wangyuekai.com/2017/06/09/js-array-remove-duplication/</loc>
     
     <lastmod>2017-06-09T07:43:04.000Z</lastmod>
@@ -89,13 +103,6 @@
     <loc>http://wangyuekai.com/2017/05/13/for-timeout/</loc>
     
     <lastmod>2017-05-13T04:08:17.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://wangyuekai.com/2017/04/28/read-history/</loc>
-    
-    <lastmod>2017-05-12T07:34:15.000Z</lastmod>
     
   </url>
   
