@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://wangyuekai.com/2017/07/04/es6-spread-syntax/</loc>
+    <loc>http://wangyuekai.com/2017/07/06/npm-skills/</loc>
     
-    <lastmod>2017-07-04T09:22:32.000Z</lastmod>
+    <lastmod>2017-07-06T02:57:15.000Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://wangyuekai.com/2017/04/28/read-history/</loc>
     
-    <lastmod>2017-06-29T03:28:30.000Z</lastmod>
+    <lastmod>2017-07-05T03:34:12.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://wangyuekai.com/2017/07/04/es6-spread-syntax/</loc>
+    
+    <lastmod>2017-07-04T09:22:32.000Z</lastmod>
     
   </url>
   

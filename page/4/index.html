@@ -272,6 +272,144 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/02/08/apache-proxy-redirect/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2017/02/08/apache-proxy-redirect/" itemprop="url">
+                  Apache Proxy和Redirect(Proxy与Redirect冲突问题)
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-08T21:40:27+08:00">
+                2017-02-08
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-comment-o"></i>
+              </span>
+              
+                <a href="/2017/02/08/apache-proxy-redirect/#SOHUCS" itemprop="discussionUrl">
+                  <span id="url::http://wangyuekai.com/2017/02/08/apache-proxy-redirect/" class="cy_cmt_count" data-xid="2017/02/08/apache-proxy-redirect/" itemprop="commentsCount" ></span>
+                </a>
+              
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>最近在国外的一台机器上部署了公司的代码，但是因为有很多的图片资源，所以国内访问很慢，而客户这段时间刚好在国内，所以想要把所有的图片资源的链接重定向到国内的一台机器上。</p>
+<p>本以为加上一段<code>Redirect</code>或者<code>RedirectMatch</code>什么的就可以了，但是加上了发现并没有起作用。看了一下Apache的配置，发现配置中还用到了<code>proxy</code>来指向node应用。</p>
+<p>google了一下，猜测<code>proxy</code>会优先于<code>Redirect</code>/<code>RedirectMatch</code>,所以对于proxy已经命中的资源，<code>Redirect</code>和<code>RedirectMatch</code>就不会在起作用，需要在proxy排除这些文件。可以使用类似<code>ProxyPassMatch /static/ !</code>来使<code>Proxy</code>对于<code>/static/</code>失效。再对<code>/static/</code>使用<code>Redirect 301 /static/ http://www.other-domain.com/static</code>。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/08/apache-proxy-redirect/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/02/02/asyncing-feeling-about-javascript-generators/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1591,147 +1729,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/01/27/class-in-ES6/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="王跳凯">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="王跳凯的blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/01/27/class-in-ES6/" itemprop="url">
-                  class in ES6
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-27T15:18:42+08:00">
-                2017-01-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-              <span class="post-comments-count">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-comment-o"></i>
-              </span>
-              
-                <a href="/2017/01/27/class-in-ES6/#SOHUCS" itemprop="discussionUrl">
-                  <span id="url::http://wangyuekai.com/2017/01/27/class-in-ES6/" class="cy_cmt_count" data-xid="2017/01/27/class-in-ES6/" itemprop="commentsCount" ></span>
-                </a>
-              
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在es6出来之后，我们看到js终于有class这个关键字，表示我们终于可以使用官方的类了。那么es6的类和之前的我们使用原型链继承实现的类有什么联系么。</p>
-<p><strong>答案是一模一样</strong></p>
-<blockquote>
-<p>JavaScript classes introduced in ECMAScript 2015 are syntactical sugar over JavaScript’s existing prototype-based inheritance. (在 ECMAScript 6 引入的 JavaScript 类（class）是 JavaScript 现有的原型继承的语法糖。)  ——  <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">MDN Classes</a></p>
-</blockquote>
-<p>好吧，那么为了使我们更好的理解es6的class，也是倒过来更好的理解js的原型链，下面我们把类的es6写法和原型链实现的写法一一列出</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/01/27/class-in-ES6/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1781,7 +1778,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">48</span>
+                <span class="site-state-item-count">49</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
