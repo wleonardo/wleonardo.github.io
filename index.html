@@ -359,52 +359,14 @@
 
       
         
-          
-            <p>在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。</p>
-<p>在客户端收到我们上一篇数据的密码验证成功的信息后，客户端会向服务端发出需要访问的地址，它可能是IP(Ipv4或者Ipv6)和端口号，也有可能是域名和端口号。</p>
-<p>具体的数据格式类似下面</p>
-<p>+—-+—–+——-+——+———-+———-+<br>|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |<br>+—-+—–+——-+——+———-+———-+<br>| 1  |  1  | X’00’ |  1   | Variable |    2     |<br>+—-+—–+——-+——+———-+———-+</p>
-<p>第一个参数<code>VER</code>表示使用的协议版本号</p>
-<p>第二个参数<code>CMD</code>表示需要使用的链接方式</p>
-<ul>
-<li><code>0x01</code> 表示CONNECT，比如我们常见的http请求</li>
-<li><code>0x02</code> 表示BIND，比如FTP等请求</li>
-<li><code>0x03</code> 表示UDP。</li>
-</ul>
-<p>第三个参数<code>RSV</code>表示单词<code>RESERVED</code>，也就是字面意思保留字段，暂时没有用</p>
-<p>第四个参数<code>ATYP</code>表示<code>address type</code>，就是使用的地址类型</p>
-<ul>
-<li>0x01 IP V4地址</li>
-<li>0x03 域名</li>
-<li>0x04 IP V6地址</li>
-</ul>
-<p>第五个参数<code>DST.ADDR</code>，表示目标主机的地址</p>
-<p>第六个参数<code>DST.PORT</code>，表示目标主机的端口</p>
-<p>在我们拿到地址和端口后，我们可以尝试连接目标主机，在我们连接成功后，返回给客户端类似下面的数据</p>
-<p>+—-+—–+——-+——+———-+———-+<br>|VER | REP |  RSV  | ATYP | BND.ADDR | BND.PORT |<br>+—-+—–+——-+——+———-+———-+<br>| 1  |  1  | X’00’ |  1   | Variable |    2     |<br>+—-+—–+——-+——+———-+———-+</p>
-<p>字段内容和上面基本一样<code>BND.ADDR</code>就是<code>DST.ADDR</code>,<code>BND.PORT</code>就是<code>DST.PORT</code>。</p>
-<p>唯一不同的就是<code>REP</code>，这个表示服务端去连接目标主机的结果</p>
-<ul>
-<li>X’00’ 成功</li>
-<li>X’01’ 普通的SOCKS服务器请求失败</li>
-<li>X’02’ 现有的规则不允许的连接</li>
-<li>X’03’ 网络不可达</li>
-<li>X’04’ 主机不可达</li>
-<li>X’05’ 连接被拒</li>
-<li>X’06’ TTL超时</li>
-<li>X’07’ 不支持的命令</li>
-<li>X’08’ 不支持的地址类型</li>
-<li>X’09’ – X’FF’ 未定义</li>
-</ul>
-<p>客户端接下来就会把原来的请求完整的发给服务端，服务端直接转发给目标主机就好，其实在我们服务端和客服端相互认证并且服务端与目标主机连接上以后，服务端接下来的任务就相当于在客户端与目标主机充当搬运工的职责，只是负责包客户端的请求内容一样的发给目标主机，再把目标主机的内容发给客户端。</p>
-<p>下面是对应的代码</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">const net = require(&apos;net&apos;);</div><div class="line">// 用来解析地址信息</div><div class="line">const ReqInfo = require(&apos;./reqinfo.js&apos;);</div><div class="line"></div><div class="line">async function receiveRequest(chunk) &#123;</div><div class="line">  let socket = this;</div><div class="line">  // 获取到地址信息</div><div class="line">  let reqinfo = await ReqInfo(chunk);</div><div class="line"></div><div class="line">  let resp = new Buffer(chunk.length);</div><div class="line">  // 上面提到的两个数据格式基本一样，只是有一个字段不一样而已，所以为了方便就复制一份</div><div class="line">  chunk.copy(resp);</div><div class="line">  resp[0] = 0x05;</div><div class="line"></div><div class="line">  // 不代理本地地址</div><div class="line">  if (reqinfo.dest === &apos;127.0.0.1&apos; || reqinfo.dest === &apos;localhost&apos;) &#123;</div><div class="line">    resp[1] = 0x02;</div><div class="line">    socket.write(resp);</div><div class="line">    return false;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  try &#123;</div><div class="line">    // 尝试连接目标主句</div><div class="line">    let req = net.createConnection(reqinfo.port, reqinfo.dest, (s) =&gt; &#123;</div><div class="line">      log(&apos;createConnection success&apos;);</div><div class="line">      // 要在保证连接上目标服务器返回成功数据</div><div class="line">      resp[1] = 0x00;</div><div class="line"></div><div class="line">      socket.write(resp);</div><div class="line">      // 在客户端接受到连接上服务器的信息，则会发送完整的请求内容，直接转发给req</div><div class="line">      socket.pipe(req);</div><div class="line">      req.pipe(socket);</div><div class="line">    &#125;);</div><div class="line">    // 设置连接目标主机的超时时间</div><div class="line">    req.setTimeout(60 * 1000);</div><div class="line">    // 连接超时</div><div class="line">    req.on(&apos;timeout&apos;, () =&gt; &#123;</div><div class="line">      resp[1] = 0x06;</div><div class="line">      socket.write(resp);</div><div class="line">      req.destroyed || req.destroy();</div><div class="line">    &#125;);</div><div class="line">    // 连接目标主机失败</div><div class="line">    req.on(&apos;error&apos;, () =&gt; &#123;</div><div class="line">      resp[1] = 0x05;</div><div class="line">      socket.write(resp);</div><div class="line">    &#125;);</div><div class="line">  &#125; catch (e) &#123;</div><div class="line">    console.error(&apos;未捕捉错误: net.createConnection&apos;);</div><div class="line">    socket.emit(&apos;error&apos;, e);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">module.exports = receiveRequest;</div></pre></td></tr></table></figure>
-<p>细心的人肯定看到了，我这边使用了<code>async</code>和<code>await</code>，主要是在解析目标主机地址时用到了，主要原因是因为我在写这段代码，调试的时候不知道为什么google就是连接不上，其他的网站都可以，后来发现原来，我所在的地方DNS被劫持了，google.com域名返回的是百度的ip，结果因为https的安全问题(相当于给百度发了google.com的证书)，导致一直访问错误。</p>
-<p>所以就把DNS放在服务端了，DNS的解析是异步的，所以这里使用<code>async</code>和<code>await</code>来解决异步的问题。不过这样会增加服务端的压力，不过这个设置可以在客户端配置。另外肯定也看到了，我这里并没有贴出<code>const ReqInfo = require(&#39;./reqinfo.js&#39;);</code>的具体代码，具体代码请移步<a href="https://github.com/wleonardo/socks-proxy" target="_blank" rel="external">github socks-proxy</a>看吧，这里就不具体解释了。</p>
-<p>至此socks5代理的服务端就基本完成了，当然这个只是一个很简单的版本，还需要很多的异常需要处理，仅供娱乐吧。</p>
-<p><a href="/2017/07/30/node-socks-proxy-1//">sock5代理node实现(1)</a><br><a href="/2017/07/31/node-socks-proxy-2//">sock5代理node实现(2)</a></p>
-
-          
+          <p>在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/08/01/node-socks-proxy-3/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

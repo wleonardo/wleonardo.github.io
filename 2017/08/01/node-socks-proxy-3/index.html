@@ -87,25 +87,16 @@
 
 
 
-<meta name="description" content="在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。
-在客户端收到我们上一篇数据的密码验证成功的信息后，客户端会向服务端发出需要访问的地址，它可能是IP(Ipv4或者Ipv6)和端口号，也有可能是域名和端口号。
-具体的数据格式类似下面
-+—-+—–+——-+——+———-+———-+|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |+—-+">
+<meta name="description" content="在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sock5代理node实现(3)">
 <meta property="og:url" content="http://wangyuekai.com/2017/08/01/node-socks-proxy-3/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
-<meta property="og:description" content="在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。
-在客户端收到我们上一篇数据的密码验证成功的信息后，客户端会向服务端发出需要访问的地址，它可能是IP(Ipv4或者Ipv6)和端口号，也有可能是域名和端口号。
-具体的数据格式类似下面
-+—-+—–+——-+——+———-+———-+|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |+—-+">
-<meta property="og:updated_time" content="2017-08-01T13:15:02.000Z">
+<meta property="og:description" content="在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。">
+<meta property="og:updated_time" content="2017-08-01T13:17:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sock5代理node实现(3)">
-<meta name="twitter:description" content="在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。
-在客户端收到我们上一篇数据的密码验证成功的信息后，客户端会向服务端发出需要访问的地址，它可能是IP(Ipv4或者Ipv6)和端口号，也有可能是域名和端口号。
-具体的数据格式类似下面
-+—-+—–+——-+——+———-+———-+|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |+—-+">
+<meta name="twitter:description" content="在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。">
 
 
 
@@ -364,6 +355,7 @@
 
       
         <p>在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。</p>
+<a id="more"></a>
 <p>在客户端收到我们上一篇数据的密码验证成功的信息后，客户端会向服务端发出需要访问的地址，它可能是IP(Ipv4或者Ipv6)和端口号，也有可能是域名和端口号。</p>
 <p>具体的数据格式类似下面</p>
 <p>+—-+—–+——-+——+———-+———-+<br>|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |<br>+—-+—–+——-+——+———-+———-+<br>| 1  |  1  | X’00’ |  1   | Variable |    2     |<br>+—-+—–+——-+——+———-+———-+</p>
