@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Node," />
+  <meta name="keywords" content="Node,socks,proxy," />
 
 
 
@@ -87,31 +87,25 @@
 
 
 
-<meta name="description" content="目录
-Query String
-querystring.escape(str)
-querystring.parse(str[, sep[, eq[, options]]])
-querystring.stringify(obj[, sep[, eq[, options]]])
-querystring.unescape(str)">
+<meta name="description" content="在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。
+在客户端收到我们上一篇数据的密码验证成功的信息后，客户端会向服务端发出需要访问的地址，它可能是IP(Ipv4或者Ipv6)和端口号，也有可能是域名和端口号。
+具体的数据格式类似下面
++—-+—–+——-+——+———-+———-+|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |+—-+">
 <meta property="og:type" content="article">
-<meta property="og:title" content="querystring">
-<meta property="og:url" content="http://wangyuekai.com/2017/01/28/querystring/index.html">
+<meta property="og:title" content="sock5代理node实现(3)">
+<meta property="og:url" content="http://wangyuekai.com/2017/08/01/node-socks-proxy-3/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
-<meta property="og:description" content="目录
-Query String
-querystring.escape(str)
-querystring.parse(str[, sep[, eq[, options]]])
-querystring.stringify(obj[, sep[, eq[, options]]])
-querystring.unescape(str)">
-<meta property="og:updated_time" content="2017-01-28T05:36:04.000Z">
+<meta property="og:description" content="在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。
+在客户端收到我们上一篇数据的密码验证成功的信息后，客户端会向服务端发出需要访问的地址，它可能是IP(Ipv4或者Ipv6)和端口号，也有可能是域名和端口号。
+具体的数据格式类似下面
++—-+—–+——-+——+———-+———-+|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |+—-+">
+<meta property="og:updated_time" content="2017-08-01T13:15:02.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="querystring">
-<meta name="twitter:description" content="目录
-Query String
-querystring.escape(str)
-querystring.parse(str[, sep[, eq[, options]]])
-querystring.stringify(obj[, sep[, eq[, options]]])
-querystring.unescape(str)">
+<meta name="twitter:title" content="sock5代理node实现(3)">
+<meta name="twitter:description" content="在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。
+在客户端收到我们上一篇数据的密码验证成功的信息后，客户端会向服务端发出需要访问的地址，它可能是IP(Ipv4或者Ipv6)和端口号，也有可能是域名和端口号。
+具体的数据格式类似下面
++—-+—–+——-+——+———-+———-+|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |+—-+">
 
 
 
@@ -139,13 +133,13 @@ querystring.unescape(str)">
 
 
 
-  <link rel="canonical" href="http://wangyuekai.com/2017/01/28/querystring/"/>
+  <link rel="canonical" href="http://wangyuekai.com/2017/08/01/node-socks-proxy-3/"/>
 
 
 
 
 
-  <title> querystring | 王跳凯的blog </title>
+  <title> sock5代理node实现(3) | 王跳凯的blog </title>
   <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
   <meta name="google-site-verification" content="qWJ2I33b2z3aL2XF4jrAarApua4GQpFVMashz57sIDY" />
 </head>
@@ -286,7 +280,7 @@ querystring.unescape(str)">
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/01/28/querystring/">
+    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/08/01/node-socks-proxy-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="王跳凯">
@@ -307,7 +301,7 @@ querystring.unescape(str)">
             
             
               
-                querystring
+                sock5代理node实现(3)
               
             
           </h1>
@@ -322,8 +316,8 @@ querystring.unescape(str)">
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-28T13:34:08+08:00">
-                2017-01-28
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-08-01T20:36:59+08:00">
+                2017-08-01
               </time>
             
 
@@ -341,9 +335,9 @@ querystring.unescape(str)">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/01/28/querystring/#comments" itemprop="discussionUrl">
+                <a href="/2017/08/01/node-socks-proxy-3/#comments" itemprop="discussionUrl">
                   <span class="post-comments-count disqus-comment-count"
-                        data-disqus-identifier="2017/01/28/querystring/" itemprop="commentCount"></span>
+                        data-disqus-identifier="2017/08/01/node-socks-proxy-3/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -369,54 +363,49 @@ querystring.unescape(str)">
       
 
       
-        <h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ul>
-<li>Query String<ul>
-<li>querystring.escape(str)</li>
-<li>querystring.parse(str[, sep[, eq[, options]]])</li>
-<li>querystring.stringify(obj[, sep[, eq[, options]]])</li>
-<li>querystring.unescape(str)</li>
-</ul>
-</li>
-</ul>
-<a id="more"></a>
-<p>#Query String<br>    稳定性：2 - 稳定<br>quertstring 模块提供了一系列用于解析和格式化url参数的工具，它可以被如下使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">const querystring = require(&apos;querystring&apos;);</div></pre></td></tr></table></figure></p>
-<h2 id="querystring-escape-str"><a href="#querystring-escape-str" class="headerlink" title="querystring.escape(str)"></a>querystring.escape(str)</h2><p>加入：v0.1.25</p>
+        <p>在前两篇两次握手信息之后，我们这次终于可以到获取数据这一步了。</p>
+<p>在客户端收到我们上一篇数据的密码验证成功的信息后，客户端会向服务端发出需要访问的地址，它可能是IP(Ipv4或者Ipv6)和端口号，也有可能是域名和端口号。</p>
+<p>具体的数据格式类似下面</p>
+<p>+—-+—–+——-+——+———-+———-+<br>|VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |<br>+—-+—–+——-+——+———-+———-+<br>| 1  |  1  | X’00’ |  1   | Variable |    2     |<br>+—-+—–+——-+——+———-+———-+</p>
+<p>第一个参数<code>VER</code>表示使用的协议版本号</p>
+<p>第二个参数<code>CMD</code>表示需要使用的链接方式</p>
 <ul>
-<li><code>str</code> \<string><br><code>querystring.escape()</code> 可以对字符串进行百分比编码，同时针对url查询字符串的特定要求进行了优化</string></li>
+<li><code>0x01</code> 表示CONNECT，比如我们常见的http请求</li>
+<li><code>0x02</code> 表示BIND，比如FTP等请求</li>
+<li><code>0x03</code> 表示UDP。</li>
 </ul>
-<p>querystring.escape()被querystring.stringify()使用，但是一般不推荐直接使用。主要在应用程序代码在必要的时候被用来分配给替代函数来实现百分比编码 ？？</p>
-<h2 id="querystring-parse-str-sep-eq-options"><a href="#querystring-parse-str-sep-eq-options" class="headerlink" title="querystring.parse(str[, sep[, eq[, options]]])"></a>querystring.parse(str[, sep[, eq[, options]]])</h2><p>加入：v0.1.25</p>
+<p>第三个参数<code>RSV</code>表示单词<code>RESERVED</code>，也就是字面意思保留字段，暂时没有用</p>
+<p>第四个参数<code>ATYP</code>表示<code>address type</code>，就是使用的地址类型</p>
 <ul>
-<li><code>str</code> \<string> 待解析的url查询字符串</string></li>
-<li><code>sep</code> \<string> 用于分界查询字符串中每对key与value的字符串，默认为<code>&#39;&amp;&#39;</code>.</string></li>
-<li><code>eq</code> \<string> 用于分界查询字符串中key与value的字符串，默认为<code>&#39;=&#39;</code>.</string></li>
-<li><code>options</code> \<object> <ul>
-<li><code>decodeURIComponent</code> \<function>  设置一个函数解码百分比编码的查询字符串，默认使用<code>querystring.unescape()</code>.</function></li>
-<li><code>maxKeys</code> \<number> 指定编码时key数量最多为多少。默认是1000，设置为0则表示不限数量<br><code>querystring.parse()</code>函数可以解析一个url的查询字符串（<code>str</code>）为一个键值对（key：value）的集合<br>例如，一个查询字符串为<code>&#39;foo=bar&amp;abc=xyz&amp;abc=123&#39;</code>可以被解析为<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    foo: &apos;bar&apos;,</div><div class="line">    abc: [&apos;xyz&apos;, &apos;123&apos;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-</number></li>
+<li>0x01 IP V4地址</li>
+<li>0x03 域名</li>
+<li>0x04 IP V6地址</li>
 </ul>
-</object></li>
-</ul>
-<p>注：<code>querystring.parse()</code>返回的对象不是原型继承于Javascript的<code>Object</code>对象，所以类似<code>obj.toString()</code>, <code>obj.hasOwnProperty()</code>等典型的<code>Object</code>对象的方法将无法使用</p>
-<p>默认情况下，百分比编码查询字符串时会使用UFT-8编码，如果使用代替字符编码，则需要指定代替字符的<code>decodeURIComponent</code>选项，如下例子<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// 假定 gbkDecodeURIComponent 函数已经存在..</div><div class="line">querystring.parse(&apos;w=%D6%D0%CE%C4&amp;foo=bar&apos;, null, null, &#123; decodeURIComponent: gbkDecodeURIComponent &#125;)</div></pre></td></tr></table></figure></p>
-<p>##querystring.stringify(obj[, sep[, eq[, options]]])<br> 加入：v0.1.25</p>
+<p>第五个参数<code>DST.ADDR</code>，表示目标主机的地址</p>
+<p>第六个参数<code>DST.PORT</code>，表示目标主机的端口</p>
+<p>在我们拿到地址和端口后，我们可以尝试连接目标主机，在我们连接成功后，返回给客户端类似下面的数据</p>
+<p>+—-+—–+——-+——+———-+———-+<br>|VER | REP |  RSV  | ATYP | BND.ADDR | BND.PORT |<br>+—-+—–+——-+——+———-+———-+<br>| 1  |  1  | X’00’ |  1   | Variable |    2     |<br>+—-+—–+——-+——+———-+———-+</p>
+<p>字段内容和上面基本一样<code>BND.ADDR</code>就是<code>DST.ADDR</code>,<code>BND.PORT</code>就是<code>DST.PORT</code>。</p>
+<p>唯一不同的就是<code>REP</code>，这个表示服务端去连接目标主机的结果</p>
 <ul>
-<li><code>obj</code> \<object> 要被序列化为查询字符串的对象.</object></li>
-<li><code>sep</code> \<string> 用于分界查询字符串中每对key与value的字符串，默认为<code>&#39;&amp;&#39;</code>.<ul>
-<li><code>eq</code> \<string> 用于分界查询字符串中key与value的字符串，默认为<code>&#39;=&#39;</code>.</string></li>
-<li><code>options</code><ul>
-<li><code>encodeURIComponent</code> \<function> 在转换查询字符传时把url中不安全的的字符串转换为百分比编码的函数.默认使用<code>querystring.escape()</code>.<br><code>querystring.stringify()</code>函数是通过遍历对象的“own properties“来生成url查询字符串<br>例子：<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">querystring.stringify(&#123; foo: &apos;bar&apos;, baz: [&apos;qux&apos;, &apos;quux&apos;], corge: &apos;&apos; &#125;)</div><div class="line">// returns &apos;foo=bar&amp;baz=qux&amp;baz=quux&amp;corge=&apos;</div><div class="line"></div><div class="line">querystring.stringify(&#123;foo: &apos;bar&apos;, baz: &apos;qux&apos;&#125;, &apos;;&apos;, &apos;:&apos;)</div><div class="line">// returns &apos;foo:bar;baz:qux&apos;</div></pre></td></tr></table></figure>
-</function></li>
+<li>X’00’ 成功</li>
+<li>X’01’ 普通的SOCKS服务器请求失败</li>
+<li>X’02’ 现有的规则不允许的连接</li>
+<li>X’03’ 网络不可达</li>
+<li>X’04’ 主机不可达</li>
+<li>X’05’ 连接被拒</li>
+<li>X’06’ TTL超时</li>
+<li>X’07’ 不支持的命令</li>
+<li>X’08’ 不支持的地址类型</li>
+<li>X’09’ – X’FF’ 未定义</li>
 </ul>
-</li>
-</ul>
-</string></li>
-</ul>
-<p>一般，查询字符串中需要百分比编码的字符会被编码为UTF-8格式。如果需要代替的编码，那么将需要指定另一个encodeURIComponent选项，如以下示例所示<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">// 假定 gbkEncodeURIComponent 函数已经存在,</div><div class="line"></div><div class="line">querystring.stringify(&#123; w: &apos;中文&apos;, foo: &apos;bar&apos; &#125;, null, null,</div><div class="line">  &#123; encodeURIComponent: gbkEncodeURIComponent &#125;)</div></pre></td></tr></table></figure></p>
-<p>##querystring.unescape(str)<br>加入：v.0.1.25</p>
-<ul>
-<li><code>str</code> \<string><br><code>querystring.unescape()</code>方法可以对提供的字符串进行url的百分比编码.<br>The querystring.unescape() method is used by querystring.parse() and is generally not expected to be used directly. It is exported primarily to allow application code to provide a replacement decoding implementation if necessary by assigning querystring.unescape to an alternative function<br><code>querystring.unescape()</code>方法被<code>querystring.parse()</code>函数所使用，一般来说也不推荐直接使用该函数。主要在应用程序代码在必要的时候被用来分配给替代函数来实现替换解码？？<br>默认情况下，<code>querystring.unescape()</code>函数会尝试使用基于<code>decodeURIComponent()</code>方法来进行解码，这样即使解码失败了，也会输出一个更加安全等效的结果，而不会输出一个错误的url</string></li>
-</ul>
+<p>客户端接下来就会把原来的请求完整的发给服务端，服务端直接转发给目标主机就好，其实在我们服务端和客服端相互认证并且服务端与目标主机连接上以后，服务端接下来的任务就相当于在客户端与目标主机充当搬运工的职责，只是负责包客户端的请求内容一样的发给目标主机，再把目标主机的内容发给客户端。</p>
+<p>下面是对应的代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">const net = require(&apos;net&apos;);</div><div class="line">// 用来解析地址信息</div><div class="line">const ReqInfo = require(&apos;./reqinfo.js&apos;);</div><div class="line"></div><div class="line">async function receiveRequest(chunk) &#123;</div><div class="line">  let socket = this;</div><div class="line">  // 获取到地址信息</div><div class="line">  let reqinfo = await ReqInfo(chunk);</div><div class="line"></div><div class="line">  let resp = new Buffer(chunk.length);</div><div class="line">  // 上面提到的两个数据格式基本一样，只是有一个字段不一样而已，所以为了方便就复制一份</div><div class="line">  chunk.copy(resp);</div><div class="line">  resp[0] = 0x05;</div><div class="line"></div><div class="line">  // 不代理本地地址</div><div class="line">  if (reqinfo.dest === &apos;127.0.0.1&apos; || reqinfo.dest === &apos;localhost&apos;) &#123;</div><div class="line">    resp[1] = 0x02;</div><div class="line">    socket.write(resp);</div><div class="line">    return false;</div><div class="line">  &#125;</div><div class="line"></div><div class="line">  try &#123;</div><div class="line">    // 尝试连接目标主句</div><div class="line">    let req = net.createConnection(reqinfo.port, reqinfo.dest, (s) =&gt; &#123;</div><div class="line">      log(&apos;createConnection success&apos;);</div><div class="line">      // 要在保证连接上目标服务器返回成功数据</div><div class="line">      resp[1] = 0x00;</div><div class="line"></div><div class="line">      socket.write(resp);</div><div class="line">      // 在客户端接受到连接上服务器的信息，则会发送完整的请求内容，直接转发给req</div><div class="line">      socket.pipe(req);</div><div class="line">      req.pipe(socket);</div><div class="line">    &#125;);</div><div class="line">    // 设置连接目标主机的超时时间</div><div class="line">    req.setTimeout(60 * 1000);</div><div class="line">    // 连接超时</div><div class="line">    req.on(&apos;timeout&apos;, () =&gt; &#123;</div><div class="line">      resp[1] = 0x06;</div><div class="line">      socket.write(resp);</div><div class="line">      req.destroyed || req.destroy();</div><div class="line">    &#125;);</div><div class="line">    // 连接目标主机失败</div><div class="line">    req.on(&apos;error&apos;, () =&gt; &#123;</div><div class="line">      resp[1] = 0x05;</div><div class="line">      socket.write(resp);</div><div class="line">    &#125;);</div><div class="line">  &#125; catch (e) &#123;</div><div class="line">    console.error(&apos;未捕捉错误: net.createConnection&apos;);</div><div class="line">    socket.emit(&apos;error&apos;, e);</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line">module.exports = receiveRequest;</div></pre></td></tr></table></figure>
+<p>细心的人肯定看到了，我这边使用了<code>async</code>和<code>await</code>，主要是在解析目标主机地址时用到了，主要原因是因为我在写这段代码，调试的时候不知道为什么google就是连接不上，其他的网站都可以，后来发现原来，我所在的地方DNS被劫持了，google.com域名返回的是百度的ip，结果因为https的安全问题(相当于给百度发了google.com的证书)，导致一直访问错误。</p>
+<p>所以就把DNS放在服务端了，DNS的解析是异步的，所以这里使用<code>async</code>和<code>await</code>来解决异步的问题。不过这样会增加服务端的压力，不过这个设置可以在客户端配置。另外肯定也看到了，我这里并没有贴出<code>const ReqInfo = require(&#39;./reqinfo.js&#39;);</code>的具体代码，具体代码请移步<a href="https://github.com/wleonardo/socks-proxy" target="_blank" rel="external">github socks-proxy</a>看吧，这里就不具体解释了。</p>
+<p>至此socks5代理的服务端就基本完成了，当然这个只是一个很简单的版本，还需要很多的异常需要处理，仅供娱乐吧。</p>
+<p><a href="/2017/07/30/node-socks-proxy-1//">sock5代理node实现(1)</a><br><a href="/2017/07/31/node-socks-proxy-2//">sock5代理node实现(2)</a></p>
 
       
     </div>
@@ -448,6 +437,10 @@ querystring.unescape(str)">
           
             <a href="/tags/Node/" rel="tag"># Node</a>
           
+            <a href="/tags/socks/" rel="tag"># socks</a>
+          
+            <a href="/tags/proxy/" rel="tag"># proxy</a>
+          
         </div>
       
 
@@ -459,8 +452,8 @@ querystring.unescape(str)">
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/" rel="next" title="反思JavaScript: 通过函数代替break">
-                <i class="fa fa-chevron-left"></i> 反思JavaScript: 通过函数代替break
+              <a href="/2017/07/31/node-socks-proxy-2/" rel="next" title="sock5代理node实现(2)">
+                <i class="fa fa-chevron-left"></i> sock5代理node实现(2)
               </a>
             
           </div>
@@ -468,10 +461,6 @@ querystring.unescape(str)">
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/28/modules/" rel="prev" title="modules">
-                modules <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -526,17 +515,8 @@ querystring.unescape(str)">
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400"
@@ -609,22 +589,6 @@ querystring.unescape(str)">
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#目录"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#querystring-escape-str"><span class="nav-number">2.</span> <span class="nav-text">querystring.escape(str)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#querystring-parse-str-sep-eq-options"><span class="nav-number">3.</span> <span class="nav-text">querystring.parse(str[, sep[, eq[, options]]])</span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
@@ -774,9 +738,9 @@ querystring.unescape(str)">
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://wangyuekai.com/2017/01/28/querystring/';
-          this.page.identifier = '2017/01/28/querystring/';
-          this.page.title = 'querystring';
+          this.page.url = 'http://wangyuekai.com/2017/08/01/node-socks-proxy-3/';
+          this.page.identifier = '2017/08/01/node-socks-proxy-3/';
+          this.page.title = 'sock5代理node实现(3)';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://wleonardo.disqus.com/embed.js';
