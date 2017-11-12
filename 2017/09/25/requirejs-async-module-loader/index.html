@@ -1,0 +1,762 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript,requirejs," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="requirejs是当前比较好的AMD规范的实现，所有的JS文件会被打包成一个js文件，减少请求数量，同时比较方便的实现了SPA的模式。但是随着项目的推进，SPA的首屏加载问题就会越来越明显。针对这个问题，webpack在v1版本中通过require.ensure，在v2版本中通过dynamic-imports来解决这个问题，不过实现最重要的就是在代码运行过程中动态加载其他的js文件（模块）。 在">
+<meta name="keywords" content="Javascript,requirejs">
+<meta property="og:type" content="article">
+<meta property="og:title" content="requirejs和react的动态模块加载">
+<meta property="og:url" content="http://wangyuekai.com/2017/09/25/requirejs-async-module-loader/index.html">
+<meta property="og:site_name" content="王跳凯的blog">
+<meta property="og:description" content="requirejs是当前比较好的AMD规范的实现，所有的JS文件会被打包成一个js文件，减少请求数量，同时比较方便的实现了SPA的模式。但是随着项目的推进，SPA的首屏加载问题就会越来越明显。针对这个问题，webpack在v1版本中通过require.ensure，在v2版本中通过dynamic-imports来解决这个问题，不过实现最重要的就是在代码运行过程中动态加载其他的js文件（模块）。 在">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-09-25T08:00:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="requirejs和react的动态模块加载">
+<meta name="twitter:description" content="requirejs是当前比较好的AMD规范的实现，所有的JS文件会被打包成一个js文件，减少请求数量，同时比较方便的实现了SPA的模式。但是随着项目的推进，SPA的首屏加载问题就会越来越明显。针对这个问题，webpack在v1版本中通过require.ensure，在v2版本中通过dynamic-imports来解决这个问题，不过实现最重要的就是在代码运行过程中动态加载其他的js文件（模块）。 在">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wangyuekai.com/2017/09/25/requirejs-async-module-loader/"/>
+
+
+
+
+
+  <title> requirejs和react的动态模块加载 | 王跳凯的blog </title>
+  <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
+  <meta name="google-site-verification" content="qWJ2I33b2z3aL2XF4jrAarApua4GQpFVMashz57sIDY" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?53c86d9133e15af360d3d19fb25bffbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王跳凯的blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/09/25/requirejs-async-module-loader/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                requirejs和react的动态模块加载
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-25T14:57:06+08:00">
+                2017-09-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/25/requirejs-async-module-loader/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/09/25/requirejs-async-module-loader/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>requirejs</code>是当前比较好的AMD规范的实现，所有的JS文件会被打包成一个js文件，减少请求数量，同时比较方便的实现了SPA的模式。但是随着项目的推进，SPA的首屏加载问题就会越来越明显。针对这个问题，<code>webpack</code>在v1版本中通过<code>require.ensure</code>，在v2版本中通过<a href="https://webpack.js.org/guides/code-splitting/#dynamic-imports" target="_blank" rel="external">dynamic-imports</a>来解决这个问题，不过实现最重要的就是在代码运行过程中动态加载其他的js文件（模块）。</p>
+<p>在<code>requirejs</code>的<a href="http://requirejs.org/" target="_blank" rel="external">官方文档</a>中，我们可以看到在模块中，也是可以随时使用<code>require</code>来加载新的模块，如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">require([&quot;require&quot;, &quot;alpha&quot;, &quot;beta&quot;], function(require, alpha, beta) &#123;</span><br><span class="line">  setTimeout(function() &#123;</span><br><span class="line">    require([&quot;omega&quot;],</span><br><span class="line">      function(omega) &#123;</span><br><span class="line">        console.log(&quot;load omega finish&quot;);</span><br><span class="line">      &#125;</span><br><span class="line">    );</span><br><span class="line">  &#125;, 100);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>不过我们在上面的代码中看到了很常见的回调地狱的问题，同时也会有一些异常处理的问题，所以我们首先先使用<code>promise</code>封装一下<code>require</code>的文件加载</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * [asyncModule description]</span><br><span class="line"> * @param  &#123;[type]&#125; paths [传入一个模块路径的数组]</span><br><span class="line"> * @return &#123;[type]&#125;       [Promise]</span><br><span class="line"> */</span><br><span class="line">function asyncModule(paths) &#123;</span><br><span class="line">  return new Promise((resolve, reject) =&gt; &#123;</span><br><span class="line">    if (!(paths instanceof Array)) &#123;</span><br><span class="line">      reject(&apos;paths should be a array&apos;);</span><br><span class="line">      return false;</span><br><span class="line">    &#125;</span><br><span class="line">    /**</span><br><span class="line">     * [paths description]</span><br><span class="line">     * @type &#123;[type]&#125;</span><br><span class="line">     */</span><br><span class="line">    paths = paths.map((path) =&gt; &#123;</span><br><span class="line">      path = manifest[path] || path;</span><br><span class="line">      let url = require.toUrl(path).slice(1);</span><br><span class="line">      return url.slice(0, url.indexOf(&apos;?&apos;));</span><br><span class="line">    &#125;);</span><br><span class="line">    require(paths, function callback(Module) &#123;</span><br><span class="line">      resolve.apply(this, arguments);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面有一段代码是<code>path</code>的处理，主要是搭配<code>require</code>来处理模块的路径:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">require.config(&#123; baseUrl: &apos;js/&apos;, waitSeconds: 60&#125;);</span><br></pre></td></tr></table></figure>
+<p>我们再通过react来封装一个”模块加载器”:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">define([], () =&gt; class DynamicModuleLoader extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state = &#123;</span><br><span class="line">      log: &apos;module loading&apos;,</span><br><span class="line">      module: undefined</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">    asyncModule([this.props.module]).then((module) =&gt; &#123;</span><br><span class="line">      this.setState(&#123;</span><br><span class="line">        module</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;).catch((e) =&gt; &#123;</span><br><span class="line">      this.setState(&#123;</span><br><span class="line">        log: &apos;module load error&apos;</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    if (this.state.module) &#123;</span><br><span class="line">      return &lt;this.state.module &#123;...this.props&#125; /&gt;;</span><br><span class="line">    &#125;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div data-ilog=&#123;this.state.log&#125; /&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>接下来我们在代码中以如下方式使用即可</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">define([&apos;dynamic-module-loader&apos;], (DynamicModuleLoader) =&gt; class PageHome extends React.Component &#123;</span><br><span class="line">  constructor(props) &#123;</span><br><span class="line">    super(props);</span><br><span class="line">    this.state = &#123;</span><br><span class="line">      ...</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line">  componentDidMount() &#123;</span><br><span class="line">  &#125;</span><br><span class="line">  render() &#123;</span><br><span class="line">    return (</span><br><span class="line">      &lt;div&gt;</span><br><span class="line">        &lt;h1&gt;Home&lt;/h1&gt;</span><br><span class="line">        &lt;DynamicModuleLoader module=&quot;module1/index.dynamic.js&quot; renderData=&#123;this.props&#125; /&gt;</span><br><span class="line">      &lt;/div&gt;</span><br><span class="line">    );</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>除了代码层面的修改，还需要针对构建工具做修改, 首先我们将需要动态加载的js文件加上<code>.dynamic.js</code>的后缀，主要的问题在于，我们需要使用<code>module1/index.dynamic.js</code>来加载，但是实际上，我们还需要考虑版本的问题，所以真实的加载文件的路径可能是<code>module1/index-f37e86f666.dynamic.js</code>,所以需要考虑开发时的便利和生成环境的需求，这里我们使用了<code>gulp</code>，:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">const gulp = require(&apos;gulp&apos;);</span><br><span class="line">const babel = require(&apos;gulp-babel&apos;);</span><br><span class="line">const rev = require(&apos;gulp-rev&apos;);</span><br><span class="line"></span><br><span class="line">gulp.src(`$&#123;PROJECT_PATH&#125;/js/**/*.async.js`)</span><br><span class="line">  .pipe(babel())</span><br><span class="line">  .pipe(uglifyJS())</span><br><span class="line">  .pipe(rev())</span><br><span class="line">  .pipe(gulp.dest(`$&#123;BUILD_PATH&#125;js/`))</span><br><span class="line">  .pipe(rev.manifest())</span><br><span class="line">  .pipe(gulp.dest(`$&#123;BUILD_PATH&#125;js/`));</span><br></pre></td></tr></table></figure>
+<p>这里我们通过<code>gulp-rev</code>来重命名模块，并且生成了<code>manifest.json</code>。那我们只需要在上面<code>function asyncModule()</code>中拿到<code>manifest.json</code>,获取就可以查询得到真正的模块路径。</p>
+<p>这里你可以通过<code>ajax.get</code>来获取<code>manifest.json</code>然后保存在全局变量。不过也可以通过<code>gulp-repalce</code>，在构建的时候直接将整个<code>json</code>插入到代码中，就不需要单独加载一个<code>json</code>了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          
+            <a href="/tags/requirejs/" rel="tag"># requirejs</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/08/01/node-socks-proxy-3/" rel="next" title="sock5代理node实现(3)">
+                <i class="fa fa-chevron-left"></i> sock5代理node实现(3)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400"
+               alt="王跳凯" />
+          <p class="site-author-name" itemprop="name">王跳凯</p>
+           
+              <p class="site-description motion-element" itemprop="description">读书的目的不只是找到一个和你想法相同的人，更重要的是看到和自己不一样的人生和想法</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wleonardo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:wang861622836@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-open-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-shower"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王跳凯</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://wleonardo.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://wangyuekai.com/2017/09/25/requirejs-async-module-loader/';
+          this.page.identifier = '2017/09/25/requirejs-async-module-loader/';
+          this.page.title = 'requirejs和react的动态模块加载';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wleonardo.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,848 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="原文：https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i  在我的上一篇文章 Death of the for Loop中，我试图去说服你放弃使用for 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中break怎么办？">
+<meta name="keywords" content="Javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="反思JavaScript: 通过函数代替break">
+<meta property="og:url" content="http://wangyuekai.com/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/index.html">
+<meta property="og:site_name" content="王跳凯的blog">
+<meta property="og:description" content="原文：https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i  在我的上一篇文章 Death of the for Loop中，我试图去说服你放弃使用for 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中break怎么办？">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-b9712034b2c2ccf9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-673056b4efcd62fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-01-28T04:32:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="反思JavaScript: 通过函数代替break">
+<meta name="twitter:description" content="原文：https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i  在我的上一篇文章 Death of the for Loop中，我试图去说服你放弃使用for 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中break怎么办？">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/2764259-b9712034b2c2ccf9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wangyuekai.com/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/"/>
+
+
+
+
+
+  <title> 反思JavaScript: 通过函数代替break | 王跳凯的blog </title>
+  <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
+  <meta name="google-site-verification" content="qWJ2I33b2z3aL2XF4jrAarApua4GQpFVMashz57sIDY" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?53c86d9133e15af360d3d19fb25bffbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王跳凯的blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                反思JavaScript: 通过函数代替break
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-01-27T19:05:17+08:00">
+                2017-01-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>原文：<a href="https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i" target="_blank" rel="external">https://hackernoon.com/rethinking-javascript-break-is-the-goto-of-loops-51b27b1c85f8#.k2oyppp5i</a><br><img src="http://upload-images.jianshu.io/upload_images/2764259-b9712034b2c2ccf9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+</blockquote>
+<p>在我的上一篇文章 <a href="https://hackernoon.com/rethinking-javascript-death-of-the-for-loop-c431564c84a8" target="_blank" rel="external">Death of the for Loop</a>中，我试图去说服你放弃使用<code>for</code> 循环改用函数式的解决方案。反过来，你提出了一个很好的问题，那么for循环中<code>break</code>怎么办？</p>
+<a id="more"></a>
+<blockquote>
+<p>break 会相当于循环中的<code>GOTO</code>，我们应该避免使用。</p>
+</blockquote>
+<p><code>break</code> 应该像<code>GOTO</code>一样被废弃。</p>
+<p>你可能会想“算了吧Joel，你这只是耸人听闻，break怎么可能会像<code>GOTO</code>一样？”</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// bad code. no copy paste.</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">outer:</span><br><span class="line">  for (var i in outerList) &#123;</span><br><span class="line">inner:</span><br><span class="line">    for (var j in innerList) &#123;</span><br><span class="line">      break outer;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<p>我可以提供标记作为证明。在其他语言中，标记和<code>GOTO</code>是相互对应的。在JavaScript，标记与<code>break</code>和<code>continue</code>也是相互对应的。因为<code>break</code>和<code>continue</code>来自于相同标记组，这也导致了它们和<code>GOTO</code>很像。</p>
+<blockquote>
+<p>JavaScript标签，break和continue是GOTO和非结构化编程时代的遗留</p>
+</blockquote>
+<p><img src="http://upload-images.jianshu.io/upload_images/2764259-673056b4efcd62fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p><a href="http://xkcd.com/292" target="_blank" rel="external">xkcd</a></p>
+<p>“但是如果它没有伤害任何人，那么我们为什么不把它留下语法中，而我们可以选择其他的方案？”</p>
+<h3 id="我们为什么限制我们如何编写软件"><a href="#我们为什么限制我们如何编写软件" class="headerlink" title="我们为什么限制我们如何编写软件?"></a>我们为什么限制我们如何编写软件?</h3><p>这个听上去有些违背直觉，但是限制是一个好事。限制我们使用<code>GOTO</code>就是一个很好的例子。我们也很欢迎限制我们的<code>“use strict”</code>，甚至批评不使用它的人。</p>
+<blockquote>
+<p>“limitations can make things better. A lot better. “— Charles Scalfani</p>
+</blockquote>
+<p>限制（规则）可以使我们写出更好的代码。</p>
+<p><a href="https://medium.com/@cscalfani/why-programmers-need-limits-3d96e1a0a6db" title="https://medium.com/@cscalfani/why-programmers-need-limits-3d96e1a0a6db" target="_blank" rel="external"><strong>为什么编程需要限制</strong><br>_限制使艺术，设计，生活更美好._medium.com</a><a href="https://medium.com/@cscalfani/why-programmers-need-limits-3d96e1a0a6db" target="_blank" rel="external"></a></p>
+<h3 id="我们对于break的选择是什么"><a href="#我们对于break的选择是什么" class="headerlink" title="我们对于break的选择是什么?"></a>我们对于break的选择是什么?</h3><p>我不是要做一个虚有其表的事情，但是也没有一个方案可以适合所有的情况。 这是一个完全不同的编程方式。 一个完全不同的思考方式。函数式编程的思想。</p>
+<p>有一个好消息是，有很多的库和工具可以帮助我们，例如<a href="https://lodash.com/" target="_blank" rel="external">Lodash</a>, <a href="http://ramdajs.com/" target="_blank" rel="external">Ramda</a>, <a href="http://danieltao.com/lazy.js/" target="_blank" rel="external">lazy.js</a>, 递归等等</p>
+<p>我们将从一个简单的cats集合和一个<code>isKitten</code>函数开始，这些将在下面所有的例子中被用到。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">const cats = [</span><br><span class="line">  &#123; name: &apos;Mojo&apos;,    months: 84 &#125;,</span><br><span class="line">  &#123; name: &apos;Mao-Mao&apos;, months: 34 &#125;,</span><br><span class="line">  &#123; name: &apos;Waffles&apos;, months: 4 &#125;,</span><br><span class="line">  &#123; name: &apos;Pickles&apos;, months: 6 &#125;</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const isKitten = cat =&gt; cat.months &lt; 7</span><br></pre></td></tr></table></figure>
+<p>让我们从一个我们熟悉的<code>for</code>循环的例子开始。它会遍历我们的cats，然后当找到第一只小猫的时候退出循环。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var firstKitten</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">for (var i = 0; i &lt; cats.length; i++) &#123;</span><br><span class="line">  if (isKitten(cats[i])) &#123;</span><br><span class="line">    firstKitten = cats[i]</span><br><span class="line">    break</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在，让我们和lodash中一个相同作用的例子做比较。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const firstKitten = _.find(cats, isKitten)</span><br></pre></td></tr></table></figure>
+<p>这个例子相当的简单。接下来让我们尝试一些边缘情况吧。现在我们改为遍历cat集合，然后选出前5只小猫，然后退出循环。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">var first5Kittens = []</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">// old-school edge case kitty loop</span><br><span class="line">for (var i = 0; i &lt; cats.length; i++) &#123;</span><br><span class="line">  if (isKitten(cats[i])) &#123;</span><br><span class="line">    first5Kittens.push(cats[i])</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">    if (first4Kittens.length &gt;= 5) &#123;</span><br><span class="line">      break</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="简单的方式"><a href="#简单的方式" class="headerlink" title="简单的方式"></a>简单的方式</h3><p>lodash是一个很好的库也可以坐很多的事情，但是有时候你需要一些其他更加专业的工具。<strong>这里我们介绍一个新朋友,</strong> <a href="http://danieltao.com/lazy.js/" target="_blank" rel="external"><strong>lazy.js</strong></a><strong>. “像Underscore，但是更加偷懒”。</strong>但是偷懒就是我们想要的.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">const result = Lazy(cats)</span><br><span class="line">  .filter(isKitten)</span><br><span class="line">  .take(5)</span><br></pre></td></tr></table></figure>
+<h3 id="困难的方法"><a href="#困难的方法" class="headerlink" title="困难的方法"></a>困难的方法</h3><p>库都是有趣的，但是<strong>有时候真正有趣的是从头开始创造东西</strong>。</p>
+<p>所以我们可以创建一个通用的函数，让它可以像<code>filter</code>一样使用也可以增加限制的功能。</p>
+<p>第一步就是把我们上面写的边缘情况的for循环封装在一个函数中。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>接下来，让我们是这个函数更加通用并且遍历所有cat具体的内容。使用<code>limit</code>来代替<code>5</code>,<code>predicate</code>来代替<code>isKitten</code>，<code>list</code>来代替<code>cats</code>。然后把这些作为函数的参数。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>现在我们有了一个可用的且可重复的<code>takeFirst</code>函数，这个可以让我们完全不用去关心我们cat的逻辑实现！</p>
+<p>我们的函数现在依旧还是一个<strong>纯函数</strong>。也就是说函数的输出只和输入的参数有关。如果传入相同的参数，一定会得到相同的结果。</p>
+<p>现在我们已经还是有那个肮脏的<code>for</code>循环，所以让我们继续重构。下一步就是把<code>i</code>和<code>newList</code>放入参数列表。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>当<code>limit</code>变为0的时候 (<code>limit</code>会在递归过程中减少)或者是遍历完了列表，我们希望可以退出递归(<code>isDone</code>)。</p>
+<p>如果递归还在进行，我们将会核对是否有符合我们的过滤条件<code>predicate</code>的值。如果当前值符合过滤条件，我们会调用<code>takeFirst</code>，减少<code>limit</code>并把当前值保存在我们的<code>newList</code>中，否者，移动到列表的下一个值。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>如果你还没有看过<a href="https://medium.com/@joelthoms/rethinking-javascript-the-if-statement-b158a61cd6cb" target="_blank" rel="external">Rethinking JavaScript: The if statement</a>，它会解释这个用三元表达式代替<code>if</code>‘的最后一步。</p>
+<p><a href="https://medium.com/@joelthoms/rethinking-javascript-the-if-statement-b158a61cd6cb" title="https://medium.com/@joelthoms/rethinking-javascript-the-if-statement-b158a61cd6cb" target="_blank" rel="external"><strong>Rethinking JavaScript: The if statement</strong><br>_Thinking functionally has opened my mind about programming._medium.com</a><a href="https://medium.com/@joelthoms/rethinking-javascript-the-if-statement-b158a61cd6cb" target="_blank" rel="external"></a><img src="http://upload-images.jianshu.io/upload_images/2764259-7b89e9b6a3515abe.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>现在我们像下面这样调用我们的新方法：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const first5Kittens = takeFirst(5, isKitten, cats)</span><br></pre></td></tr></table></figure>
+<p>为了兼容更多的情况，我们可以柯里化<code>takeFirst</code>，然后使用它去创建一些其他的函数（关于柯里化的介绍在另一篇文章中）</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">const first5 = takeFirst(5)</span><br><span class="line">const getFirst5Kittens = first5(isKitten)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">const first5Kittens = getFirst5Kittens(cats)</span><br></pre></td></tr></table></figure>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>现在有很多优秀的库例如 lodash, ramda和lazy.js供我们使用。但是如果我们足够大胆，也可以使用递归来创建我们自己的函方法。</p>
+<p>我必须要警告虽然<code>takeFirst</code>看上去很酷 <strong>但是使用递归是有得也有失的</strong>. 递归在Javascript中是很危险的，它很容易就会导致<code>超出最大调用堆栈大小</code>的报错。</p>
+<p>我将会在我的下一篇文章中重写JavaScript的递归。敬请关注。</p>
+<p>我知道这只是一件小事，但是当我收到来自Medium和Twitter (<a href="https://twitter.com/joelnet" target="_blank" rel="external">@joelnet</a>)的follow通知时会使我很开心。当然，如果你觉得我实在胡说八道，你也可以在下面的讨论区告诉我。</p>
+<p>Cheers!</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/01/27/how-require-actually-works/" rel="next" title="Node学习之路：require()工作原理">
+                <i class="fa fa-chevron-left"></i> Node学习之路：require()工作原理
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/01/28/querystring/" rel="prev" title="querystring">
+                querystring <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400"
+               alt="王跳凯" />
+          <p class="site-author-name" itemprop="name">王跳凯</p>
+           
+              <p class="site-description motion-element" itemprop="description">读书的目的不只是找到一个和你想法相同的人，更重要的是看到和自己不一样的人生和想法</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">54</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wleonardo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:wang861622836@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-open-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#我们为什么限制我们如何编写软件"><span class="nav-number">1.</span> <span class="nav-text">我们为什么限制我们如何编写软件?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#我们对于break的选择是什么"><span class="nav-number">2.</span> <span class="nav-text">我们对于break的选择是什么?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#简单的方式"><span class="nav-number">3.</span> <span class="nav-text">简单的方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#困难的方法"><span class="nav-number">4.</span> <span class="nav-text">困难的方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-shower"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王跳凯</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three.min.js"></script>
+
+  
+  <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://wleonardo.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://wangyuekai.com/2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/';
+          this.page.identifier = '2017/01/27/rethinking-javascript-break-is-the-goto-of-loops/';
+          this.page.title = '反思JavaScript: 通过函数代替break';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wleonardo.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
