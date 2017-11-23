@@ -87,14 +87,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="王跳凯的blog">
-<meta property="og:url" content="http://wangyuekai.com/404.html">
+<meta name="description" content="使用mac作为开发工具的web相关的开发同学，相信都有用过一个很好用的代理截包工具—charles 这两年，随着google对https的大力推动和越来越多的公司认识到https对于网络安全的重要性，越来越多的项目已经使用上https了。 这使得以前相对比较简单的截包设置来说，多了一些步骤。这里主要记录一下关于ios的截包设置。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="charles-https-proxy">
+<meta property="og:url" content="http://wangyuekai.com/2017/11/23/charles-https-proxy/index.html">
 <meta property="og:site_name" content="王跳凯的blog">
+<meta property="og:description" content="使用mac作为开发工具的web相关的开发同学，相信都有用过一个很好用的代理截包工具—charles 这两年，随着google对https的大力推动和越来越多的公司认识到https对于网络安全的重要性，越来越多的项目已经使用上https了。 这使得以前相对比较简单的截包设置来说，多了一些步骤。这里主要记录一下关于ios的截包设置。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-04-15T10:04:16.000Z">
+<meta property="og:image" content="http://ozvd64z7s.bkt.clouddn.com/1511436982087.png">
+<meta property="og:image" content="http://ozvd64z7s.bkt.clouddn.com/1511436917305.png">
+<meta property="og:image" content="http://ozvd64z7s.bkt.clouddn.com/1511436982087.png">
+<meta property="og:updated_time" content="2017-11-23T12:01:07.386Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="王跳凯的blog">
+<meta name="twitter:title" content="charles-https-proxy">
+<meta name="twitter:description" content="使用mac作为开发工具的web相关的开发同学，相信都有用过一个很好用的代理截包工具—charles 这两年，随着google对https的大力推动和越来越多的公司认识到https对于网络安全的重要性，越来越多的项目已经使用上https了。 这使得以前相对比较简单的截包设置来说，多了一些步骤。这里主要记录一下关于ios的截包设置。">
+<meta name="twitter:image" content="http://ozvd64z7s.bkt.clouddn.com/1511436982087.png">
 
 
 
@@ -122,19 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://wangyuekai.com/404.html"/>
+  <link rel="canonical" href="http://wangyuekai.com/2017/11/23/charles-https-proxy/"/>
 
 
 
 
 
-  <title>
-  
-
-  
-     | 王跳凯的blog
-  
-</title>
+  <title> charles-https-proxy | 王跳凯的blog </title>
   <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
   <meta name="google-site-verification" content="qWJ2I33b2z3aL2XF4jrAarApua4GQpFVMashz57sIDY" />
 </head>
@@ -171,7 +172,7 @@
     
   
 
-  <div class="container sidebar-position-left  ">
+  <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -266,34 +267,178 @@
             
 
   <div id="posts" class="posts-expand">
-  <header class="post-header">
+    
 
-	<h1 class="post-title" itemprop="name headline"></h1>
+  
 
+  
+  
+  
 
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/11/23/charles-https-proxy/">
 
-</header>
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
 
     
-    
-      <!DOCTYPE HTML>
-<html>
-<head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8;">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="robots" content="all">
-  <meta name="robots" content="index,follow">
-  <link rel="stylesheet" type="text/css" href="https://qzone.qq.com/gy/404/style/404style.css">
-</head>
-<body>
-  <script type="text/plain" src="http://www.qq.com/404/search_children.js" charset="utf-8" homepageurl="/" homepagename="回到我的主页">
-  </script>
-  <script src="https://qzone.qq.com/gy/404/data.js" charset="utf-8"></script>
-  <script src="https://qzone.qq.com/gy/404/page.js" charset="utf-8"></script>
-</body>
-</html>
+      <header class="post-header">
 
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                charles-https-proxy
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T19:55:21+08:00">
+                2017-11-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/11/23/charles-https-proxy/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/11/23/charles-https-proxy/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
     
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>使用mac作为开发工具的web相关的开发同学，相信都有用过一个很好用的代理截包工具—charles</p>
+<p>这两年，随着google对https的大力推动和越来越多的公司认识到https对于网络安全的重要性，越来越多的项目已经使用上https了。</p>
+<p>这使得以前相对比较简单的截包设置来说，多了一些步骤。这里主要记录一下关于ios的截包设置。<br><a id="more"></a><br>对于charles端的设置，相对来说网上也有很多的教程了。这边就简单提一下。</p>
+<ol>
+<li>需要在<strong>help</strong> 的 <strong>SSL Proxying</strong> 选项中点击<strong>install Charles Root Certificate</strong><br><img src="http://ozvd64z7s.bkt.clouddn.com/1511436982087.png" alt="Alt text"></li>
+<li>在钥匙串中点击添加<br><img src="http://ozvd64z7s.bkt.clouddn.com/1511436917305.png" alt="Alt text"></li>
+<li>设置证书为信任<br><img src="http://ozvd64z7s.bkt.clouddn.com/1511436982087.png" alt="Alt text"></li>
+<li>在<strong>Charles</strong>的<strong>Proxy</strong>中选中<strong>SSL Proxying Settings</strong>, 在里面增加你需要解析的https</li>
+<li>接下来，我们将我们ios设备连接上Charles的代理（这个网上教程很多了）</li>
+<li><p>然后在safari中打开<a href="https://chls.pro/ssl，添加证书，然后你就可以再safari中访问https的网站，并看到请求的具体信息了。" target="_blank" rel="external">https://chls.pro/ssl，添加证书，然后你就可以再safari中访问https的网站，并看到请求的具体信息了。</a></p>
+<blockquote>
+<p>但是很多时候我们更多的是需要查看APP中的信息，那么你还需要下面一步</p>
+</blockquote>
+</li>
+<li><p>在ios大于10.3的版本中，你需要打开设置-&gt; 通用-&gt; 关于本机-&gt; 证书信任设置，在这里，将<strong>Charles</strong>的证书设置为完全信任，那么我们在ios设备上的任何地方访问的https请求都可以被解析看到了。</p>
+</li>
+</ol>
+<blockquote>
+<p>具体的信息可以查看Charles的<a href="https://www.charlesproxy.com/documentation/using-charles/ssl-certificates/" target="_blank" rel="external">官方文档</a></p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/25/requirejs-async-module-loader/" rel="next" title="requirejs和react的动态模块加载">
+                <i class="fa fa-chevron-left"></i> requirejs和react的动态模块加载
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -532,6 +677,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
@@ -552,9 +701,9 @@
     
       <script type="text/javascript">
         var disqus_config = function () {
-          this.page.url = 'http://wangyuekai.com/404.html';
-          this.page.identifier = '404.html';
-          this.page.title = '';
+          this.page.url = 'http://wangyuekai.com/2017/11/23/charles-https-proxy/';
+          this.page.identifier = '2017/11/23/charles-https-proxy/';
+          this.page.title = 'charles-https-proxy';
         };
         var d = document, s = d.createElement('script');
         s.src = 'https://wleonardo.disqus.com/embed.js';
