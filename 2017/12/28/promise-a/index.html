@@ -1,0 +1,829 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="wleonardo" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Promise A+ 学习 在js的本身被设计为异步的，那么这就给编码提出了一个要求，该如何去优雅的编写js代码中异步的代码，最早的时候，我们使用回调来处理这个问题。但是同时也产生了回调地狱的问题。 后来则出现了Promise，Promise的出现可以说彻底改变了对于异步代码的编写方式。Promise的影响之深远，可以说es6加入了Promise，koa中yield，Generator也是配合了P">
+<meta property="og:type" content="article">
+<meta property="og:title" content="promise-a+">
+<meta property="og:url" content="http://wangyuekai.com/2017/12/28/promise-a/index.html">
+<meta property="og:site_name" content="王跳凯的blog">
+<meta property="og:description" content="Promise A+ 学习 在js的本身被设计为异步的，那么这就给编码提出了一个要求，该如何去优雅的编写js代码中异步的代码，最早的时候，我们使用回调来处理这个问题。但是同时也产生了回调地狱的问题。 后来则出现了Promise，Promise的出现可以说彻底改变了对于异步代码的编写方式。Promise的影响之深远，可以说es6加入了Promise，koa中yield，Generator也是配合了P">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-04-22T14:40:18.358Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="promise-a+">
+<meta name="twitter:description" content="Promise A+ 学习 在js的本身被设计为异步的，那么这就给编码提出了一个要求，该如何去优雅的编写js代码中异步的代码，最早的时候，我们使用回调来处理这个问题。但是同时也产生了回调地狱的问题。 后来则出现了Promise，Promise的出现可以说彻底改变了对于异步代码的编写方式。Promise的影响之深远，可以说es6加入了Promise，koa中yield，Generator也是配合了P">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wangyuekai.com/2017/12/28/promise-a/"/>
+
+
+
+
+
+  <title> promise-a+ | 王跳凯的blog </title>
+  <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
+  <meta name="google-site-verification" content="qWJ2I33b2z3aL2XF4jrAarApua4GQpFVMashz57sIDY" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?53c86d9133e15af360d3d19fb25bffbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王跳凯的blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2017/12/28/promise-a/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                promise-a+
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-28T18:17:46+08:00">
+                2017-12-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/12/28/promise-a/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/12/28/promise-a/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Promise A+ 学习</p>
+<p>在js的本身被设计为异步的，那么这就给编码提出了一个要求，该如何去优雅的编写js代码中异步的代码，最早的时候，我们使用回调来处理这个问题。但是同时也产生了回调地狱的问题。</p>
+<p>后来则出现了Promise，Promise的出现可以说彻底改变了对于异步代码的编写方式。Promise的影响之深远，可以说es6加入了Promise，koa中yield，Generator也是配合了Promise才实现了类似await，async的功能。知道ES7中真正的async和await也是基于Promise实现的（其实async和await只是Generator的语法糖）。可以说Promise在异步编程中已经无处不在了。</p>
+<p>所以了解Promise的规范还是很有必要的。当然最好的是去看一下规范的原文。</p>
+<p>Promise A+的英文原文：<a href="https://promisesaplus.com/" target="_blank" rel="external">Promise/A+</a><br><a id="more"></a><br>下面对于原文的翻译，我将会引用一个网上已有的翻译版本<a href="http://www.ituring.com.cn/article/66566" target="_blank" rel="external">【翻译】Promises/A+规范</a>的内容，在此感激作者。</p>
+<p><strong>一个开放、健全且通用的 JavaScript Promise 标准。由开发者制定，供开发者参考。</strong></p>
+<p>Promise 表示一个异步操作的最终结果，与之进行交互的方式主要是 <code>then</code> 方法，该方法注册了两个回调函数，用于接收 <code>promise</code> 的终值或本 <code>promise</code> 不能执行的原因。</p>
+<p>本规范详细列出了 <code>then</code> 方法的执行过程，所有遵循 Promises/A+ 规范实现的 <code>promise</code> 均可以本标准作为参照基础来实施 <code>then</code> 方法。因而本规范是十分稳定的。尽管 Promise/A+ 组织有时可能会修订本规范，但主要是为了处理一些特殊的边界情况，且这些改动都是微小且向下兼容的。如果我们要进行大规模不兼容的更新，我们一定会在事先进行谨慎地考虑、详尽的探讨和严格的测试。</p>
+<p>从历史上说，本规范实际上是把之前 <a href="http://wiki.commonjs.org/wiki/Promises/A" target="_blank" rel="external">Promise/A 规范</a> 中的建议明确成为了行为标准：我们一方面扩展了原有规范约定俗成的行为，一方面删减了原规范的一些特例情况和有问题的部分。</p>
+<p>最后，核心的 Promises/A+ 规范不设计如何创建、解决和拒绝 <code>promise</code>，而是专注于提供一个通用的 <code>then</code> 方法。上述对于 promises 的操作方法将来在其他规范中可能会提及。</p>
+<h1 id="术语"><a href="#术语" class="headerlink" title="术语"></a>术语</h1><h2 id="1-1-Promise"><a href="#1-1-Promise" class="headerlink" title="1.1 Promise"></a>1.1 Promise</h2><p><code>promise</code> 是一个拥有 <code>then</code> 方法的对象或函数，其行为符合本规范；</p>
+<h2 id="1-2-thenable"><a href="#1-2-thenable" class="headerlink" title="1.2 thenable"></a>1.2 thenable</h2><p>是一个定义了 <code>then</code> 方法的对象或函数，文中译作“拥有 <code>then</code> 方法”；</p>
+<h2 id="1-3-值（value）"><a href="#1-3-值（value）" class="headerlink" title="1.3 值（value）"></a>1.3 值（value）</h2><p>指任何 <code>JavaScript</code> 的合法值（包括 <code>undefined</code> , <code>thenable</code> 和 <code>promise</code>）；</p>
+<h2 id="1-4-异常（exception）"><a href="#1-4-异常（exception）" class="headerlink" title="1.4 异常（exception）"></a>1.4 异常（exception）</h2><p>是使用 throw 语句抛出的一个值。</p>
+<h2 id="1-5-据因（reason）"><a href="#1-5-据因（reason）" class="headerlink" title="1.5 据因（reason）"></a>1.5 据因（reason）</h2><p>表示一个 <code>promise</code> 的拒绝原因。</p>
+<h1 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h1><h2 id="2-1-Promise-的状态"><a href="#2-1-Promise-的状态" class="headerlink" title="2.1 Promise 的状态"></a>2.1 Promise 的状态</h2><p>一个 Promise 的当前状态必须为以下三种状态中的一种：等待态（Pending）、执行态（Fulfilled）和拒绝态（Rejected）。</p>
+<h3 id="2-1-1-等待态（Pending）"><a href="#2-1-1-等待态（Pending）" class="headerlink" title="2.1.1 等待态（Pending）"></a>2.1.1 等待态（Pending）</h3><p>处于等待态时，<code>promise</code> 需满足以下条件：</p>
+<ul>
+<li>可以迁移至执行态或拒绝态</li>
+</ul>
+<h3 id="2-1-2-执行态（Fulfilled）"><a href="#2-1-2-执行态（Fulfilled）" class="headerlink" title="2.1.2 执行态（Fulfilled）"></a>2.1.2 执行态（Fulfilled）</h3><p>处于执行态时，<code>promise</code> 需满足以下条件：</p>
+<ul>
+<li>不能迁移至其他任何状态</li>
+<li>必须拥有一个不可变的终值</li>
+</ul>
+<h3 id="2-1-3-拒绝态（Rejected）"><a href="#2-1-3-拒绝态（Rejected）" class="headerlink" title="2.1.3 拒绝态（Rejected）"></a>2.1.3 拒绝态（Rejected）</h3><p>处于拒绝态时，<code>promise</code> 需满足以下条件：</p>
+<ul>
+<li>不能迁移至其他任何状态</li>
+<li>必须拥有一个不可变的据因</li>
+</ul>
+<p>这里的不可变指的是恒等（即可用 === 判断相等），而不是意味着更深层次的不可变</p>
+<h3 id="2-2-then方法"><a href="#2-2-then方法" class="headerlink" title="2.2 then方法"></a>2.2 <code>then</code>方法</h3><p>一个 <code>promise</code> 必须提供一个 <code>then</code> 方法以访问其当前值、终值和据因</p>
+<p><code>promise</code> 的 <code>then</code> 方法接受两个参数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">promise.then(onFulfilled, onRejected)</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-1-onFulfilled-和-onRejected-都是可选参数。"><a href="#2-2-1-onFulfilled-和-onRejected-都是可选参数。" class="headerlink" title="2.2.1 onFulfilled 和 onRejected 都是可选参数。"></a>2.2.1 <code>onFulfilled</code> 和 <code>onRejected</code> 都是可选参数。</h4><h5 id="2-2-1-1-如果-onFulfilled-不是函数，其必须被忽略"><a href="#2-2-1-1-如果-onFulfilled-不是函数，其必须被忽略" class="headerlink" title="2.2.1.1 如果 onFulfilled 不是函数，其必须被忽略"></a>2.2.1.1 如果 <code>onFulfilled</code> 不是函数，其必须被忽略</h5><h5 id="2-2-1-2-如果-onRejected-不是函数，其必须被忽略"><a href="#2-2-1-2-如果-onRejected-不是函数，其必须被忽略" class="headerlink" title="2.2.1.2 如果 onRejected 不是函数，其必须被忽略"></a>2.2.1.2 如果 <code>onRejected</code> 不是函数，其必须被忽略</h5><h4 id="2-2-2-如果-onFulfilled-是函数："><a href="#2-2-2-如果-onFulfilled-是函数：" class="headerlink" title="2.2.2 如果 onFulfilled 是函数："></a>2.2.2 如果 <code>onFulfilled</code> 是函数：</h4><h5 id="2-2-2-1-当-promise-执行结束后其必须被调用，其第一个参数为-promise-的终值"><a href="#2-2-2-1-当-promise-执行结束后其必须被调用，其第一个参数为-promise-的终值" class="headerlink" title="2.2.2.1 当 promise 执行结束后其必须被调用，其第一个参数为 promise 的终值"></a>2.2.2.1 当 <code>promise</code> 执行结束后其必须被调用，其第一个参数为 <code>promise</code> 的终值</h5><blockquote>
+<p>类似 onFulfilled(value);</p>
+</blockquote>
+<h5 id="2-2-2-2-在-promise-执行结束前其不可被调用"><a href="#2-2-2-2-在-promise-执行结束前其不可被调用" class="headerlink" title="2.2.2.2 在 promise 执行结束前其不可被调用"></a>2.2.2.2 在 <code>promise</code> 执行结束前其不可被调用</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 这里的onFulfilled为伪代码，表示onFulfilled的执行函数</span><br><span class="line">var onFulfilled = function() &#123;</span><br><span class="line">  console.log(&quot;onFulfilled&quot;);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var c = new Promise((onFulfilled, onRejected) =&gt; &#123;</span><br><span class="line">  onFulfilled(&apos;ok&apos;);</span><br><span class="line">  console.log(&apos;123&apos;);</span><br><span class="line">&#125;)</span><br><span class="line"></span><br><span class="line">&gt; &apos;123&apos;</span><br><span class="line">&gt; &apos;onFulfilled&apos;</span><br></pre></td></tr></table></figure>
+<h4 id="2-2-2-3-其调用次数不可超过一次"><a href="#2-2-2-3-其调用次数不可超过一次" class="headerlink" title="2.2.2.3 其调用次数不可超过一次"></a>2.2.2.3 其调用次数不可超过一次</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">var c = new Promise((onFulfilled, onRejected) =&gt; &#123;</span><br><span class="line">  onFulfilled(&apos;ok&apos;);</span><br><span class="line">  onFulfilled(&apos;ok2&apos;);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">c.then((data) =&gt; &#123;</span><br><span class="line">  console.log(data); // &apos;ok&apos;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-3-如果-onRejected-是函数："><a href="#2-2-3-如果-onRejected-是函数：" class="headerlink" title="2.2.3 如果 onRejected 是函数："></a>2.2.3 如果 <code>onRejected</code> 是函数：</h3><h5 id="2-2-3-1-当-promise-被拒绝执行后其必须被调用，其第一个参数为-promise-的据因"><a href="#2-2-3-1-当-promise-被拒绝执行后其必须被调用，其第一个参数为-promise-的据因" class="headerlink" title="2.2.3.1 当 promise 被拒绝执行后其必须被调用，其第一个参数为 promise 的据因"></a>2.2.3.1 当 <code>promise</code> 被拒绝执行后其必须被调用，其第一个参数为 <code>promise</code> 的据因</h5><h5 id="2-2-3-2-在-promise-被拒绝执行前其不可被调用"><a href="#2-2-3-2-在-promise-被拒绝执行前其不可被调用" class="headerlink" title="2.2.3.2 在 promise 被拒绝执行前其不可被调用"></a>2.2.3.2 在 <code>promise</code> 被拒绝执行前其不可被调用</h5><h4 id="2-2-3-3-其调用次数不可超过一次"><a href="#2-2-3-3-其调用次数不可超过一次" class="headerlink" title="2.2.3.3 其调用次数不可超过一次"></a>2.2.3.3 其调用次数不可超过一次</h4><h4 id="2-2-4-onFulfilled和-onRejected-只有在执行环境堆栈仅包含平台代码时才可被调用"><a href="#2-2-4-onFulfilled和-onRejected-只有在执行环境堆栈仅包含平台代码时才可被调用" class="headerlink" title="2.2.4 onFulfilled和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用"></a>2.2.4 <strong><code>onFulfilled</code>和 <code>onRejected</code> 只有在执行环境堆栈仅包含平台代码时才可被调用</strong></h4><h4 id="2-2-5-onFulfilled-和-onRejected-必须被作为函数调用（即没有-this-值）"><a href="#2-2-5-onFulfilled-和-onRejected-必须被作为函数调用（即没有-this-值）" class="headerlink" title="2.2.5 onFulfilled 和 onRejected 必须被作为函数调用（即没有 this 值）"></a>2.2.5 <strong>onFulfilled 和 onRejected 必须被作为函数调用（即没有 this 值）</strong></h4><h4 id="2-2-6-then-方法可以被同一个-promise-调用多次"><a href="#2-2-6-then-方法可以被同一个-promise-调用多次" class="headerlink" title="2.2.6 then 方法可以被同一个 promise 调用多次"></a>2.2.6 then 方法可以被同一个 promise 调用多次</h4><h5 id="2-2-6-1-当-promise-成功执行时，所有-onFulfilled-需按照其注册顺序依次回调"><a href="#2-2-6-1-当-promise-成功执行时，所有-onFulfilled-需按照其注册顺序依次回调" class="headerlink" title="2.2.6.1 当 promise 成功执行时，所有 onFulfilled 需按照其注册顺序依次回调"></a>2.2.6.1 当 promise 成功执行时，所有 onFulfilled 需按照其注册顺序依次回调</h5><h5 id="2-2-6-1-当-promise-被拒绝执行时，所有的-onRejected-需按照其注册顺序依次回调"><a href="#2-2-6-1-当-promise-被拒绝执行时，所有的-onRejected-需按照其注册顺序依次回调" class="headerlink" title="2.2.6.1 当 promise 被拒绝执行时，所有的 onRejected 需按照其注册顺序依次回调"></a>2.2.6.1 当 promise 被拒绝执行时，所有的 onRejected 需按照其注册顺序依次回调</h5><h4 id="2-2-7-then-必须返回一个-promise"><a href="#2-2-7-then-必须返回一个-promise" class="headerlink" title="2.2.7 then 必须返回一个 promise"></a>2.2.7 <strong>then 必须返回一个 <code>promise</code></strong></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">promise2 = promise1.then(onFulfilled, onRejected);</span><br></pre></td></tr></table></figure>
+<h5 id="2-2-7-1-如果-onFulfilled-或者-onRejected-返回一个值-x-，则运行下面的-Promise-解决过程：-Resolve"><a href="#2-2-7-1-如果-onFulfilled-或者-onRejected-返回一个值-x-，则运行下面的-Promise-解决过程：-Resolve" class="headerlink" title="2.2.7.1 如果 onFulfilled 或者 onRejected 返回一个值 x ，则运行下面的 Promise 解决过程：[Resolve]"></a>2.2.7.1 如果 onFulfilled 或者 <code>onRejected</code> 返回一个值 x ，则运行下面的 Promise 解决过程：[<a href="promise2, x">Resolve]</a></h5><h5 id="2-2-7-2-如果-onFulfilled-或者-onRejected-抛出一个异常-e-，则-promise2-必须拒绝执行，并返回拒因-e"><a href="#2-2-7-2-如果-onFulfilled-或者-onRejected-抛出一个异常-e-，则-promise2-必须拒绝执行，并返回拒因-e" class="headerlink" title="2.2.7.2 如果 onFulfilled 或者 onRejected 抛出一个异常 e ，则 promise2 必须拒绝执行，并返回拒因 e"></a>2.2.7.2 如果 onFulfilled 或者 <code>onRejected</code> 抛出一个异常 e ，则 promise2 必须拒绝执行，并返回拒因 e</h5><h5 id="2-2-7-3-如果-onFulfilled-不是函数且-promise1-成功执行，-promise2-必须成功执行并返回相同的值"><a href="#2-2-7-3-如果-onFulfilled-不是函数且-promise1-成功执行，-promise2-必须成功执行并返回相同的值" class="headerlink" title="2.2.7.3 如果 onFulfilled 不是函数且 promise1 成功执行， promise2 必须成功执行并返回相同的值"></a>2.2.7.3 如果 onFulfilled 不是函数且 promise1 成功执行， promise2 必须成功执行并返回相同的值</h5><h5 id="2-2-7-4-如果-onRejected-不是函数且-promise1-拒绝执行，-promise2-必须拒绝执行并返回相同的据因"><a href="#2-2-7-4-如果-onRejected-不是函数且-promise1-拒绝执行，-promise2-必须拒绝执行并返回相同的据因" class="headerlink" title="2.2.7.4 如果 onRejected 不是函数且 promise1 拒绝执行， promise2 必须拒绝执行并返回相同的据因"></a>2.2.7.4 如果 <code>onRejected</code> 不是函数且 promise1 拒绝执行， promise2 必须拒绝执行并返回相同的据因</h5><h3 id="2-3-Promise-解决过程"><a href="#2-3-Promise-解决过程" class="headerlink" title="2.3 Promise 解决过程"></a>2.3 Promise 解决过程</h3><blockquote>
+<p>注释：这里是描述的是Promise.then() 执行以后返回什么内容，其实Promise.then()一定会返回一个新的Promise，但是具体是什么内容，是和then里的回调函数的返回值有关，下面的x就是then的回调函数的返回值。可以再看一眼上面2.2.7的内容</p>
+</blockquote>
+<p>Promise 解决过程是一个抽象的操作，其需输入一个 promise 和一个值，我们表示为 <code>[[Resolve]](promise, x)</code>，如果 x 有 then 方法且看上去像一个 Promise ，解决程序即尝试使 promise 接受 x 的状态；否则其用 x 的值来执行 promise 。</p>
+<p>这种 thenable 的特性使得 Promise 的实现更具有通用性：只要其暴露出一个遵循 Promise/A+ 协议的 then 方法即可；这同时也使遵循 Promise/A+ 规范的实现可以与那些不太规范但可用的实现能良好共存。</p>
+<p>运行 <code>[[Resolve]](promise, x)</code>需遵循以下步骤：</p>
+<h4 id="2-3-1-x-与-promise-相等"><a href="#2-3-1-x-与-promise-相等" class="headerlink" title="2.3.1 x 与 promise 相等"></a>2.3.1 x 与 promise 相等</h4><p>如果 promise 和 x 指向同一对象，以 TypeError 为据因拒绝执行 promise<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">var p = new Promise(function(resolve, reject) &#123;</span><br><span class="line">  resolve(123);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line"> then的回调函数返回了p2, 和promise是同一个变量，那么就会返回一个错误</span><br><span class="line"> */</span><br><span class="line">var p2 = p.then((data) =&gt; &#123;</span><br><span class="line">  return p2;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">&gt;&gt; Uncaught (in promise) TypeError: Chaining cycle detected for promise #&lt;Promise&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="2-3-2-x-为-Promise"><a href="#2-3-2-x-为-Promise" class="headerlink" title="2.3.2 x 为 Promise"></a>2.3.2 x 为 Promise</h3><p>如果 x 为 Promise ，则使 promise 接受 x 的状态</p>
+<h4 id="2-3-2-1-如果-x-处于等待态，-promise-需保持为等待态直至-x-被执行或拒绝"><a href="#2-3-2-1-如果-x-处于等待态，-promise-需保持为等待态直至-x-被执行或拒绝" class="headerlink" title="2.3.2.1 如果 x 处于等待态， promise 需保持为等待态直至 x 被执行或拒绝"></a>2.3.2.1 如果 x 处于等待态， promise 需保持为等待态直至 x 被执行或拒绝</h4><h4 id="2-3-2-2-如果-x-处于执行态，用相同的值执行-promise"><a href="#2-3-2-2-如果-x-处于执行态，用相同的值执行-promise" class="headerlink" title="2.3.2.2 如果 x 处于执行态，用相同的值执行 promise"></a>2.3.2.2 如果 x 处于执行态，用相同的值执行 promise</h4><h4 id="2-3-2-3-如果-x-处于拒绝态，用相同的据因拒绝-promise"><a href="#2-3-2-3-如果-x-处于拒绝态，用相同的据因拒绝-promise" class="headerlink" title="2.3.2.3 如果 x 处于拒绝态，用相同的据因拒绝 promise"></a>2.3.2.3 如果 x 处于拒绝态，用相同的据因拒绝 promise</h4><blockquote>
+<p>这里其实是我们经常会用到的一个特性，就是promise链式调用,这里就不多解释了</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">getUserInfo().then((userInfo) =&gt; &#123;</span><br><span class="line">  return getCompanyInfo();</span><br><span class="line">&#125;).then((companyInfo) =&gt; &#123;</span><br><span class="line">  return getCityInfo();</span><br><span class="line">&#125;).then((cityInfo) =&gt; &#123;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h3 id="2-3-3-x-为对象或函数"><a href="#2-3-3-x-为对象或函数" class="headerlink" title="2.3.3 x 为对象或函数"></a>2.3.3 x 为对象或函数</h3><h4 id="2-3-3-1-把-x-then-赋值给-then"><a href="#2-3-3-1-把-x-then-赋值给-then" class="headerlink" title="2.3.3.1 把 x.then 赋值给 then"></a>2.3.3.1 把 x.then 赋值给 then</h4><blockquote>
+<p>这里相当于创建了一个新的变量then，类似 <code>var then = x.then;</code>, 作用其实和我们平常的这样做的方式差不多，方便后面的使用。</p>
+</blockquote>
+<h4 id="2-3-3-2-如果取-x-then-的值时抛出错误-e-，则以-e-为据因拒绝-promise"><a href="#2-3-3-2-如果取-x-then-的值时抛出错误-e-，则以-e-为据因拒绝-promise" class="headerlink" title="2.3.3.2 如果取 x.then 的值时抛出错误 e ，则以 e 为据因拒绝 promise"></a>2.3.3.2 如果取 x.then 的值时抛出错误 e ，则以 e 为据因拒绝 promise</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">function objFactory() &#123;</span><br><span class="line">  var obj = &#123;&#125;;</span><br><span class="line">  Object.defineProperty(obj, &quot;then&quot;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      throw Error(&apos;then error&apos;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var a = new Promise((resolve) =&gt; &#123;</span><br><span class="line">  resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">a.then(() =&gt; &#123;</span><br><span class="line">  return objFactory()</span><br><span class="line">&#125;);</span><br><span class="line">// Uncaught (in promise) Error: then error</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-3-3-如果-then-是函数，将-x-作为函数的作用域-this-调用之。传递两个回调函数作为参数，第一个参数叫做-resolvePromise-，第二个参数叫做-rejectPromise"><a href="#2-3-3-3-如果-then-是函数，将-x-作为函数的作用域-this-调用之。传递两个回调函数作为参数，第一个参数叫做-resolvePromise-，第二个参数叫做-rejectPromise" class="headerlink" title="2.3.3.3 如果 then 是函数，将 x 作为函数的作用域 this 调用之。传递两个回调函数作为参数，第一个参数叫做 resolvePromise ，第二个参数叫做 rejectPromise:"></a>2.3.3.3 如果 then 是函数，将 x 作为函数的作用域 this 调用之。传递两个回调函数作为参数，第一个参数叫做 resolvePromise ，第二个参数叫做 rejectPromise:</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">// 类似这个代码</span><br><span class="line">var then = x.then;</span><br><span class="line"></span><br><span class="line">if (typeof then === &apos;function&apos;) &#123;</span><br><span class="line">  then.call(x, resolvePromise, rejectPromise);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-3-3-1-如果-resolvePromise-以值-y-为参数被调用，则运行-Resolve"><a href="#2-3-3-3-1-如果-resolvePromise-以值-y-为参数被调用，则运行-Resolve" class="headerlink" title="2.3.3.3.1 如果 resolvePromise 以值 y 为参数被调用，则运行 [Resolve]"></a>2.3.3.3.1 如果 resolvePromise 以值 y 为参数被调用，则运行 <a href="promise, y">[Resolve]</a></h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function objFactory() &#123;</span><br><span class="line">  var obj = &#123;&#125;;</span><br><span class="line">  Object.defineProperty(obj, &quot;then&quot;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      return function(resolvePromise, rejectPromise) &#123;</span><br><span class="line">        resolvePromise(&apos;resolve_y&apos;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var a = new Promise((resolve) =&gt; &#123;</span><br><span class="line">  resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var c = a.then(() =&gt; &#123;</span><br><span class="line">  return objFactory()</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">c.then((data) =&gt; &#123;</span><br><span class="line">  console.log(data); // &quot;resolve_y&quot;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h5 id="2-3-3-3-2-如果-rejectPromise-以据因-r-为参数被调用，则以据因-r-拒绝-promise"><a href="#2-3-3-3-2-如果-rejectPromise-以据因-r-为参数被调用，则以据因-r-拒绝-promise" class="headerlink" title="2.3.3.3.2 如果 rejectPromise 以据因 r 为参数被调用，则以据因 r 拒绝 promise"></a>2.3.3.3.2 如果 rejectPromise 以据因 r 为参数被调用，则以据因 r 拒绝 promise</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// 类似 2.3.3.3.1</span><br><span class="line">function objFactory() &#123;</span><br><span class="line">  var obj = &#123;&#125;;</span><br><span class="line">  Object.defineProperty(obj, &quot;then&quot;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      return function(resolvePromise, rejectPromise) &#123;</span><br><span class="line">        rejectPromise(&apos;resolve_y&apos;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="2-3-3-3-3-如果-resolvePromise-和-rejectPromise-均被调用，或者被同一参数调用了多次，则优先采用首次调用并忽略剩下的调用"><a href="#2-3-3-3-3-如果-resolvePromise-和-rejectPromise-均被调用，或者被同一参数调用了多次，则优先采用首次调用并忽略剩下的调用" class="headerlink" title="2.3.3.3.3 如果 resolvePromise 和 rejectPromise 均被调用，或者被同一参数调用了多次，则优先采用首次调用并忽略剩下的调用"></a>2.3.3.3.3 如果 resolvePromise 和 rejectPromise 均被调用，或者被同一参数调用了多次，则优先采用首次调用并忽略剩下的调用</h5><blockquote>
+<p>这个就不给例子了，表述也很直接了</p>
+</blockquote>
+<h5 id="2-3-3-3-4-如果调用-then-方法抛出了异常-e："><a href="#2-3-3-3-4-如果调用-then-方法抛出了异常-e：" class="headerlink" title="2.3.3.3.4 如果调用 then 方法抛出了异常 e："></a>2.3.3.3.4 如果调用 then 方法抛出了异常 e：</h5><h6 id="2-3-3-3-4-1-如果-resolvePromise-或-rejectPromise-已经被调用，则忽略之"><a href="#2-3-3-3-4-1-如果-resolvePromise-或-rejectPromise-已经被调用，则忽略之" class="headerlink" title="2.3.3.3.4.1 如果 resolvePromise 或 rejectPromise 已经被调用，则忽略之"></a>2.3.3.3.4.1 如果 resolvePromise 或 rejectPromise 已经被调用，则忽略之</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">function objFactory() &#123;</span><br><span class="line">  var obj = &#123;&#125;;</span><br><span class="line">  Object.defineProperty(obj, &quot;then&quot;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      return function(resolvePromise, rejectPromise) &#123;</span><br><span class="line">        resolvePromise(&apos;resolve_y&apos;);</span><br><span class="line">        console.log(test);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var a = new Promise((resolve) =&gt; &#123;</span><br><span class="line">  resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var c = a.then(() =&gt; &#123;</span><br><span class="line">  return objFactory()</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">c.then((data) =&gt; &#123;</span><br><span class="line">  console.log(data); // &quot;resolve_y&quot;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h6 id="2-3-3-3-4-2-否则以-e-为据因拒绝-promise"><a href="#2-3-3-3-4-2-否则以-e-为据因拒绝-promise" class="headerlink" title="2.3.3.3.4.2 否则以 e 为据因拒绝 promise"></a>2.3.3.3.4.2 否则以 e 为据因拒绝 promise</h6><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">function objFactory() &#123;</span><br><span class="line">  var obj = &#123;&#125;;</span><br><span class="line">  Object.defineProperty(obj, &quot;then&quot;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      return function(resolvePromise, rejectPromise) &#123;</span><br><span class="line">        console.log(test);</span><br><span class="line">        resolvePromise(&apos;resolve_y&apos;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var a = new Promise((resolve) =&gt; &#123;</span><br><span class="line">  resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var c = a.then(() =&gt; &#123;</span><br><span class="line">  return objFactory()</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">// VM1124:6 Uncaught (in promise) ReferenceError: test is not defined</span><br></pre></td></tr></table></figure>
+<h5 id="2-3-3-3-5-如果-then-不是函数，以-x-为参数执行-promise"><a href="#2-3-3-3-5-如果-then-不是函数，以-x-为参数执行-promise" class="headerlink" title="2.3.3.3.5 如果 then 不是函数，以 x 为参数执行 promise"></a>2.3.3.3.5 如果 then 不是函数，以 x 为参数执行 promise</h5><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">function objFactory() &#123;</span><br><span class="line">  var obj = &#123;&#125;;</span><br><span class="line">  Object.defineProperty(obj, &quot;then&quot;, &#123;</span><br><span class="line">    get: function() &#123;</span><br><span class="line">      return &apos;test&apos;;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br><span class="line">  return obj;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var a = new Promise((resolve) =&gt; &#123;</span><br><span class="line">  resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var c = a.then(() =&gt; &#123;</span><br><span class="line">  return objFactory()</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">c.then((data) =&gt; &#123;</span><br><span class="line">  console.log(data); // object &#123;then: &quot;test&quot;&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="2-3-3-4-如果-x-不为对象或者函数，以-x-为参数执行-promise"><a href="#2-3-3-4-如果-x-不为对象或者函数，以-x-为参数执行-promise" class="headerlink" title="2.3.3.4 如果 x 不为对象或者函数，以 x 为参数执行 promise"></a>2.3.3.4 如果 x 不为对象或者函数，以 x 为参数执行 promise</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">var a = new Promise((resolve) =&gt; &#123;</span><br><span class="line">  resolve();</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">var c = a.then(() =&gt; &#123;</span><br><span class="line">  return &quot;test&quot;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">c.then((data) =&gt; &#123;</span><br><span class="line">  console.log(data); // &quot;test&quot;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>未完待续</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/23/charles-https-proxy/" rel="next" title="charles-https-proxy">
+                <i class="fa fa-chevron-left"></i> charles-https-proxy
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400"
+               alt="王跳凯" />
+          <p class="site-author-name" itemprop="name">王跳凯</p>
+           
+              <p class="site-description motion-element" itemprop="description">读书的目的不只是找到一个和你想法相同的人，更重要的是看到和自己不一样的人生和想法</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">56</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wleonardo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:wang861622836@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-open-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#术语"><span class="nav-number">1.</span> <span class="nav-text">术语</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-Promise"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 Promise</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-thenable"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 thenable</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3-值（value）"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 值（value）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4-异常（exception）"><span class="nav-number">1.4.</span> <span class="nav-text">1.4 异常（exception）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-5-据因（reason）"><span class="nav-number">1.5.</span> <span class="nav-text">1.5 据因（reason）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#要求"><span class="nav-number">2.</span> <span class="nav-text">要求</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-Promise-的状态"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 Promise 的状态</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-等待态（Pending）"><span class="nav-number">2.1.1.</span> <span class="nav-text">2.1.1 等待态（Pending）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-执行态（Fulfilled）"><span class="nav-number">2.1.2.</span> <span class="nav-text">2.1.2 执行态（Fulfilled）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-3-拒绝态（Rejected）"><span class="nav-number">2.1.3.</span> <span class="nav-text">2.1.3 拒绝态（Rejected）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-then方法"><span class="nav-number">2.1.4.</span> <span class="nav-text">2.2 then方法</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-onFulfilled-和-onRejected-都是可选参数。"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">2.2.1 onFulfilled 和 onRejected 都是可选参数。</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-1-如果-onFulfilled-不是函数，其必须被忽略"><span class="nav-number">2.1.4.1.1.</span> <span class="nav-text">2.2.1.1 如果 onFulfilled 不是函数，其必须被忽略</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-1-2-如果-onRejected-不是函数，其必须被忽略"><span class="nav-number">2.1.4.1.2.</span> <span class="nav-text">2.2.1.2 如果 onRejected 不是函数，其必须被忽略</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-如果-onFulfilled-是函数："><span class="nav-number">2.1.4.2.</span> <span class="nav-text">2.2.2 如果 onFulfilled 是函数：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-1-当-promise-执行结束后其必须被调用，其第一个参数为-promise-的终值"><span class="nav-number">2.1.4.2.1.</span> <span class="nav-text">2.2.2.1 当 promise 执行结束后其必须被调用，其第一个参数为 promise 的终值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-2-2-在-promise-执行结束前其不可被调用"><span class="nav-number">2.1.4.2.2.</span> <span class="nav-text">2.2.2.2 在 promise 执行结束前其不可被调用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-3-其调用次数不可超过一次"><span class="nav-number">2.1.4.3.</span> <span class="nav-text">2.2.2.3 其调用次数不可超过一次</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-3-如果-onRejected-是函数："><span class="nav-number">2.1.5.</span> <span class="nav-text">2.2.3 如果 onRejected 是函数：</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-3-1-当-promise-被拒绝执行后其必须被调用，其第一个参数为-promise-的据因"><span class="nav-number">2.1.5.0.1.</span> <span class="nav-text">2.2.3.1 当 promise 被拒绝执行后其必须被调用，其第一个参数为 promise 的据因</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-3-2-在-promise-被拒绝执行前其不可被调用"><span class="nav-number">2.1.5.0.2.</span> <span class="nav-text">2.2.3.2 在 promise 被拒绝执行前其不可被调用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-3-其调用次数不可超过一次"><span class="nav-number">2.1.5.1.</span> <span class="nav-text">2.2.3.3 其调用次数不可超过一次</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-4-onFulfilled和-onRejected-只有在执行环境堆栈仅包含平台代码时才可被调用"><span class="nav-number">2.1.5.2.</span> <span class="nav-text">2.2.4 onFulfilled和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-5-onFulfilled-和-onRejected-必须被作为函数调用（即没有-this-值）"><span class="nav-number">2.1.5.3.</span> <span class="nav-text">2.2.5 onFulfilled 和 onRejected 必须被作为函数调用（即没有 this 值）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-6-then-方法可以被同一个-promise-调用多次"><span class="nav-number">2.1.5.4.</span> <span class="nav-text">2.2.6 then 方法可以被同一个 promise 调用多次</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-6-1-当-promise-成功执行时，所有-onFulfilled-需按照其注册顺序依次回调"><span class="nav-number">2.1.5.4.1.</span> <span class="nav-text">2.2.6.1 当 promise 成功执行时，所有 onFulfilled 需按照其注册顺序依次回调</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-6-1-当-promise-被拒绝执行时，所有的-onRejected-需按照其注册顺序依次回调"><span class="nav-number">2.1.5.4.2.</span> <span class="nav-text">2.2.6.1 当 promise 被拒绝执行时，所有的 onRejected 需按照其注册顺序依次回调</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-7-then-必须返回一个-promise"><span class="nav-number">2.1.5.5.</span> <span class="nav-text">2.2.7 then 必须返回一个 promise</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-7-1-如果-onFulfilled-或者-onRejected-返回一个值-x-，则运行下面的-Promise-解决过程：-Resolve"><span class="nav-number">2.1.5.5.1.</span> <span class="nav-text">2.2.7.1 如果 onFulfilled 或者 onRejected 返回一个值 x ，则运行下面的 Promise 解决过程：[Resolve]</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-7-2-如果-onFulfilled-或者-onRejected-抛出一个异常-e-，则-promise2-必须拒绝执行，并返回拒因-e"><span class="nav-number">2.1.5.5.2.</span> <span class="nav-text">2.2.7.2 如果 onFulfilled 或者 onRejected 抛出一个异常 e ，则 promise2 必须拒绝执行，并返回拒因 e</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-7-3-如果-onFulfilled-不是函数且-promise1-成功执行，-promise2-必须成功执行并返回相同的值"><span class="nav-number">2.1.5.5.3.</span> <span class="nav-text">2.2.7.3 如果 onFulfilled 不是函数且 promise1 成功执行， promise2 必须成功执行并返回相同的值</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-2-7-4-如果-onRejected-不是函数且-promise1-拒绝执行，-promise2-必须拒绝执行并返回相同的据因"><span class="nav-number">2.1.5.5.4.</span> <span class="nav-text">2.2.7.4 如果 onRejected 不是函数且 promise1 拒绝执行， promise2 必须拒绝执行并返回相同的据因</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-Promise-解决过程"><span class="nav-number">2.1.6.</span> <span class="nav-text">2.3 Promise 解决过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-x-与-promise-相等"><span class="nav-number">2.1.6.1.</span> <span class="nav-text">2.3.1 x 与 promise 相等</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-2-x-为-Promise"><span class="nav-number">2.1.7.</span> <span class="nav-text">2.3.2 x 为 Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-1-如果-x-处于等待态，-promise-需保持为等待态直至-x-被执行或拒绝"><span class="nav-number">2.1.7.1.</span> <span class="nav-text">2.3.2.1 如果 x 处于等待态， promise 需保持为等待态直至 x 被执行或拒绝</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-2-如果-x-处于执行态，用相同的值执行-promise"><span class="nav-number">2.1.7.2.</span> <span class="nav-text">2.3.2.2 如果 x 处于执行态，用相同的值执行 promise</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-2-3-如果-x-处于拒绝态，用相同的据因拒绝-promise"><span class="nav-number">2.1.7.3.</span> <span class="nav-text">2.3.2.3 如果 x 处于拒绝态，用相同的据因拒绝 promise</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-3-x-为对象或函数"><span class="nav-number">2.1.8.</span> <span class="nav-text">2.3.3 x 为对象或函数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-1-把-x-then-赋值给-then"><span class="nav-number">2.1.8.1.</span> <span class="nav-text">2.3.3.1 把 x.then 赋值给 then</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-2-如果取-x-then-的值时抛出错误-e-，则以-e-为据因拒绝-promise"><span class="nav-number">2.1.8.2.</span> <span class="nav-text">2.3.3.2 如果取 x.then 的值时抛出错误 e ，则以 e 为据因拒绝 promise</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-3-如果-then-是函数，将-x-作为函数的作用域-this-调用之。传递两个回调函数作为参数，第一个参数叫做-resolvePromise-，第二个参数叫做-rejectPromise"><span class="nav-number">2.1.8.3.</span> <span class="nav-text">2.3.3.3 如果 then 是函数，将 x 作为函数的作用域 this 调用之。传递两个回调函数作为参数，第一个参数叫做 resolvePromise ，第二个参数叫做 rejectPromise:</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-3-1-如果-resolvePromise-以值-y-为参数被调用，则运行-Resolve"><span class="nav-number">2.1.8.4.</span> <span class="nav-text">2.3.3.3.1 如果 resolvePromise 以值 y 为参数被调用，则运行 [Resolve]</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-3-3-2-如果-rejectPromise-以据因-r-为参数被调用，则以据因-r-拒绝-promise"><span class="nav-number">2.1.8.4.1.</span> <span class="nav-text">2.3.3.3.2 如果 rejectPromise 以据因 r 为参数被调用，则以据因 r 拒绝 promise</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-3-3-3-如果-resolvePromise-和-rejectPromise-均被调用，或者被同一参数调用了多次，则优先采用首次调用并忽略剩下的调用"><span class="nav-number">2.1.8.4.2.</span> <span class="nav-text">2.3.3.3.3 如果 resolvePromise 和 rejectPromise 均被调用，或者被同一参数调用了多次，则优先采用首次调用并忽略剩下的调用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-3-3-4-如果调用-then-方法抛出了异常-e："><span class="nav-number">2.1.8.4.3.</span> <span class="nav-text">2.3.3.3.4 如果调用 then 方法抛出了异常 e：</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-3-3-4-1-如果-resolvePromise-或-rejectPromise-已经被调用，则忽略之"><span class="nav-number">2.1.8.4.3.1.</span> <span class="nav-text">2.3.3.3.4.1 如果 resolvePromise 或 rejectPromise 已经被调用，则忽略之</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#2-3-3-3-4-2-否则以-e-为据因拒绝-promise"><span class="nav-number">2.1.8.4.3.2.</span> <span class="nav-text">2.3.3.3.4.2 否则以 e 为据因拒绝 promise</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2-3-3-3-5-如果-then-不是函数，以-x-为参数执行-promise"><span class="nav-number">2.1.8.4.4.</span> <span class="nav-text">2.3.3.3.5 如果 then 不是函数，以 x 为参数执行 promise</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-3-4-如果-x-不为对象或者函数，以-x-为参数执行-promise"><span class="nav-number">2.1.8.5.</span> <span class="nav-text">2.3.3.4 如果 x 不为对象或者函数，以 x 为参数执行 promise</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-shower"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王跳凯</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    
+
+  
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/fastclick/1.0.0/fastclick.min.js"></script>
+    
+
+  
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery-lazyload/1.9.5/jquery.lazyload.js"></script>
+    
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+    
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.js"></script>
+    
+
+  
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+    
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://wleonardo.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://wangyuekai.com/2017/12/28/promise-a/';
+          this.page.identifier = '2017/12/28/promise-a/';
+          this.page.title = 'promise-a+';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wleonardo.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
