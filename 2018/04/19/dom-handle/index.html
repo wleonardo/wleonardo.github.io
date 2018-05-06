@@ -1,0 +1,843 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="http://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.min.css" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="https://cdn.bootcss.com/font-awesome/4.6.2/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Javascript," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="前端开发始终绕不过的就是操作DOM，在以前，我们使用Jquery，zepto等库来操作DOM，之后在vue，Angular，React等框架出现后，我们通过操作数据来控制DOM（绝大多数时候），越来越少的去直接操作DOM，更不用说用原生的JS来操作DOM了。 但是并不是所有时候都一定要引入这些库，对于基础的JS操作DOM的一些方法，还是要有些了解的。这里就算是回顾一下JS那些熟悉却也陌生的DOM操">
+<meta name="keywords" content="Javascript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="dom-handle">
+<meta property="og:url" content="http://wangyuekai.com/2018/04/19/dom-handle/index.html">
+<meta property="og:site_name" content="王跳凯的blog">
+<meta property="og:description" content="前端开发始终绕不过的就是操作DOM，在以前，我们使用Jquery，zepto等库来操作DOM，之后在vue，Angular，React等框架出现后，我们通过操作数据来控制DOM（绝大多数时候），越来越少的去直接操作DOM，更不用说用原生的JS来操作DOM了。 但是并不是所有时候都一定要引入这些库，对于基础的JS操作DOM的一些方法，还是要有些了解的。这里就算是回顾一下JS那些熟悉却也陌生的DOM操">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-06T13:12:00.778Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="dom-handle">
+<meta name="twitter:description" content="前端开发始终绕不过的就是操作DOM，在以前，我们使用Jquery，zepto等库来操作DOM，之后在vue，Angular，React等框架出现后，我们通过操作数据来控制DOM（绝大多数时候），越来越少的去直接操作DOM，更不用说用原生的JS来操作DOM了。 但是并不是所有时候都一定要引入这些库，对于基础的JS操作DOM的一些方法，还是要有些了解的。这里就算是回顾一下JS那些熟悉却也陌生的DOM操">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://wangyuekai.com/2018/04/19/dom-handle/"/>
+
+
+
+
+
+  <title> dom-handle | 王跳凯的blog </title>
+  <meta name="baidu-site-verification" content="RsjvxNEwiQ" />
+  <meta name="google-site-verification" content="qWJ2I33b2z3aL2XF4jrAarApua4GQpFVMashz57sIDY" />
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?53c86d9133e15af360d3d19fb25bffbf";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">王跳凯的blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://wangyuekai.com/2018/04/19/dom-handle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="王跳凯">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="王跳凯的blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                dom-handle
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-04-19T21:10:55+08:00">
+                2018-04-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/04/19/dom-handle/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2018/04/19/dom-handle/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>前端开发始终绕不过的就是操作DOM，在以前，我们使用Jquery，zepto等库来操作DOM，之后在vue，Angular，React等框架出现后，我们通过操作数据来控制DOM（绝大多数时候），越来越少的去直接操作DOM，更不用说用原生的JS来操作DOM了。</p>
+<p>但是并不是所有时候都一定要引入这些库，对于基础的JS操作DOM的一些方法，还是要有些了解的。这里就算是回顾一下JS那些熟悉却也陌生的DOM操作函数。<br><a id="more"></a></p>
+<h3 id="查询"><a href="#查询" class="headerlink" title="查询"></a>查询</h3><h4 id="按照ID查询"><a href="#按照ID查询" class="headerlink" title="按照ID查询"></a>按照ID查询</h4><blockquote>
+<p>document.getElementById(id) // 兼容最好</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">// demo</span><br><span class="line">// HTMl</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;main&quot;&gt;</span><br><span class="line">    &lt;div id=&quot;content&quot;&gt;&lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">// Script</span><br><span class="line">const mainDom = document.getElementById(&apos;main&apos;);</span><br><span class="line"></span><br><span class="line">const contentDom = document.getElementById(&apos;content&apos;);</span><br></pre></td></tr></table></figure>
+<h4 id="按照class查询"><a href="#按照class查询" class="headerlink" title="按照class查询"></a>按照class查询</h4><blockquote>
+<p>element.getElementsByClassName // ie9+ <br><br>element.querySelectorAll // ie8 <br><br>遍历 // ie7-</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">// demo</span><br><span class="line">// HTMl</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;main&quot;&gt;</span><br><span class="line">    &lt;div id=&quot;content&quot;&gt;</span><br><span class="line">      &lt;p class=&quot;info test&quot;&gt;info1&lt;/p&gt;</span><br><span class="line">      &lt;p class=&quot;info&quot;&gt;info2&lt;/p&gt;</span><br><span class="line">      &lt;p class=&quot;info&quot;&gt;info3&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">// Script</span><br><span class="line">const mainDom = document.getElementById(&apos;main&apos;);</span><br><span class="line">const infoDomList1 = mainDom.querySelectorAll(&apos;.info.test&apos;);</span><br><span class="line">const infoDomList2 = mainDom.getElementsByClassName(&apos;info test&apos;);</span><br></pre></td></tr></table></figure>
+<h4 id="按照Tag查询"><a href="#按照Tag查询" class="headerlink" title="按照Tag查询"></a>按照Tag查询</h4><blockquote>
+<p>element.getElementsByTagName // ie6+<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// demo</span><br><span class="line">// HTMl</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;main&quot;&gt;</span><br><span class="line">    &lt;div id=&quot;content&quot;&gt;</span><br><span class="line">      &lt;p class=&quot;info test&quot;&gt;info1&lt;/p&gt;</span><br><span class="line">      &lt;p class=&quot;info&quot;&gt;info2&lt;/p&gt;</span><br><span class="line">      &lt;p class=&quot;info&quot;&gt;info3&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">// Script</span><br><span class="line">const divDom = document.getElementsByTagName(&apos;div&apos;);</span><br><span class="line">const pDom = divDom[0].getElementsByTagName(&apos;p&apos;);</span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<h4 id="按照属性查询"><a href="#按照属性查询" class="headerlink" title="按照属性查询"></a>按照属性查询</h4><blockquote>
+<p>element.querySelector //ie8+ <br><br>element.querySelectorAll() //ie8+ <br><br>querySelector返回返回的是单个DOM元素，querySelectorAll返回NodeList</p>
+</blockquote>
+<p><code>querySelector</code>的语法很类似jquery里面的选择器，<code>querySelector</code>和<code>querySelectorAll</code>的使用方法是一样，所以下面的一些说法都是适用于两个。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">// demo</span><br><span class="line">// HTMl</span><br><span class="line">&lt;body&gt;</span><br><span class="line">  &lt;div id=&quot;main&quot;&gt;</span><br><span class="line">    &lt;div id=&quot;content&quot;&gt;</span><br><span class="line">      &lt;p class=&quot;info test&quot;&gt;info1&lt;/p&gt;</span><br><span class="line">      &lt;p class=&quot;info&quot;&gt;info2&lt;/p&gt;</span><br><span class="line">      &lt;p class=&quot;info&quot;&gt;info3&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">// Script</span><br><span class="line">const infoDom = document.querySelectorAll(&apos;.info&apos;);</span><br><span class="line">const infoDom2 = document.querySelectorAll(&apos;.info:not(.test)&apos;);</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>querySelectorAll 和 querySelector 在子查询下和jquery不是一样的，详见<a href="http://www.zhangxinxu.com/wordpress/2015/11/know-dom-queryselectorall/" target="_blank" rel="external">DOM元素querySelectorAll可能让你意外的特性表现</a><br>简单的说就是<code>document.querySelector(&quot;#my-id&quot;).querySelectorAll(&quot;div div&quot;);</code>，直接感觉是查询<code>#my-id</code>的子元素下符合<code>div div</code>的<code>dom</code>，其实不是，而是<code>#my-id</code>的子元素中，同时也符合在全局范围内的<code>div div</code>的<code>dom</code>。</p>
+</blockquote>
+<h4 id="获取父元素"><a href="#获取父元素" class="headerlink" title="获取父元素"></a>获取父元素</h4><blockquote>
+<p>element.parentNode // 基本都兼容</p>
+</blockquote>
+<h4 id="获取子元素"><a href="#获取子元素" class="headerlink" title="获取子元素"></a>获取子元素</h4><blockquote>
+<p>element.childNodes // 基本都兼容</p>
+</blockquote>
+<p><code>element.childNodes</code>不止会获取到<code>DOM</code>，也会获取到文字等，只有当<code>nodeType === 1</code>时才表示<code>DOM</code>。</p>
+<h4 id="获取兄弟节点"><a href="#获取兄弟节点" class="headerlink" title="获取兄弟节点"></a>获取兄弟节点</h4><h5 id="获取前面的兄弟节点"><a href="#获取前面的兄弟节点" class="headerlink" title="获取前面的兄弟节点"></a>获取前面的兄弟节点</h5><blockquote>
+<p>element.previousSibling //基本都兼容</p>
+</blockquote>
+<p>获取所有前面的兄弟节点就是遍历<code>previousSibling</code>, 直到<code>null</code>。</p>
+<blockquote>
+<p>Gecko内核的浏览器会在源代码中标签内部有空白符的地方插入一个文本结点到文档中.因此,使用诸如 Node.firstChild 和 Node.previousSibling 之类的方法可能会引用到一个空白符文本节点, 而不是使用者所预期得到的节点.</p>
+</blockquote>
+<h5 id="获取后面的兄弟节点"><a href="#获取后面的兄弟节点" class="headerlink" title="获取后面的兄弟节点"></a>获取后面的兄弟节点</h5><blockquote>
+<p>element.nextSibling //基本都兼容</p>
+</blockquote>
+<p>获取所有和注意点都和<code>previousSibling</code>一样</p>
+<h3 id="DOM操作"><a href="#DOM操作" class="headerlink" title="DOM操作"></a>DOM操作</h3><h4 id="创建DOM"><a href="#创建DOM" class="headerlink" title="创建DOM"></a>创建DOM</h4><blockquote>
+<p>document.createElement(tagName)</p>
+</blockquote>
+<h4 id="新增DOM"><a href="#新增DOM" class="headerlink" title="新增DOM"></a>新增DOM</h4><h5 id="添加到节点的子节点的最后-append"><a href="#添加到节点的子节点的最后-append" class="headerlink" title="添加到节点的子节点的最后 append"></a>添加到节点的子节点的最后 append</h5><blockquote>
+<p>paranetElement.appendChild(child);</p>
+</blockquote>
+<h5 id="添加到节点的前面"><a href="#添加到节点的前面" class="headerlink" title="添加到节点的前面"></a>添加到节点的前面</h5><blockquote>
+<p>paranetElement.insertBefore(newElement, Element)</p>
+</blockquote>
+<p>通过<code>insertBefore</code>方法可以将<code>newElement</code>插入到<code>Element</code>前面，如果<code>Element</code>是<code>null</code>则将<code>newElement</code>插入到<code>paranetElement</code>的尾部。</p>
+<p>如果<code>newElement</code>是一个已经存在在文档中的<code>DOM</code>, <code>insertBefore</code>则会表现为移动该<code>DOM</code>(将会保留所有的事件)。</p>
+<h5 id="添加到节点的后面"><a href="#添加到节点的后面" class="headerlink" title="添加到节点的后面"></a>添加到节点的后面</h5><blockquote>
+<p>没有这个函数 😶<br>可以使用 insertBefore 方法和 nextSibling 来模拟它。</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">parentDiv.insertBefore(sp1, sp2.nextSibling);</span><br></pre></td></tr></table></figure>
+<p>如果<code>sp2</code>没有下一个节点，则它肯定是最后一个节点，则<code>sp2.nextSibling</code>返回<code>null</code>，且<code>sp1</code>被插入到子节点列表的最后面（即<code>sp2</code>后面）</p>
+<p>详见<a href="https://developer.mozilla.org/zh-CN/docs/Web/API/Node/insertBefore" target="_blank" rel="external">Node.insertBefore()</a></p>
+<h4 id="修改DOM"><a href="#修改DOM" class="headerlink" title="修改DOM"></a>修改DOM</h4><h5 id="修改DOM的文案"><a href="#修改DOM的文案" class="headerlink" title="修改DOM的文案"></a>修改DOM的文案</h5><blockquote>
+<p>Element.innerHTML // 获取标签内的所有内容<br>Element.innerText // 只获取标签内的文字内容，不包括标签</p>
+</blockquote>
+<h5 id="修改css"><a href="#修改css" class="headerlink" title="修改css"></a>修改css</h5><blockquote>
+<p>element.style.cssAttribute</p>
+</blockquote>
+<h5 id="修改属性"><a href="#修改属性" class="headerlink" title="修改属性"></a>修改属性</h5><blockquote>
+<p>element.setAttribute() <br><br>element.removeAttribute() <br><br>element.className</p>
+</blockquote>
+<h4 id="删除DOM"><a href="#删除DOM" class="headerlink" title="删除DOM"></a>删除DOM</h4><blockquote>
+<p>paranetElement.removeChild(element)</p>
+</blockquote>
+<h4 id="清空子节点"><a href="#清空子节点" class="headerlink" title="清空子节点"></a>清空子节点</h4><blockquote>
+<p>没有专门的函数，可以遍历removeChild来实现</p>
+</blockquote>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">var element = document.getElementById(&quot;top&quot;);</span><br><span class="line">while (element.firstChild) &#123;</span><br><span class="line">  element.removeChild(element.firstChild);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h3><p>关于<code>DOM</code>的操作，常用的暂时只想到这么多，以后想到了，再慢慢补充</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Javascript/" rel="tag"># Javascript</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/12/28/promise-a/" rel="next" title="promise-a+">
+                <i class="fa fa-chevron-left"></i> promise-a+
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/05/06/middleware/" rel="prev" title="中间件（middleware）">
+                中间件（middleware） <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div id="cloud-tie-wrapper" class="cloud-tie-wrapper"></div>
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="https://avatars0.githubusercontent.com/u/7393641?v=3&u=62c54043ae7196f3fafaa1e5f4868cfd35476676&s=400"
+               alt="王跳凯" />
+          <p class="site-author-name" itemprop="name">王跳凯</p>
+           
+              <p class="site-description motion-element" itemprop="description">读书的目的不只是找到一个和你想法相同的人，更重要的是看到和自己不一样的人生和想法</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/wleonardo" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:wang861622836@163.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope-open-o"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#查询"><span class="nav-number">1.</span> <span class="nav-text">查询</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#按照ID查询"><span class="nav-number">1.1.</span> <span class="nav-text">按照ID查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#按照class查询"><span class="nav-number">1.2.</span> <span class="nav-text">按照class查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#按照Tag查询"><span class="nav-number">1.3.</span> <span class="nav-text">按照Tag查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#按照属性查询"><span class="nav-number">1.4.</span> <span class="nav-text">按照属性查询</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取父元素"><span class="nav-number">1.5.</span> <span class="nav-text">获取父元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取子元素"><span class="nav-number">1.6.</span> <span class="nav-text">获取子元素</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#获取兄弟节点"><span class="nav-number">1.7.</span> <span class="nav-text">获取兄弟节点</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#获取前面的兄弟节点"><span class="nav-number">1.7.1.</span> <span class="nav-text">获取前面的兄弟节点</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#获取后面的兄弟节点"><span class="nav-number">1.7.2.</span> <span class="nav-text">获取后面的兄弟节点</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DOM操作"><span class="nav-number">2.</span> <span class="nav-text">DOM操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建DOM"><span class="nav-number">2.1.</span> <span class="nav-text">创建DOM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#新增DOM"><span class="nav-number">2.2.</span> <span class="nav-text">新增DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#添加到节点的子节点的最后-append"><span class="nav-number">2.2.1.</span> <span class="nav-text">添加到节点的子节点的最后 append</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加到节点的前面"><span class="nav-number">2.2.2.</span> <span class="nav-text">添加到节点的前面</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#添加到节点的后面"><span class="nav-number">2.2.3.</span> <span class="nav-text">添加到节点的后面</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#修改DOM"><span class="nav-number">2.3.</span> <span class="nav-text">修改DOM</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#修改DOM的文案"><span class="nav-number">2.3.1.</span> <span class="nav-text">修改DOM的文案</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改css"><span class="nav-number">2.3.2.</span> <span class="nav-text">修改css</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#修改属性"><span class="nav-number">2.3.3.</span> <span class="nav-text">修改属性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#删除DOM"><span class="nav-number">2.4.</span> <span class="nav-text">删除DOM</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#清空子节点"><span class="nav-number">2.5.</span> <span class="nav-text">清空子节点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结尾"><span class="nav-number">3.</span> <span class="nav-text">结尾</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-shower"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">王跳凯</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    
+
+  
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/fastclick/1.0.0/fastclick.min.js"></script>
+    
+
+  
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/jquery-lazyload/1.9.5/jquery.lazyload.js"></script>
+    
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.min.js"></script>
+    
+
+  
+    <script type="text/javascript" src="https://cdn.bootcss.com/velocity/1.2.1/velocity.ui.js"></script>
+    
+
+  
+    <script type="text/javascript" src="https://apps.bdimg.com/libs/fancybox/2.1.5/jquery.fancybox.pack.js"></script>
+    
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://wleonardo.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://wangyuekai.com/2018/04/19/dom-handle/';
+          this.page.identifier = '2018/04/19/dom-handle/';
+          this.page.title = 'dom-handle';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://wleonardo.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
